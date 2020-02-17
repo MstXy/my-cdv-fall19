@@ -1,0 +1,38 @@
+body {
+  background-color: black;
+}
+
+.input {
+  transform: translate(-50%, 0);
+  position: absolute;
+  top: 20%;
+  left: 50%;
+}
+
+#input_box {
+  font-size: 25px;
+  font-family: Roboto;
+}
+#submit_btn {
+  font-size: 25px;
+  font-family: Roboto;
+}
+
+.square_container {
+  transform: translate(-50%, 0);
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+
+  color: white;
+}
+
+.square {
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  margin: 5px;
+}
