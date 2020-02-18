@@ -1,16 +1,16 @@
 ## Reading Response
-###Introduction and Chapter 2
-####~Why does Bowker say "'Raw data is both an oxymoron and a bad idea'" ? (pp. 663)
+### Introduction and Chapter 2
+#### Why does Bowker say "'Raw data is both an oxymoron and a bad idea'" ? (pp. 663)
 We are creating raw data with our everyday activity, and we are leaving a trace of our life by leaving raw data. These raw data could be used to bring benefit to mankind, but it could also be used to access our private personal life and be used against ourselves. So raw data is contradictory in this sense. Also, raw data is of limited use if we left them raw, they are just streaming data. Since raw data is only the product of our daily life, they doesn't mean anything we do not collect, process and reinvent them. So using only raw data is a bad idea, and the author use it to address that raw data need to be 'cooked with care' - to be carefully processed and analyzed, and probably under good regulations.
 
-###Section 1 (pp. 665)
-####What could be meant by the quote "'accounting tools [...] do not simply aid the measurement of economic activity, they shape the reality they measure'"? Try draw parallels to the CompStat system from the Reply All Podcast.
+### Section 1 (pp. 665)
+#### What could be meant by the quote "'accounting tools [...] do not simply aid the measurement of economic activity, they shape the reality they measure'"? Try draw parallels to the CompStat system from the Reply All Podcast.
 ‘Change the instruments, and you will change the entire social theory that goes with them’, the author quoted Latour's words. In my view, by  changing the tool to measure and view the world to using data, the efficiency of most operations of the society could be boosted. However, the issue is that if we rely on the data too much, or to say, approach the reality using only data, we are seeing a one-sided world. As in the CompStat System case, the crime rate could be 'intentionally' decreased by manipulating the relevant data. They are just changing the numbers, but the actual crime rate hasn't changed. So, in my view, data, or big data, should not be the only way we approach the reality. It needs to be supplemented by other tools, like actual field study/observation. Thus a more well-rounded view of an issue could be formed, and the risk of data being manipulated could be minimized.
 
-###Section 3 and 4 (pp. 668)
-####In which way is Twitter data limited?
+### Section 3 and 4 (pp. 668)
+#### In which way is Twitter data limited?
 The number of accounts does not match with the actual users, and the number of actual users does not match with the actual number of people online. Also, the tweets on Twitter is censored and controlled, making the tweets collected inaccurate. Twitter data is only valid under the context of social media or online community. Using in other fields may cause big differences.
 
-###Section 5 (pp. 671)
-####If you don't need to login to obtain certain data, then it is public and free to use. Or isn't it? Please share your opinion.
+### Section 5 (pp. 671)
+#### If you don't need to login to obtain certain data, then it is public and free to use. Or isn't it? Please share your opinion.
 In my view, I agree to the claim. Data that are accessible to everyone without login is certainly public and free. Admittedly, there are people who don't want their personal information be open to the public, then they should no share these on their acccounts or social media. What is vital is that the company or software responsible for these data should made it clear in the users' agreement that what data would be public and what would not be. Also, there should be certain regulations claiming that the data collected should not be used against the users themselves, which I think is the most important part.
