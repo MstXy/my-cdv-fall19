@@ -14,7 +14,11 @@ html {
   align-items: center;
   justify-content: flex-start;
   text-align: justify;
+  box-shadow: 5px 5px grey;
+  transition: width 2s;
 }
+
+
 .score {
   height: 75px;
   width: 300px;
@@ -26,6 +30,7 @@ html {
   align-items: center;
   justify-content: flex-end;
   text-align: justify;
+  text-shadow: 2px 2px lightgrey;
 }
 #score {
   display: none;
@@ -93,6 +98,7 @@ html {
   top: 70%;
   left: 25%;
   font-size: 35px;
+  background-color: lightgrey;
 }
 #sortBtn {
   transform: translate(0, -50%);
@@ -102,6 +108,7 @@ html {
   top: 70%;
   right: 40%;
   font-size: 35px;
+  background-color: lightgrey;
 }
 
 #app {

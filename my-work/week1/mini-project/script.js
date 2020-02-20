@@ -99,14 +99,16 @@ console.log(transformedData);
 for (var i = 0; i < transformedData.length; i++) {
   let datapoint = transformedData[i];
 
+  //create bar and its properties
   let bar = document.createElement('div');
   bar.className = "bar";
-  bar.style.width = datapoint.average * 80 + 'px';
 
+  // show average rating
   let averageScore = document.createElement('div');
   averageScore.className = "score";
   averageScore.innerHTML = datapoint.average.toFixed(2);
 
+  //change color
   if (datapoint.name == "Wechat") {
     bar.style.backgroundColor = "#00c71e";
   } else if (datapoint.name == "Alipay") {
@@ -127,6 +129,12 @@ for (var i = 0; i < transformedData.length; i++) {
 
   bar.style.color = "white";
   bar.innerHTML = datapoint.name;
+  bar.style.width = "200px";
+
+  // add hover effect
+  bar.addEventListener("mouseover", function(){
+    bar.style.width = datapoint.average * 80 + 'px';
+  })
 
   document.getElementById('bar_graph').appendChild(bar);
   document.getElementById('score').appendChild(averageScore);
@@ -141,14 +149,16 @@ transformedData.sort(function(a, b){return b.average - a.average});
 for (var i = 0; i < transformedData.length; i++) {
   let datapoint = transformedData[i];
 
+  //create bar and its properties
   let bar = document.createElement('div');
   bar.className = "bar";
-  bar.style.width = datapoint.average * 80 + 'px';
 
+  // show average rating
   let averageScore = document.createElement('div');
   averageScore.className = "score";
   averageScore.innerHTML = datapoint.average.toFixed(2);
 
+  //change color
   if (datapoint.name == "Wechat") {
     bar.style.backgroundColor = "#00c71e";
   } else if (datapoint.name == "Alipay") {
@@ -169,6 +179,13 @@ for (var i = 0; i < transformedData.length; i++) {
 
   bar.style.color = "white";
   bar.innerHTML = datapoint.name;
+  bar.style.width = "200px";
+
+  // add hover effect
+  bar.addEventListener("mouseover", function(){
+    bar.style.width = datapoint.average * 80 + 'px';
+  })
+
 
   document.getElementById('sorted_graph').appendChild(bar);
   document.getElementById('sortedScore').appendChild(averageScore);
