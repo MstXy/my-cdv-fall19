@@ -1,0 +1,80 @@
+[
+    {
+        "time": "2020-02-24T16:00:00.000Z",
+        "type": "Breakfast",
+        "color": "Purple / Red",
+        "category": "Green",
+        "size": "Small",
+        "ingredients": "Red Bean",
+        "mood": "Low to Neutural",
+        "maker": "Dad",
+        "duration": 5,
+        "phone": true,
+        "bowls": 1
+    },
+    {
+        "time": "2020-02-24T16:00:00.000Z",
+        "type": "Lunch",
+        "color": "White / Orange / Pink / Brown",
+        "category": "Food From Yesterday",
+        "size": "Medium",
+        "ingredients": "Rice, Sausage, Carrot, Fish",
+        "mood": "Low to High",
+        "maker": "Mom and Dad",
+        "duration": 20,
+        "phone": false,
+        "bowls": 2
+    },
+    {
+        "time": "2020-02-24T16:00:00.000Z",
+        "type": "Dinner",
+        "color": "\nWhite / Green / Brown / Yellow",
+        "category": "Diversed",
+        "size": "Big",
+        "ingredients": "Rice, Green Vegetables, Asparagus, \nQuail Egg, Egg, Tofu, Chicken Breast, \nPotatoe, Carrot",
+        "mood": "High ",
+        "maker": "Dad",
+        "duration": 30,
+        "phone": true,
+        "bowls": 5
+    },
+    {
+        "time": "2020-02-25T16:00:00.000Z",
+        "type": "Breakfast",
+        "color": "Brown / Yellow",
+        "category": "Quick",
+        "size": "Small",
+        "ingredients": "Coffee, Cake",
+        "mood": "Low to Neutural",
+        "maker": "I",
+        "duration": 10,
+        "phone": true,
+        "bowls": 2
+    },
+    {
+        "time": "2020-02-25T16:00:00.000Z",
+        "type": "Lunch",
+        "color": "White / Brown / Green",
+        "category": "Food From Yesterday",
+        "size": "Big",
+        "ingredients": "Rice, Chicken Breast, Tofu, \nQuail Egg, Asparagus, Potatoe, Carrot",
+        "mood": "Low",
+        "maker": "Dad",
+        "duration": 15,
+        "phone": false,
+        "bowls": 3
+    },
+    {
+        "time": "2020-02-25T16:00:00.000Z",
+        "type": "Dinner",
+        "color": "White / Green / Yellow / Brown / Purple",
+        "category": "Diversed",
+        "size": "Big",
+        "ingredients": "Rice, Cauliflower, Scrambled Egg,\nTofu, Leek, Bullfrog, Duck Blood Curd",
+        "mood": "Low to Neutural",
+        "maker": "Dad",
+        "duration": 30,
+        "phone": false,
+        "bowls": 5
+    }
+]
