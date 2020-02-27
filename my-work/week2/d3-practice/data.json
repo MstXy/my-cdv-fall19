@@ -1,11 +1,13 @@
 [
     {
+        "no": 1,
+        "day": 1,
         "time": "2020-02-24T16:00:00.000Z",
         "type": "Breakfast",
-        "color": "Purple / Red",
+        "ingredients": [{"color": "Purple", "food": "Red Bean", "type": "Breakfast", "day": 1, "no": 1},
+          {"color": "Red", "food": "Red Bean", "type": "Breakfast", "day": 1, "no": 2}],
         "category": "Green",
         "size": "Small",
-        "ingredients": "Red Bean",
         "mood": "Low to Neutural",
         "maker": "Dad",
         "duration": 5,
@@ -13,12 +15,17 @@
         "bowls": 1
     },
     {
+        "no": 2,
+        "day": 1,
         "time": "2020-02-24T16:00:00.000Z",
         "type": "Lunch",
-        "color": "White / Orange / Pink / Brown",
+        "ingredients": [{"color": "White", "food": "Rice", "type": "Lunch", "day": 1, "no": 1},
+          {"color": "Orange", "food": "Carrot", "type": "Lunch", "day": 1, "no": 2},
+          {"color": "Pink", "food": "Sausage", "type": "Lunch", "day": 1, "no": 3},
+          {"color": "Brown", "food": "Smoked Fish", "type": "Lunch", "day": 1, "no": 4}
+        ],
         "category": "Food From Yesterday",
         "size": "Medium",
-        "ingredients": "Rice, Sausage, Carrot, Fish",
         "mood": "Low to High",
         "maker": "Mom and Dad",
         "duration": 20,
@@ -26,12 +33,17 @@
         "bowls": 2
     },
     {
+        "no": 3,
+        "day": 1,
         "time": "2020-02-24T16:00:00.000Z",
         "type": "Dinner",
-        "color": "\nWhite / Green / Brown / Yellow",
+        "ingredients": [{"color": "White", "food": "Rice", "type": "Dinner", "day": 1, "no": 1},
+          {"color": "Green", "food": "Green Vegetables, Asparagus", "type": "Dinner", "day": 1, "no": 2},
+          {"color": "Brown", "food": "Tofu, Quail Egg, Egg", "type": "Dinner", "day": 1, "no": 3},
+          {"color": "Yellow", "food": "Potatoe, Chicken Breast", "type": "Dinner", "day": 1, "no": 4}
+        ],
         "category": "Diversed",
         "size": "Big",
-        "ingredients": "Rice, Green Vegetables, Asparagus, \nQuail Egg, Egg, Tofu, Chicken Breast, \nPotatoe, Carrot",
         "mood": "High ",
         "maker": "Dad",
         "duration": 30,
@@ -39,12 +51,17 @@
         "bowls": 5
     },
     {
+        "no": 4,
+        "day": 2,
         "time": "2020-02-25T16:00:00.000Z",
         "type": "Breakfast",
         "color": "Brown / Yellow",
+        "ingredients": [
+          {"color": "Brown", "food": "Coffee", "type": "Breakfast", "day": 2, "no": 1},
+          {"color": "Yellow", "food": "Cake", "type": "Breakfast", "day": 2, "no": 2}
+        ],
         "category": "Quick",
         "size": "Small",
-        "ingredients": "Coffee, Cake",
         "mood": "Low to Neutural",
         "maker": "I",
         "duration": 10,
@@ -52,12 +69,17 @@
         "bowls": 2
     },
     {
+        "no": 5,
+        "day": 2,
         "time": "2020-02-25T16:00:00.000Z",
         "type": "Lunch",
-        "color": "White / Brown / Green",
+        "ingredients": [{"color": "White", "food": "Rice", "type": "Lunch", "day": 2, "no": 1},
+          {"color": "Green", "food": "Asparagus", "type": "Lunch", "day": 2, "no": 2},
+          {"color": "Brown", "food": "Tofu, Quail Egg, Egg", "type": "Lunch", "day": 2, "no": 3},
+          {"color": "Yellow", "food": "Chiken Breast, Potatoe", "type": "Lunch", "day": 2, "no": 4}
+        ],
         "category": "Food From Yesterday",
         "size": "Big",
-        "ingredients": "Rice, Chicken Breast, Tofu, \nQuail Egg, Asparagus, Potatoe, Carrot",
         "mood": "Low",
         "maker": "Dad",
         "duration": 15,
@@ -65,16 +87,77 @@
         "bowls": 3
     },
     {
+        "no": 6,
+        "day": 2,
         "time": "2020-02-25T16:00:00.000Z",
         "type": "Dinner",
         "color": "White / Green / Yellow / Brown / Purple",
+        "ingredients": [{"color": "White", "food": "Rice, Tofu", "type": "Dinner", "day": 2, "no": 1},
+          {"color": "Green", "food": "Cauliflower, Leek, Green Pepper", "type": "Dinner", "day": 2, "no": 2},
+          {"color": "Brown", "food": "Duck Blood Curd, Bullfrog", "type": "Dinner", "day": 2, "no": 3},
+          {"color": "Yellow", "food": "Scrambled Egg", "type": "Dinner", "day": 2, "no": 4},
+          {"color": "Purple", "food": "Onion", "type": "Dinner", "day": 2, "no": 5}
+        ],
         "category": "Diversed",
         "size": "Big",
-        "ingredients": "Rice, Cauliflower, Scrambled Egg,\nTofu, Leek, Bullfrog, Duck Blood Curd",
         "mood": "Low to Neutural",
         "maker": "Dad",
         "duration": 30,
         "phone": false,
         "bowls": 5
+    },
+    {
+        "no": 7,
+        "day": 3,
+        "time": "2020-02-26T16:00:00.000Z",
+        "type": "Breakfast",
+        "color": "White / Brown",
+        "ingredients": [{"color": "White", "food": "Egg", "type": "Breakfast", "day": 3, "no": 1},
+          {"color": "Brown", "food": "Coffee", "type": "Breakfast", "day": 3, "no": 2}
+        ],
+        "category": "Quick",
+        "size": "Small",
+        "mood": "High ",
+        "maker": "I",
+        "duration": 5,
+        "phone": true,
+        "bowls": 1
+    },
+    {
+        "no": 8,
+        "day": 3,
+        "time": "2020-02-26T16:00:00.000Z",
+        "type": "Lunch",
+        "color": "White / Brown / Green / Purple",
+        "ingredients": [{"color": "White", "food": "Noodles", "type": "Lunch", "day": 3, "no": 1},
+          {"color": "Green", "food": "Cauliflower, Green Pepper", "type": "Lunch", "day": 3, "no": 2},
+          {"color": "Brown", "food": "Bullfrog", "type": "Lunch", "day": 3, "no": 3},
+          {"color": "Purple", "food": "Onion", "type": "Lunch", "day": 3, "no": 4}
+        ],
+        "category": "Food From Yesterday",
+        "size": "Medium",
+        "mood": "High to Low",
+        "maker": "Dad",
+        "duration": 20,
+        "phone": false,
+        "bowls": 3
+    },
+    {
+        "no": 9,
+        "day": 3,
+        "time": "2020-02-26T16:00:00.000Z",
+        "type": "Dinner",
+        "color": "White / Green / Yellow / Pink",
+        "ingredients": [{"color": "White", "food": "Rice, Basa Fish", "type": "Dinner", "day": 3, "no": 1},
+          {"color": "Green", "food": "Cucumber, Semen Canavaliae, ", "type": "Dinner", "day": 3, "no": 2},
+          {"color": "Pink", "food": "Shrimp, Pork Bone", "type": "Dinner", "day": 3, "no": 3},
+          {"color": "Yellow", "food": "Soybean", "type": "Dinner", "day": 3, "no": 4}
+        ],
+        "category": "Diversed",
+        "size": "Big",
+        "mood": "Low to Neutral",
+        "maker": "Dad",
+        "duration": 20,
+        "phone": false
     }
 ]

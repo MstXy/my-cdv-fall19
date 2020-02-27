@@ -1,9 +1,19 @@
 body{
   width, height: 100%;
   margin: 0;
+
 }
 
 #viz{
   border: 1px black solid;
   background-color: lightblue;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  width: 95%;
+  height: 95%;
+}
+#word{
+  display: none;
 }
