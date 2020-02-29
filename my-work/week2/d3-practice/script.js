@@ -7,6 +7,35 @@ let viz = d3.select("#viz-container")
     .attr("id", "viz")
 ;
 
+// mood edge-rounded square
+viz
+  .append("rect")
+    .attr("x", 700)
+    .attr("y", 150)
+    .attr("width", 50)
+    .attr("height", 50)
+    .attr("rx", 10)
+    .attr("ry", 10)
+;
+viz
+  .append("rect")
+    .attr("x", 700)
+    .attr("y", 325)
+    .attr("width", 50)
+    .attr("height", 50)
+    .attr("rx", 10)
+    .attr("ry", 10)
+;
+viz
+  .append("rect")
+    .attr("x", 700)
+    .attr("y", 500)
+    .attr("width", 50)
+    .attr("height", 50)
+    .attr("rx", 10)
+    .attr("ry", 10)
+;
+
 d3.json("data.json").then(gotData);
 
 function gotData(incomingData) {
@@ -15,6 +44,7 @@ function gotData(incomingData) {
   let enterSelection = viz.selectAll("circleData").data(incomingData).enter();
 
   console.log(enterSelection);
+  // circle
   enterSelection
     .append("circle")
       .attr("cx", chooseX)
@@ -25,6 +55,7 @@ function gotData(incomingData) {
       .attr("fill", chooseColor)
 ;
 
+  // phone square
   enterSelection
     .append("rect")
       .attr("x", chooseXs)
@@ -35,6 +66,10 @@ function gotData(incomingData) {
       .attr("stroke", "#000")
       .attr("stroke-width", 3)
 ;
+
+
+
+
 
   var rectGroups = viz.selectAll(".rectGroups").data(incomingData).enter()
   	.append("g")
@@ -66,11 +101,18 @@ function gotData(incomingData) {
         return d.color;
       })
       .attr("stroke", function(d) {
-        return d.color;
+        if (d.color == "Black") {
+          return "white";
+        } else {
+          return d.color;
+        }
       })
       .attr("stroke-width", 0.5)
       .attr("id", giveID)
-      .attr("style", "display:none");
+      .attr("style", "display:none")
+;
+
+
 
 
 
@@ -89,26 +131,45 @@ function chooseRadius(data) {
 
 function chooseX(data) {
   datapoint = data.type;
-  if (datapoint == "Breakfast") {
-    return 50;
-  } else if (datapoint == "Lunch") {
-    return 275;
-  } else if (datapoint == "Dinner") {
-    return 500;
+  if (data.day <= 3) {
+    if (datapoint == "Breakfast") {
+      return 50;
+    } else if (datapoint == "Lunch") {
+      return 275;
+    } else if (datapoint == "Dinner") {
+      return 500;
+    }
+  } else {
+    if (datapoint == "Breakfast") {
+      return 925;
+    } else if (datapoint == "Lunch") {
+      return 1150;
+    } else if (datapoint == "Dinner") {
+      return 1375;
+    }
   }
 }
 function chooseY(data) {
   datapoint = data.day;
-  return (datapoint-0.8) * 250;
+  if (datapoint <= 3) {
+    return (datapoint-0.8) * 250;
+  } else {
+    return (datapoint-3-0.8) * 250;
+  }
+
 }
 function chooseColor(data) {
   datapoint = data.maker;
   if (datapoint == "Dad") {
-    return "#243fd6"
+    return "#4a67e8"
   } else if (datapoint == "Mom and Dad") {
-    return "#9a02db"
+    return "#bb4ae8"
   } else if (datapoint == "I") {
-    return "#e3d342"
+    return "#e5e84a"
+  } else if (datapoint == "Mom") {
+    return "#ff4545"
+  } else if (datapoint == "Dad and I") {
+    return "#4ae877"
   }
 }
 
@@ -123,14 +184,7 @@ function chooseXs(data) {
   } else if (r == "Big") {
     rr =  40;
   }
-  datapoint = data.type;
-  if (datapoint == "Breakfast") {
-    xx =  50;
-  } else if (datapoint == "Lunch") {
-    xx =  275;
-  } else if (datapoint == "Dinner") {
-    xx =  500;
-  }
+  xx = chooseX(data);
   d = xx - rr;
   return d;
 }
@@ -144,8 +198,9 @@ function chooseYs(data) {
   } else if (r == "Big") {
     rr =  40;
   }
-  datapoint = data.day;
-  yy =  (datapoint-0.8) * 250;
+  // datapoint = data.day;
+  // yy =  (datapoint-0.8) * 250;
+  yy = chooseY(data);
   d = yy - rr;
   return d;
 }
@@ -163,25 +218,45 @@ function chooseRadiusS(data) {
 
 function chooseXr(data) {
   datapoint = data.type;
-  if (datapoint == "Breakfast") {
-    return 20;
-  } else if (datapoint == "Lunch") {
-    return 240;
-  } else if (datapoint == "Dinner") {
-    return 460;
+  if (data.day <= 3) {
+    if (datapoint == "Breakfast") {
+      return 10;
+    } else if (datapoint == "Lunch") {
+      return 230;
+    } else if (datapoint == "Dinner") {
+      return 450;
+    }
+  } else {
+    if (datapoint == "Breakfast") {
+      return 890;
+    } else if (datapoint == "Lunch") {
+      return 1110;
+    } else if (datapoint == "Dinner") {
+      return 1330;
+    }
   }
+
 }
 
 function chooseYr(data) {
   datapoint = data.day;
   offset = data.no;
-  return (datapoint - 0.6) * 250 + offset * 20;
+  if (datapoint <= 3) {
+    return (datapoint - 0.6) * 250 + offset * 20;
+  } else {
+    return (datapoint - 3 - 0.6) * 250 + offset * 20;
+  }
 }
 
 function chooseYt(data) {
   datapoint = data.day;
   offset = data.no;
-  return (datapoint - 0.6) * 250 + offset * 20 + 13;
+  if (datapoint <= 3) {
+    return (datapoint - 0.6) * 250 + offset * 20 + 13;
+  } else {
+    return (datapoint - 3 - 0.6) * 250 + offset * 20 + 13;
+  }
+
 }
 
 function giveID(d) {
