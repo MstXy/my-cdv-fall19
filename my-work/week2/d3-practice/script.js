@@ -11,20 +11,18 @@ let viz = d3.select("#viz-container")
 viz
   .append("rect")
     .attr("x", 700)
-    .attr("y", 150)
+    .attr("y", 375)
     .attr("width", 50)
     .attr("height", 50)
     .attr("rx", 10)
     .attr("ry", 10)
-;
-viz
-  .append("rect")
-    .attr("x", 700)
-    .attr("y", 325)
-    .attr("width", 50)
-    .attr("height", 50)
-    .attr("rx", 10)
-    .attr("ry", 10)
+    .attr("stroke-width", 5)
+    .attr("stroke", "black")
+    .attr("fill", "#f75cbc")
+    .attr("id", "moodBlockH")
+    .on("click", showLine1)
+    .on("mouseover", mouseoverBtn)
+    .on("mouseout", mouseoutBtn)
 ;
 viz
   .append("rect")
@@ -34,6 +32,44 @@ viz
     .attr("height", 50)
     .attr("rx", 10)
     .attr("ry", 10)
+    .attr("stroke-width", 5)
+    .attr("stroke", "black")
+    .attr("fill", "#55e6a9")
+    .attr("id", "moodBlockN")
+    .on("click", showLine2)
+    .on("mouseover", mouseoverBtn)
+    .on("mouseout", mouseoutBtn)
+;
+viz
+  .append("rect")
+    .attr("x", 700)
+    .attr("y", 625)
+    .attr("width", 50)
+    .attr("height", 50)
+    .attr("rx", 10)
+    .attr("ry", 10)
+    .attr("stroke-width", 5)
+    .attr("stroke", "black")
+    .attr("fill", "#302e85")
+    .attr("id", "moodBlockL")
+    .on("click", showLine3)
+    .on("mouseover", mouseoverBtn)
+    .on("mouseout", mouseoutBtn)
+;
+//title
+viz
+  .append("text")
+    .attr("x", 670)
+    .attr("y", 175)
+    .attr("font-size", 50)
+    .text("Title")
+;
+viz
+  .append("text")
+    .attr("x", 670)
+    .attr("y", 225)
+    .attr("font-size", 50)
+    .text("Here")
 ;
 
 d3.json("data.json").then(gotData);
@@ -62,11 +98,25 @@ function gotData(incomingData) {
       .attr("y", chooseYs)
       .attr("width", chooseRadiusS)
       .attr("height", chooseRadiusS)
-      .attr("fill", function(d) { return (d.phone == true) ? "blue" : "lightblue"})
+      .attr("fill", function(d) { return (d.phone == true) ? "blue" : "#c9c9ff"})
       .attr("stroke", "#000")
       .attr("stroke-width", 3)
 ;
 
+  // moodb line
+  enterSelection
+    .append("line")
+      .attr("x1", chooseX)
+      .attr("y1", chooseY)
+      .attr("x2", 725)
+      .attr("y2", chooseYl)
+      .attr("stroke-width", 4)
+      .attr("stroke", "black")
+      .attr("stroke-dasharray", "20, 5")
+      .attr("stroke-linecap", "round")
+      .attr("style", "display: none")
+      .attr("id", giveLineID)
+;
 
 
 
@@ -260,7 +310,6 @@ function chooseYt(data) {
 }
 
 function giveID(d) {
-  console.log((d.type).toString() + (d.day).toString() + (d.no).toString());
   return (d.type).toString() + (d.day).toString() + (d.no).toString();
 }
 
@@ -276,5 +325,95 @@ function hideIngredient(d) {
   d3.select(this).attr("fill", function(d) {
     return d.color;
   })
+}
 
+function chooseYl(data) {
+  datapoint = data.moodb;
+  if (datapoint == "Low") {
+    return 650;
+  } else if (datapoint == "Neutral") {
+    return 525;
+  } else if (datapoint == "High"){
+    return 400;
+  }
+}
+
+lArray = [];
+nArray = [];
+hArray = [];
+function giveLineID(d) {
+  id = d.moodb + (d.no).toString();
+  if (d.moodb == "Low") {
+    lArray.push(id);
+  } else if (d.moodb == "Neutral") {
+    nArray.push(id);
+  } else if (d.moodb == "High") {
+    hArray.push(id);
+  }
+  return id;
+}
+
+btn1Clicked = false;
+function showLine1() {
+  if (!btn1Clicked) {
+    for (var i = 0; i < hArray.length; i++) {
+      id = "#" + hArray[i];
+      d3.select(id).attr("style", "display:block");
+    }
+    btn1Clicked = true;
+  } else {
+    for (var i = 0; i < hArray.length; i++) {
+      id = "#" + hArray[i];
+      d3.select(id).attr("style", "display:none");
+    }
+    btn1Clicked = false;
+  }
+}
+
+btn2Clicked = false;
+function showLine2() {
+  if (!btn2Clicked) {
+    for (var i = 0; i < nArray.length; i++) {
+      id = "#" + nArray[i];
+      d3.select(id).attr("style", "display:block");
+    }
+    btn2Clicked = true;
+  } else {
+    for (var i = 0; i < nArray.length; i++) {
+      id = "#" + nArray[i];
+      d3.select(id).attr("style", "display:none");
+    }
+    btn2Clicked = false;
+  }
+}
+btn3Clicked = false;
+function showLine3() {
+  if (!btn3Clicked) {
+    for (var i = 0; i <lArray.length; i++) {
+      id = "#" + lArray[i];
+      d3.select(id).attr("style", "display:block");
+    }
+    btn3Clicked = true;
+  } else {
+    for (var i = 0; i < lArray.length; i++) {
+      id = "#" + lArray[i];
+      d3.select(id).attr("style", "display:none");
+    }
+    btn3Clicked = false;
+  }
+}
+
+function mouseoverBtn() {
+  d3.select(this).attr("fill", "lightgrey");
+}
+function mouseoutBtn() {
+  console.log("mouseout");
+  self = d3.select(this);
+  if (this.id == "moodBlockH") {
+    self.attr("fill", "#f75cbc");
+  } else if (this.id == "moodBlockN") {
+    self.attr("fill", "#55e6a9");
+  } else if (this.id == "moodBlockL") {
+    self.attr("fill", "#302e85");
+  }
 }

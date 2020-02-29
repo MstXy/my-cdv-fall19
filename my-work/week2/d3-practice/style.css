@@ -6,7 +6,7 @@ body{
 
 #viz{
   border: 1px black solid;
-  background-color: lightblue;
+  background-color: #c1f2f5;
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
