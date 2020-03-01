@@ -4,8 +4,8 @@
         "day": 1,
         "time": "2020-02-24T16:00:00.000Z",
         "type": "Breakfast",
-        "ingredients": [{"color": "Purple", "food": "Red Bean", "type": "Breakfast", "day": 1, "no": 1},
-          {"color": "Red", "food": "Red Bean", "type": "Breakfast", "day": 1, "no": 2}
+        "ingredients": [{"color": "#a1002b", "food": "Red Date", "type": "Breakfast", "day": 1, "no": 1, "amount": 10},
+          {"color": "#672422", "food": "Red Bean", "type": "Breakfast", "day": 1, "no": 2, "amount": 30}
         ],
         "category": "Green",
         "size": "Small",
@@ -21,10 +21,10 @@
         "day": 1,
         "time": "2020-02-24T16:00:00.000Z",
         "type": "Lunch",
-        "ingredients": [{"color": "White", "food": "Rice", "type": "Lunch", "day": 1, "no": 1},
-          {"color": "Orange", "food": "Carrot", "type": "Lunch", "day": 1, "no": 2},
-          {"color": "Pink", "food": "Sausage", "type": "Lunch", "day": 1, "no": 3},
-          {"color": "Brown", "food": "Smoked Fish", "type": "Lunch", "day": 1, "no": 4}
+        "ingredients": [{"color": "#fffaf0", "food": "Rice", "type": "Lunch", "day": 1, "no": 1, "amount": 50},
+          {"color": "Orange", "food": "Carrot", "type": "Lunch", "day": 1, "no": 2, "amount": 15},
+          {"color": "Pink", "food": "Sausage", "type": "Lunch", "day": 1, "no": 3, "amount": 15},
+          {"color": "Brown", "food": "Smoked Fish", "type": "Lunch", "day": 1, "no": 4, "amount": 20}
         ],
         "category": "Food From Yesterday",
         "size": "Medium",
@@ -40,10 +40,10 @@
         "day": 1,
         "time": "2020-02-24T16:00:00.000Z",
         "type": "Dinner",
-        "ingredients": [{"color": "White", "food": "Rice", "type": "Dinner", "day": 1, "no": 1},
-          {"color": "Green", "food": "Green Vegetables, Asparagus", "type": "Dinner", "day": 1, "no": 2},
-          {"color": "Brown", "food": "Tofu, Quail Egg, Egg", "type": "Dinner", "day": 1, "no": 3},
-          {"color": "Yellow", "food": "Potatoe, Chicken Breast", "type": "Dinner", "day": 1, "no": 4}
+        "ingredients": [{"color": "#fffaf0", "food": "Rice", "type": "Dinner", "day": 1, "no": 1, "amount": 50},
+          {"color": "Green", "food": "Green Vegetables, Asparagus", "type": "Dinner", "day": 1, "no": 2, "amount": 35},
+          {"color": "Brown", "food": "Tofu, Quail Egg, Egg", "type": "Dinner", "day": 1, "no": 3, "amount": 25},
+          {"color": "Yellow", "food": "Potatoe, Chicken Breast", "type": "Dinner", "day": 1, "no": 4, "amount": 20}
         ],
         "category": "Diversed",
         "size": "Big",
@@ -61,8 +61,8 @@
         "type": "Breakfast",
         "color": "Brown / Yellow",
         "ingredients": [
-          {"color": "Brown", "food": "Coffee", "type": "Breakfast", "day": 2, "no": 1},
-          {"color": "Yellow", "food": "Cake", "type": "Breakfast", "day": 2, "no": 2}
+          {"color": "#6f4e37", "food": "Coffee", "type": "Breakfast", "day": 2, "no": 1, "amount": 30},
+          {"color": "Yellow", "food": "Cake", "type": "Breakfast", "day": 2, "no": 2, "amount": 20}
         ],
         "category": "Quick",
         "size": "Small",
@@ -78,10 +78,10 @@
         "day": 2,
         "time": "2020-02-25T16:00:00.000Z",
         "type": "Lunch",
-        "ingredients": [{"color": "White", "food": "Rice", "type": "Lunch", "day": 2, "no": 1},
-          {"color": "Green", "food": "Asparagus", "type": "Lunch", "day": 2, "no": 2},
-          {"color": "Brown", "food": "Tofu, Quail Egg, Egg", "type": "Lunch", "day": 2, "no": 3},
-          {"color": "Yellow", "food": "Chiken Breast, Potatoe", "type": "Lunch", "day": 2, "no": 4}
+        "ingredients": [{"color": "#fffaf0", "food": "Rice", "type": "Lunch", "day": 2, "no": 1, "amount": 50},
+          {"color": "Green", "food": "Asparagus", "type": "Lunch", "day": 2, "no": 2, "amount": 20},
+          {"color": "Brown", "food": "Tofu, Quail Egg, Egg", "type": "Lunch", "day": 2, "no": 3, "amount": 20},
+          {"color": "Yellow", "food": "Chiken Breast, Potatoe", "type": "Lunch", "day": 2, "no": 4, "amount": 15}
         ],
         "category": "Food From Yesterday",
         "size": "Big",
@@ -98,11 +98,11 @@
         "time": "2020-02-25T16:00:00.000Z",
         "type": "Dinner",
         "color": "White / Green / Yellow / Brown / Purple",
-        "ingredients": [{"color": "White", "food": "Rice, Tofu", "type": "Dinner", "day": 2, "no": 1},
-          {"color": "Green", "food": "Cauliflower, Leek, Green Pepper", "type": "Dinner", "day": 2, "no": 2},
-          {"color": "Brown", "food": "Duck Blood Curd, Bullfrog", "type": "Dinner", "day": 2, "no": 3},
-          {"color": "Yellow", "food": "Scrambled Egg", "type": "Dinner", "day": 2, "no": 4},
-          {"color": "Purple", "food": "Onion", "type": "Dinner", "day": 2, "no": 5}
+        "ingredients": [{"color": "#fffaf0", "food": "Rice, Tofu", "type": "Dinner", "day": 2, "no": 1, "amount": 60},
+          {"color": "Green", "food": "Cauliflower, Leek, Green Pepper", "type": "Dinner", "day": 2, "no": 2, "amount": 35},
+          {"color": "Brown", "food": "Duck Blood Curd, Bullfrog", "type": "Dinner", "day": 2, "no": 3, "amount": 25},
+          {"color": "Yellow", "food": "Scrambled Egg", "type": "Dinner", "day": 2, "no": 4, "amount": 15},
+          {"color": "Purple", "food": "Onion", "type": "Dinner", "day": 2, "no": 5, "amount": 10}
         ],
         "category": "Diversed",
         "size": "Big",
@@ -119,8 +119,8 @@
         "time": "2020-02-26T16:00:00.000Z",
         "type": "Breakfast",
         "color": "White / Brown",
-        "ingredients": [{"color": "White", "food": "Egg", "type": "Breakfast", "day": 3, "no": 1},
-          {"color": "Brown", "food": "Coffee", "type": "Breakfast", "day": 3, "no": 2}
+        "ingredients": [{"color": "#fffaf0", "food": "Egg", "type": "Breakfast", "day": 3, "no": 1, "amount": 10},
+          {"color": "#6f4e37", "food": "Coffee", "type": "Breakfast", "day": 3, "no": 2, "amount": 30}
         ],
         "category": "Quick",
         "size": "Small",
@@ -137,10 +137,10 @@
         "time": "2020-02-26T16:00:00.000Z",
         "type": "Lunch",
         "color": "White / Brown / Green / Purple",
-        "ingredients": [{"color": "White", "food": "Noodles", "type": "Lunch", "day": 3, "no": 1},
-          {"color": "Green", "food": "Cauliflower, Green Pepper", "type": "Lunch", "day": 3, "no": 2},
-          {"color": "Brown", "food": "Bullfrog", "type": "Lunch", "day": 3, "no": 3},
-          {"color": "Purple", "food": "Onion", "type": "Lunch", "day": 3, "no": 4}
+        "ingredients": [{"color": "#fffaf0", "food": "Noodles", "type": "Lunch", "day": 3, "no": 1, "amount": 45},
+          {"color": "Green", "food": "Cauliflower, Green Pepper", "type": "Lunch", "day": 3, "no": 2, "amount": 20},
+          {"color": "#6f4e37", "food": "Bullfrog", "type": "Lunch", "day": 3, "no": 3, "amount": 15},
+          {"color": "Purple", "food": "Onion", "type": "Lunch", "day": 3, "no": 4, "amount": 5}
         ],
         "category": "Food From Yesterday",
         "size": "Medium",
@@ -157,10 +157,10 @@
         "time": "2020-02-26T16:00:00.000Z",
         "type": "Dinner",
         "color": "White / Green / Yellow / Pink",
-        "ingredients": [{"color": "White", "food": "Rice, Basa Fish", "type": "Dinner", "day": 3, "no": 1},
-          {"color": "Green", "food": "Cucumber, Semen Canavaliae, ", "type": "Dinner", "day": 3, "no": 2},
-          {"color": "Pink", "food": "Shrimp, Pork Bone", "type": "Dinner", "day": 3, "no": 3},
-          {"color": "Yellow", "food": "Soybean", "type": "Dinner", "day": 3, "no": 4}
+        "ingredients": [{"color": "#fffaf0", "food": "Rice, Basa Fish", "type": "Dinner", "day": 3, "no": 1, "amount": 65},
+          {"color": "Green", "food": "Cucumber, Semen Canavaliae, ", "type": "Dinner", "day": 3, "no": 2, "amount": 30},
+          {"color": "Pink", "food": "Shrimp, Pork Bone", "type": "Dinner", "day": 3, "no": 3, "amount": 30},
+          {"color": "Yellow", "food": "Soybean", "type": "Dinner", "day": 3, "no": 4, "amount": 10}
         ],
         "category": "Diversed",
         "size": "Big",
@@ -175,10 +175,10 @@
         "day": 4,
         "time": "2020-02-27T16:00:00.000Z",
         "type": "Breakfast",
-        "color": "Yellow / Brown",
+        "color": "Yellow / #87cc1d",
         "ingredients": [
-          {"color": "Brown", "food": "Coffee", "type": "Breakfast", "day": 4, "no": 1},
-          {"color": "Yellow", "food": "Cake", "type": "Breakfast", "day": 4, "no": 2}
+          {"color": "#87cc1d", "food": "Matcha", "type": "Breakfast", "day": 4, "no": 1, "amount": 30},
+          {"color": "Yellow", "food": "Cake", "type": "Breakfast", "day": 4, "no": 2, "amount": 15}
         ],
         "category": "Quick",
         "size": "Small",
@@ -195,9 +195,9 @@
         "time": "2020-02-27T16:00:00.000Z",
         "type": "Lunch",
         "color": "White / Green / Pink",
-        "ingredients": [{"color": "White", "food": "Rice", "type": "Lunch", "day": 4, "no": 1},
-          {"color": "Green", "food": "Cucumber, Semen Canavaliae, ", "type": "Lunch", "day": 4, "no": 2},
-          {"color": "Pink", "food": "Sausage, Shrimp", "type": "Lunch", "day": 4, "no": 3}
+        "ingredients": [{"color": "#fffaf0", "food": "Rice", "type": "Lunch", "day": 4, "no": 1, "amount": 50},
+          {"color": "Green", "food": "Cucumber, Semen Canavaliae, ", "type": "Lunch", "day": 4, "no": 2, "amount": 20},
+          {"color": "Pink", "food": "Sausage, Shrimp", "type": "Lunch", "day": 4, "no": 3, "amount": 20}
         ],
         "category": "Food From Yesterday",
         "size": "Medium",
@@ -214,11 +214,11 @@
         "time": "2020-02-28T16:00:00.000Z",
         "type": "Dinner",
         "color": "White / Green / Yellow / Black / Grey",
-        "ingredients": [{"color": "White", "food": "Rice, Egg, Mushroom", "type": "Dinner", "day": 4, "no": 1},
-          {"color": "Green", "food": "Green Vegetable, ", "type": "Dinner", "day": 4, "no": 2},
-          {"color": "Yellow", "food": "Chicken", "type": "Dinner", "day": 4, "no": 3},
-          {"color": "Black", "food": "Grass Carp", "type": "Dinner", "day": 4, "no": 4},
-          {"color": "Grey", "food": "Mushroom", "type": "Dinner", "day": 4, "no": 5}
+        "ingredients": [{"color": "#fffaf0", "food": "Rice, Egg, Mushroom", "type": "Dinner", "day": 4, "no": 1, "amount": 60},
+          {"color": "Green", "food": "Green Vegetable, ", "type": "Dinner", "day": 4, "no": 2, "amount": 25},
+          {"color": "Yellow", "food": "Chicken", "type": "Dinner", "day": 4, "no": 3, "amount": 40},
+          {"color": "Black", "food": "Grass Carp", "type": "Dinner", "day": 4, "no": 4, "amount": 30},
+          {"color": "Grey", "food": "Mushroom", "type": "Dinner", "day": 4, "no": 5, "amount": 10}
         ],
         "category": "Diversed",
         "size": "Big",
@@ -235,8 +235,8 @@
         "time": "2020-02-28T16:00:00.000Z",
         "type": "Breakfast",
         "color": "White / Brown",
-        "ingredients": [{"color": "White", "food": "Steamed Bun", "type": "Breakfast", "day": 5, "no": 1},
-          {"color": "Brown", "food": "Coffee", "type": "Breakfast", "day": 5, "no": 2}
+        "ingredients": [{"color": "#fffaf0", "food": "Steamed Bun", "type": "Breakfast", "day": 5, "no": 1, "amount": 10},
+          {"color": "#6f4e37", "food": "Coffee", "type": "Breakfast", "day": 5, "no": 2, "amount": 30}
         ],
         "category": "Quick",
         "size": "Small",
@@ -253,8 +253,8 @@
         "time": "2020-02-28T16:00:00.000Z",
         "type": "Lunch",
         "color": "Yellow / Green",
-        "ingredients": [{"color": "Yellow", "food": "Fast Noodles", "type": "Lunch", "day": 5, "no": 1},
-          {"color": "Green", "food": "Lettures", "type": "Lunch", "day": 5, "no": 2}
+        "ingredients": [{"color": "Yellow", "food": "Fast Noodles", "type": "Lunch", "day": 5, "no": 1, "amount": 40},
+          {"color": "Green", "food": "Lettures", "type": "Lunch", "day": 5, "no": 2, "amount": 10}
         ],
         "category": "Quick and Unhealthy",
         "size": "Medium",
@@ -271,18 +271,75 @@
         "time": "2020-02-28T16:00:00.000Z",
         "type": "Dinner",
         "color": "Brown / Green / White / Red / Yellow / Orange / Grey",
-        "ingredients": [{"color": "Brown", "food": "Giant Steak", "type": "Dinner", "day": 5, "no": 1},
-          {"color": "White", "food": "Cream, Shrimp", "type": "Dinner", "day": 5, "no": 2},
-          {"color": "Red", "food": "Tomatoe", "type": "Dinner", "day": 5, "no": 3},
-          {"color": "Yellow", "food": "Potatoe", "type": "Dinner", "day": 5, "no": 4},
-          {"color": "Orange", "food": "Carrot", "type": "Dinner", "day": 5, "no": 5},
-          {"color": "Green", "food": "Lettures", "type": "Dinner", "day": 5, "no": 6},
-          {"color": "Grey", "food": "Mushroom", "type": "Dinner", "day": 5, "no": 7}
+        "ingredients": [{"color": "#6f4e37", "food": "Giant Steak", "type": "Dinner", "day": 5, "no": 1, "amount": 70},
+          {"color": "#fffaf0", "food": "Cream, Shrimp", "type": "Dinner", "day": 5, "no": 2, "amount": 40},
+          {"color": "Red", "food": "Tomatoe", "type": "Dinner", "day": 5, "no": 3, "amount": 15},
+          {"color": "Yellow", "food": "Potatoe", "type": "Dinner", "day": 5, "no": 4, "amount": 25},
+          {"color": "Orange", "food": "Carrot", "type": "Dinner", "day": 5, "no": 5, "amount": 20},
+          {"color": "Green", "food": "Lettures", "type": "Dinner", "day": 5, "no": 6, "amount": 20},
+          {"color": "Grey", "food": "Mushroom", "type": "Dinner", "day": 5, "no": 7, "amount": 10}
         ],
         "category": "Formal",
         "size": "Big",
         "moodb": "Neutral",
         "mooda": "High",
         "maker": "Mom"
+    },
+    {
+        "no": 16,
+        "day": 6,
+        "time": "2020-02-29T16:00:00.000Z",
+        "type": "Breakfast",
+        "color": "Brown",
+        "ingredients": [{"color": "#6f4e37", "food": "Brown Sugar Bun,Coffee", "type": "Breakfast", "day": 6, "no": 1, "amount": 40}
+        ],
+        "category": "Quick",
+        "size": "Small",
+        "moodb": "Neutral",
+        "mooda": "Neutral",
+        "maker": "I",
+        "duration": 5,
+        "phone": true,
+        "bowls": 2
+    },
+    {
+        "no": 17,
+        "day": 6,
+        "time": "2020-02-29T16:00:00.000Z",
+        "type": "Lunch",
+        "color": "White / Green / Pink",
+        "ingredients": [{"color": "#fffaf0", "food": "Rice Cake", "type": "Lunch", "day": 6, "no": 1, "amount": 45},
+          {"color": "Green", "food": "Green Vegetable", "type": "Lunch", "day": 6, "no": 2, "amount": 15},
+          {"color": "Pink", "food": "Pork", "type": "Lunch", "day": 6, "no": 3, "amount": 15}
+        ],
+        "category": "Delicious",
+        "size": "Medium",
+        "moodb": "Neutral",
+        "mooda": "Neutral",
+        "maker": "Mom",
+        "duration": 20,
+        "phone": false,
+        "bowls": 1
+    },
+    {
+        "no": 18,
+        "day": 6,
+        "time": "2020-02-29T16:00:00.000Z",
+        "type": "Dinner",
+        "color": "White / Yellow / Green / Pink / Darkyellow",
+        "ingredients": [{"color": "#fffaf0", "food": "Rice", "type": "Dinner", "day": 6, "no": 1, "amount": 50},
+          {"color": "Yellow", "food": "Scrambled Egg", "type": "Dinner", "day": 6, "no": 2, "amount": 25},
+          {"color": "Green", "food": "Bean Seedling, Celery", "type": "Dinner", "day": 6, "no": 3, "amount": 35},
+          {"color": "Pink", "food": "Shrimp, Steak Bone", "type": "Dinner", "day": 6, "no": 4, "amount": 25},
+          {"color": "#eb9928", "food": "Dry Bean Curd", "type": "Dinner", "day": 6, "no": 5, "amount": 10}
+        ],
+        "category": "Diversed",
+        "size": "Big",
+        "moodb": "High",
+        "mooda": "High",
+        "maker": "Mom",
+        "duration": 30,
+        "phone": false,
+        "bowls": 5
     }
 ]

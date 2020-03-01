@@ -129,7 +129,7 @@ function gotData(incomingData) {
   	.append("rect")
       .attr("x", chooseXr)
       .attr("y", chooseYr)
-      .attr("width", 90)
+      .attr("width", function(d) { return d.amount * 2 })
       .attr("height", 15)
       .attr("fill", function(d) {
         return d.color;
@@ -270,7 +270,7 @@ function chooseXr(data) {
   datapoint = data.type;
   if (data.day <= 3) {
     if (datapoint == "Breakfast") {
-      return 10;
+      return 20;
     } else if (datapoint == "Lunch") {
       return 230;
     } else if (datapoint == "Dinner") {
@@ -278,7 +278,7 @@ function chooseXr(data) {
     }
   } else {
     if (datapoint == "Breakfast") {
-      return 890;
+      return 900;
     } else if (datapoint == "Lunch") {
       return 1110;
     } else if (datapoint == "Dinner") {
