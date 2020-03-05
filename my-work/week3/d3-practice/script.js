@@ -54,15 +54,13 @@ function gotData(incomingData) {
   // Formal
   groupElements.append("polygon")
       .attr("points", shapeFormal)
-      .attr("fill-rule", "nonzero")
-      .attr("stroke", "#fff")
+      .attr("stroke", "grey")
       .attr("stroke-width", 2)
 
   ;
   groupElements.append("polygon")
       .attr("points", shapeFormal2)
-      .attr("fill-rule", "nonzero")
-      .attr("stroke", "#fff")
+      .attr("stroke", "grey")
       .attr("stroke-width", 2)
   ;
 
