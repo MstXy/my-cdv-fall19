@@ -1,0 +1,19 @@
+body{
+  width, height: 100%;
+  margin: 0;
+  user-select: none;
+}
+
+#viz{
+  border: 5px black solid;
+  background-color: #c1f2f5;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  width: 99%;
+  height: 98%;
+}
+#word{
+  display: none;
+}
