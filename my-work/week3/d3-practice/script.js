@@ -72,11 +72,19 @@ function gotData(incomingData) {
       .attr("points", chooseTriPoint)
       .attr("stroke", "#000")
       .attr("stroke-width", function(d) { return (d.size == "Small") ? 2.5 : 3})
-      .attr("fill", function(d) { return d.color})
+      .attr("fill", function(d) { return d.color })
   ;
 
-
-
+  // ingredients proportion rects
+  ingredientsGroup.selectAll(".rectgroup").data(function(d) { return d.ingredients}).enter()
+    .append("rect")
+      .attr("x", chooseRectX)
+      .attr("y", 50)
+      .attr("width", chooseRectWidth)
+      .attr("height", function(d) { return d.amount })
+      .attr("fill", function(d) { return d.color })
+      .attr("stroke", "black")
+      .attr("stroke-width", function(d) { return (d.size == "Small") ? 2.5 : 2.5})
 
 
 }
@@ -271,7 +279,6 @@ function chooseTriPoint(d) {
     s = 4;
   }
   offset = d.no * 3;
-  offsetSca = 1;
   offset = offset * s;
   xl = - 6  * s + offset;
   yl = -5  * s + offset;
@@ -283,4 +290,28 @@ function chooseTriPoint(d) {
   pointR = xr + "," + yr;
   pointT = xt + "," + yt;
   return  pointL + " " + pointR + " " + pointT;
+}
+
+function chooseRectX(d) {
+  size = d.size;
+  if (size == "Small") {
+    s = 2;
+  } else if (size == "Medium") {
+    s = 3;
+  } else if (size == "Big") {
+    s = 4;
+  }
+  offset = d.no * 3;
+  return - 6  * s + offset * s;
+}
+function chooseRectWidth(d) {
+  size = d.size;
+  if (size == "Small") {
+    s = 2;
+  } else if (size == "Medium") {
+    s = 3;
+  } else if (size == "Big") {
+    s = 4;
+  }
+  return 6  * s;
 }
