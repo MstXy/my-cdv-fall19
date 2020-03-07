@@ -54,13 +54,13 @@ function gotData(incomingData) {
   // Formal
   groupElements.append("polygon")
       .attr("points", shapeFormal)
-      .attr("stroke", "grey")
+      .attr("stroke", "lightgrey")
       .attr("stroke-width", 2)
 
   ;
   groupElements.append("polygon")
       .attr("points", shapeFormal2)
-      .attr("stroke", "grey")
+      .attr("stroke", "lightgrey")
       .attr("stroke-width", 2)
   ;
 
@@ -94,7 +94,7 @@ function translatePosition(d) {
   type = d.type;
   day = d.day;
   if (d.day <= 3) {
-    y = (day - 0.1) * 200;
+    y = (day - 0.3) * 200;
     if (type == "Breakfast") {
       x = 175;
     } else if (type == "Lunch") {
@@ -103,7 +103,7 @@ function translatePosition(d) {
       x = 600;
     }
   } else {
-    y = (day - 3 - 0.1) * 200;
+    y = (day - 3 - 0.3) * 200;
     if (type == "Breakfast") {
       x = 825;
     } else if (type == "Lunch") {
@@ -313,5 +313,5 @@ function chooseRectWidth(d) {
   } else if (size == "Big") {
     s = 4;
   }
-  return 6  * s;
+  return 4  * s;
 }
