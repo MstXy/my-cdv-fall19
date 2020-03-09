@@ -1,10 +1,10 @@
-####1 System that study weather or geology to predict extreme natural disasters.
+#### 1 System that study weather or geology to predict extreme natural disasters.
 This should be among the most reliable prediction system we have in our society, whose prediction is based on the movement patterns of the weather and geology. The data it gathers and the prediction it makes is completely one cause and one effect, so it is not easy to be interfered by other factors, thus making it uncommon to produce false predictions.
 
-####2 Algorithms used by Alibaba for the Double-Eleven
+#### 2 Algorithms used by Alibaba for the Double-Eleven
 It was questioned on the Internet last year about the total amount of sales reported by Alibaba after the Double Eleven, since it follows a very nice curve if compared together with previous yeas’ data. The company was questioned to be faking the sales data. But actually, it is later clarified that Alibaba set its sales goal according to the mathematical curve. It is able to keep track of the data once the Double Eleven starts, and with a certain algorithm, it is able to predict the actual going of the amount of sales. After the prediction, Ali was able to adjust the discount rate to control or boost the transaction to make it keep with the ideal or expected sales, neither below nor exceed too much.
 
-####3 Algorithms developed by financial companies.
+#### 3 Algorithms developed by financial companies.
 Different financial companies would develop their own algorithms with regard to various kinds of factors in the financial market, such as oil prices, price of currencies and precious-metal, different indexes of stock market and also international politics to calculate out a relatively reliable prediction about the future direction of the stock market and then they were able to direct fund accordingly.
 
 
