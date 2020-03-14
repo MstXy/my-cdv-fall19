@@ -4,7 +4,7 @@
         "day": 1,
         "time": "2020-02-24T16:00:00.000Z",
         "type": "Breakfast",
-        "ingredients": [{"color": "#a1002b", "food": "Red Date", "type": "Breakfast", "day": 1, "no": 1, "amount": 10, "size": "Small"},
+        "ingredients": [{"color": "Brown", "food": "Red Date", "type": "Breakfast", "day": 1, "no": 1, "amount": 10, "size": "Small"},
           {"color": "#672422", "food": "Red Bean", "type": "Breakfast", "day": 1, "no": 2, "amount": 30, "size": "Small"}
         ],
         "category": "Green",

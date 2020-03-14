@@ -24,14 +24,18 @@ viz
     .attr("stroke-width", 3)
 ;
 
-
 //GLOBAL ATTRIBUTES
 x1 = 250;
 x2 = 500;
 x3 = 725;
-y1 = 150;
+y1 = 140;
 y2 = 400;
-y3 = 650;
+y3 = 660;
+
+s1 = 20  * 1.2;
+s2 = 30 * 1.2;
+s3 = 40 * 1.2;
+
 // connection line
 // start circle
 circleXArray = [Math.cos(Math.PI / 168 * 125) * 150, Math.cos(Math.PI) * 150, Math.cos(Math.PI / 168 * 125) * 150, Math.cos(Math.PI / 168 * 43) * 150, Math.cos(0) * 150, Math.cos(Math.PI / 168 * 43) * 150];
@@ -47,7 +51,7 @@ for (var i = 0; i < 6; i++) {
   ;
 }
 // mid line
-linetipXArray = [1200 - 250, 1200 - 325, 1200 - 250, 1200 + 250, 1200 + 325, 1200 +  250];
+linetipXArray = [1200 - 250, 1200 - 325, 1200 - 250, 1200 + 250, 1200 + 325, 1200 + 250];
 linetipYArray = [y3, y2, y1, y1, y2, y3];
 for (var i = 0; i < 6; i++) {
   viz.append("line")
@@ -59,13 +63,26 @@ for (var i = 0; i < 6; i++) {
     .attr("stroke", "black")
   ;
 }
-
+// extension line
+linetipX_Array = [1200 - 250 - 50, 1200 - 325, 1200 - 250 - 50, 1200 + 250 + 50, 1200 + 325, 1200 + 250 + 50];
+linetipYArray = [y3, y2, y1, y1, y2, y3];
+for (var i = 0; i < 6; i++) {
+  viz.append("line")
+    .attr("x1", linetipXArray[i])
+    .attr("y1", linetipYArray[i])
+    .attr("x2", linetipX_Array[i])
+    .attr("y2", linetipYArray[i])
+    .attr("stroke-width", 3)
+    .attr("stroke", "black")
+  ;
+}
 
 // get original data
 d3.json("data.json").then(gotData);
 
 //transformData
 function transformData(d) {
+  // modify bowls
   for (var i = 0; i < d.length; i++) {
     num = d[i].bowls;
     bowl_list = [];
@@ -75,6 +92,7 @@ function transformData(d) {
     }
     d[i].bowls = bowl_list;
   }
+  // modify duration
   for (var i = 0; i < d.length; i++) {
     num = d[i].duration / 5;
     duration_list = [];
@@ -83,6 +101,90 @@ function transformData(d) {
       duration_list.push(list);
     }
     d[i].duration = duration_list;
+  }
+  // modify color
+  for (var i = 0; i < d.length / 3; i++) {
+    // "colors":[{"color": "red", "amount": "10"}, {"color": "red", "amount": "10"}];
+    breakfast = d[i * 3].ingredients;
+    lunch = d[i * 3 + 1].ingredients;
+    dinner = d[i * 3 + 2].ingredients;
+    day = d[i * 3].day;
+    checkArray = [];
+    colorArray = [];
+    index = 0;
+    for (var b = 0; b < breakfast.length; b++) {
+      color = breakfast[b].color;
+      amount = breakfast[b].amount;
+      if (checkArray.indexOf(color) == -1) {
+        dict = {};
+        dict["color"] = color;
+        dict["amount"] = amount;
+        dict["day"] = day;
+        index += 1
+        dict["index"] = index;
+        checkArray.push(color);
+        colorArray.push(dict);
+      }
+      for (var n = 0; n < colorArray.length; n++) {
+        if (color == colorArray[n].color) {
+          colorArray[n].amount += amount;
+        }
+      }
+    }
+    for (var l = 0; l < lunch.length; l++) {
+      color = lunch[l].color;
+      amount = lunch[l].amount;
+      if (checkArray.indexOf(color) == -1) {
+        dict = {};
+        dict["color"] = color;
+        dict["amount"] = amount;
+        dict["day"] = day;
+        index += 1
+        dict["index"] = index;
+        checkArray.push(color);
+        colorArray.push(dict);
+      }
+      for (var n = 0; n < colorArray.length; n++) {
+        if (color == colorArray[n].color) {
+          colorArray[n].amount += amount;
+        }
+      }
+    }
+    for (var di = 0; di < dinner.length; di++) {
+      color = dinner[di].color;
+      amount = dinner[di].amount;
+      if (checkArray.indexOf(color) == -1) {
+        dict = {};
+        dict["color"] = color;
+        dict["amount"] = amount;
+        dict["day"] = day;
+        index += 1
+        dict["index"] = index;
+        checkArray.push(color);
+        colorArray.push(dict);
+      }
+      for (var n = 0; n < colorArray.length; n++) {
+        if (color == colorArray[n].color) {
+          colorArray[n].amount += amount;
+        }
+      }
+    }
+    for (var m = 0; m < colorArray.length; m++) {
+      colorArray[m]["total"] = index;
+    }
+    d[i * 3]["colors"] = colorArray;
+    d[i * 3 + 1]["colors"] = colorArray;
+    d[i * 3 + 2]["colors"] = colorArray;
+  }
+
+  // false data starts here: feelsguiltyman
+  // manipulate WHITE color
+  for (var i = 0; i < d.length; i++) {
+    for (var n = 0; n < d[i].colors.length; n++) {
+      if (d[i].colors[n].color == "#fffaf0") {
+        d[i].colors[n].amount *= 0.96;
+      }
+    }
   }
   return d;
 }
@@ -150,12 +252,60 @@ function gotData(incomingData) {
   ;
   // base line
   lineGroup.append("line")
-      .attr("x1", function(d) { return (d.type == "Breakfast") ? 100 : 120 })
+      .attr("x1", chooseLinePoint1)
       .attr("y1", 0)
-      .attr("x2", function(d) { return (d.type == "Breakfast") ? 50 : 70 })
+      .attr("x2", chooseLinePoint2)
       .attr("y2", 0)
       .attr("stroke", "black")
-      .attr("stroke-width", 2)
+      .attr("stroke-width", 3)
+  ;
+  // base circle 1
+  lineGroup.append("circle")
+      .attr("cx", chooseLinePoint1)
+      .attr("cy", 0)
+      .attr("r", 3)
+      .attr("fill", "black")
+      .attr("stroke", "black")
+      .attr("stroke-width", 3)
+  ;
+  // base circle 2
+  lineGroup.append("circle")
+      .attr("cx", chooseLinePoint2)
+      .attr("cy", 0)
+      .attr("r", 3)
+      .attr("fill", "black")
+      .attr("stroke", "black")
+      .attr("stroke-width", 3)
+  ;
+  // sep group
+  let sepLineGroup = lineGroup.selectAll(".durationPoly").data(function(d) {return d.bowls}).enter();
+  // sep line static
+  sepLineGroup.append("line")
+      .attr("x1", chooseSepLinePointX1)
+      .attr("y1", chooseSepLinePointY)
+      .attr("x2", chooseSepLinePointX2)
+      .attr("y2", chooseSepLinePointY)
+      .attr("stroke", "black")
+      .attr("stroke-width", 3)
+  ;
+  // sep line
+  sepLineGroup.append("line")
+      .attr("x1", chooseLinePoint2)
+      .attr("y1", 0)
+      .attr("x2", chooseSepLinePointX2)
+      .attr("y2", chooseSepLinePointY)
+      .attr("stroke", "black")
+      .attr("stroke-width", 3)
+  ;
+  // sep circle
+  sepLineGroup.append("circle")
+      .attr("cx", chooseSepLinePointX1)
+      .attr("cy", chooseSepLinePointY)
+      .attr("r", 3)
+      .attr("fill", "black")
+      .attr("stroke", "black")
+      .attr("stroke-width", 3)
+  ;
 
   // phone square
   groupElements.append("rect")
@@ -168,6 +318,32 @@ function gotData(incomingData) {
       .attr("stroke-width", function(d) { return (d.size == "Small") ? 2.5 : 3})
   ;
 
+  // color
+  let colorGroups = viz.selectAll(".colorGroup").data(transformedData).enter()
+    .append("g")
+      .attr("class", "colorGroup")
+      .attr("transform", translateColorPosition)
+  ;
+  //color block
+  colorGroups.selectAll(".colorBlock").data(function(d) {return d.colors}).enter()
+    .append("polygon")
+      .attr("class", "colorBlock")
+      .attr("points", function(d) { return (d.day <= 3) ? "0,10 0,-10 8,-8 8,8" : "0,10 0,-10 -8,-8 -8,8"})
+      .attr("fill", function(d) {return d.color})
+      .attr("stroke", "black")
+      .attr("stroke-width", 2)
+      .attr("transform", transformColorPoly)
+  ;
+  colorGroups.selectAll(".colorPptBlock").data(function(d) {return d.colors}).enter()
+    .append("rect")
+      .attr("class", "colorPptBlock")
+      .attr("width", function(d) {return d.amount * 0.9})
+      .attr("height", 20)
+      .attr("fill", function(d) {return d.color})
+      .attr("stroke", "black")
+      .attr("stroke-width", 2)
+      .attr("transform", transformColorRect)
+  ;
 
 
   // fun category
@@ -253,11 +429,11 @@ function translatePosition(d) {
 function chooseRadius(d) {
   data = d.size;
   if (data == "Small") {
-    return 20;
+    return s1;
   } else if (data == "Medium") {
-    return 30;
+    return s2;
   } else if (data == "Big") {
-    return 40;
+    return s3;
   }
 }
 
@@ -290,42 +466,42 @@ function chooseStrokeColor(d) {
 function chooseOffsetX(d) {
   data = d.size;
   if (data == "Small") {
-    return - 12 * 1.5;
+    return - 0.6 * s1 * 1.5;
   } else if (data == "Medium") {
-    return - 18 * 1.5;
+    return - 0.6 * s2 * 1.5;
   } else if (data == "Big") {
-    return - 24 * 1.5;
+    return - 0.6 * s3 * 1.5;
   }
 }
 function chooseOffsetY(d) {
   data = d.size;
   if (data == "Small") {
-    return - 12 * 1.9;
+    return - 0.6 * s1 * 1.9;
   } else if (data == "Medium") {
-    return - 18 * 1.9;
+    return - 0.6 * s2 * 1.9;
   } else if (data == "Big") {
-    return - 24 * 1.9;
+    return - 0.6 * s3 * 1.9;
   }
 }
 
 function chooseWidthS(d) {
   data = d.size;
   if (data == "Small") {
-    return 12;
+    return 0.6 * s1;
   } else if (data == "Medium") {
-    return 18;
+    return 0.6 * s2;
   } else if (data == "Big") {
-    return 24;
+    return 0.6 * s3;
   }
 }
 function chooseHeightS(d) {
   data = d.size;
   if (data == "Small") {
-    return 18;
+    return 0.9 * s1;
   } else if (data == "Medium") {
-    return 27;
+    return 0.9 * s2;
   } else if (data == "Big") {
-    return 36;
+    return 0.9 * s3;
   }
 }
 
@@ -333,11 +509,11 @@ function chooseMoodbPoint(d) {
   data = d.moodb;
   size = d.size;
   if (size == "Small") {
-    s = 2;
+    s = 0.1 * s1;
   } else if (size == "Medium") {
-    s = 3;
+    s = 0.1 * s2;
   } else if (size == "Big") {
-    s =  4;
+    s =  0.1 * s3;
   }
   if (data == "High") {
     return -8 * s + "," + -10 * s + " " + -2 * s + "," + -5.5 * s + " " + -6.5 * s + "," + 0.5 * s + " " + -12.5 * s + "," + -4 * s;
@@ -364,11 +540,11 @@ function chooseMoodaPoint(d) {
   data = d.mooda;
   size = d.size;
   if (size == "Small") {
-    s = 2;
+    s = 0.1 * s1;
   } else if (size == "Medium") {
-    s = 3;
+    s = 0.1 * s2;
   } else if (size == "Big") {
-    s =  4;
+    s =  0.1 * s3;
   }
   if (data == "High") {
     return 8 * s + "," + -10 * s + " " + 2 * s + "," + -5.5 * s + " " + 6.5 * s + "," + 0.5 * s + " " + 12.5 * s + "," + -4 * s;
@@ -511,7 +687,158 @@ function chooseBowlsLinePos(d) {
   return "translate(" + x + "," + y + ")";
 }
 
+function chooseLinePoint1(d) {
+  if (d.day <= 3) {
+    if (d.type == "Breakfast") {
+      if (d.day == 2) {
+        return 100;
+      } else {
+        return 130;
+      }
+    } else {
+      return 120;
+    }
+  } else {
+    if (d.type == "Breakfast") {
+      if (d.day == 5) {
+        return -100;
+      } else {
+        return -130;
+      }
+    } else {
+      return -120;
+    }
+  }
+}
 
+function chooseLinePoint2(d) {
+  if (d.day <= 3) {
+    if (d.type == "Breakfast") {
+      return 50;
+    } else {
+      return 70;
+    }
+  } else {
+    if (d.type == "Breakfast") {
+      return -50;
+    } else {
+      return -70;
+    }
+  }
+}
+
+function chooseSepLinePointX1(d) {
+  if (d.day <= 3) {
+    if (d.type == "Breakfast") {
+      return 0;
+    } else {
+      return 10;
+    }
+  } else {
+    if (d.type == "Breakfast") {
+      return 0;
+    } else {
+      return -10;
+    }
+  }
+}
+function chooseSepLinePointX2(d) {
+  if (d.day <= 3) {
+    if (d.type == "Breakfast") {
+      return 30;
+    } else {
+      return 50;
+    }
+  } else {
+    if (d.type == "Breakfast") {
+      return -30;
+    } else {
+      return -50;
+    }
+  }
+}
+function chooseSepLinePointY(d) {
+  if (d.total % 2 == 0) {
+    //even偶
+    i = d.bowl;
+    y = Math.pow(-1,i + 1) * (Math.floor((i+1)/2) * 2 - 1) * (10 - d.total) * 0.1 * 15;
+  } else if (d.total % 2 == 1) {
+    //odd奇
+    i = d.bowl;
+    y = Math.pow(-1,i + 1) * (Math.floor((i)/2) * 2) * (10 - d.total) * 0.1 * 15;
+  }
+  return y;
+}
+
+function translateColorPosition(d) {
+  if (d.day <= 3) {
+    x = 100;
+    if (d.day == 1) {
+      y = y1;
+    } else if (d.day == 2) {
+      y = y2;
+    } else if (d.day == 3) {
+      y = y3;
+    }
+  } else {
+    x = 2300;
+    if (d.day == 4) {
+      y = y1;
+    } else if (d.day == 5) {
+      y = y2;
+    } else if (d.day == 6) {
+      y = y3;
+    }
+  }
+  return "translate(" + x + "," + y + ")"
+
+}
+
+function transformColorPoly(d) {
+  if (d.day <= 3) {
+    x = 50;
+  } else {
+    x = -50;
+  }
+  if (d.total % 2 == 0) {
+    //even偶
+    i = d.index;
+    y = Math.pow(-1,i + 1) * (Math.floor((i+1)/2) * 2 - 1) * 15;
+  } else if (d.total % 2 == 1) {
+    //odd奇
+    i = d.index;
+    y = Math.pow(-1,i + 1) * (Math.floor((i)/2) * 2) * 15;
+  }
+  return "translate(" + x + "," + y + ")"
+}
+
+function transformColorRect(d) {
+  offsetX = 0;
+  offsetY = 0;
+  if (d.day <= 3) {
+    x = 50;
+  } else {
+    x = -50;
+  }
+  if (d.total % 2 == 0) {
+    //even偶
+    i = d.index;
+    y = Math.pow(-1,i + 1) * (Math.floor((i+1)/2) * 2 - 1) * 15;
+  } else if (d.total % 2 == 1) {
+    //odd奇
+    i = d.index;
+    y = Math.pow(-1,i + 1) * (Math.floor((i)/2) * 2) * 15;
+  }
+  // set offset
+  if (d.day > 3) {
+    offsetX = 10;
+    offsetY = -10;
+  } else {
+    offsetY = -10;
+    offsetX = - d.amount * 0.9 - 10;
+  }
+  return "translate(" + (x + offsetX) + "," + (y + offsetY) + ")"
+}
 //
 // function chooseTriPoint(d) {
 //   let xl, yl, xr, yr, xt, yt;
