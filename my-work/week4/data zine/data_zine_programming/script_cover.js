@@ -18,7 +18,7 @@ viz.append("circle")
     .attr("cx", 650)
     .attr("cy", 20)
     .attr("r", 175)
-    .attr("fill", "#ffede8")
+    .attr("fill", "#e5e84a")
     .attr("stroke", "black")
     .attr("stroke-width", 5)
 ;
@@ -41,9 +41,9 @@ viz.append("circle")
     .attr("cx", 300)
     .attr("cy", 400)
     .attr("r", 15)
-    .attr("fill", "lightgrey")
+    .attr("fill", "black")
     .attr("stroke", "black")
-    .attr("stroke-width", 5)
+    .attr("stroke-width", 0)
 ;
 
 // mid small circle
@@ -51,9 +51,9 @@ viz.append("circle")
     .attr("cx", 600)
     .attr("cy", 100)
     .attr("r", 15)
-    .attr("fill", "lightgrey")
+    .attr("fill", "black")
     .attr("stroke", "black")
-    .attr("stroke-width", 5)
+    .attr("stroke-width", 0)
 ;
 
 
@@ -61,7 +61,7 @@ viz.append("circle")
 // top right polygon
 viz.append("polygon")
     .attr("points", "950,50 1150,250 1350,50 1150,-150")
-    .attr("fill", "#e8f2ff")
+    .attr("fill", "#302e85")
     .attr("stroke", "black")
     .attr("stroke-width", 5)
 ;
@@ -71,7 +71,7 @@ viz.append("circle")
     .attr("cx", 780)
     .attr("cy", 700)
     .attr("r", 75)
-    .attr("fill", "#e8ffef")
+    .attr("fill", "#55e6a9")
     .attr("stroke", "black")
     .attr("stroke-width", 5)
 ;
@@ -136,9 +136,9 @@ viz.append("circle")
     .attr("cx", 900)
     .attr("cy", 700)
     .attr("r", 10)
-    .attr("fill", "lightgrey")
+    .attr("fill", "black")
     .attr("stroke", "black")
-    .attr("stroke-width", 5)
+    .attr("stroke-width", 0)
 ;
 
 // fork circle top
@@ -146,9 +146,9 @@ viz.append("circle")
     .attr("cx", 1075)
     .attr("cy", 650)
     .attr("r", 10)
-    .attr("fill", "lightgrey")
+    .attr("fill", "black")
     .attr("stroke", "black")
-    .attr("stroke-width", 5)
+    .attr("stroke-width", 0)
 ;
 
 // fork circle mid
@@ -156,9 +156,9 @@ viz.append("circle")
     .attr("cx", 1075)
     .attr("cy", 700)
     .attr("r", 10)
-    .attr("fill", "lightgrey")
+    .attr("fill", "black")
     .attr("stroke", "black")
-    .attr("stroke-width", 5)
+    .attr("stroke-width", 0)
 ;
 
 // fork circle bottom
@@ -166,9 +166,9 @@ viz.append("circle")
     .attr("cx", 1075)
     .attr("cy", 750)
     .attr("r", 10)
-    .attr("fill", "lightgrey")
+    .attr("fill", "black")
     .attr("stroke", "black")
-    .attr("stroke-width", 5)
+    .attr("stroke-width", 0)
 ;
 
 // right most circle
@@ -176,7 +176,7 @@ viz.append("circle")
     .attr("cx", 1325)
     .attr("cy", 700)
     .attr("r", 200)
-    .attr("fill", "#e8fffa")
+    .attr("fill", "#ff4545")
     .attr("stroke", "black")
     .attr("stroke-width", 5)
 ;

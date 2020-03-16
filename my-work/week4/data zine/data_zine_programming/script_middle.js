@@ -350,16 +350,22 @@ function gotData(incomingData) {
   // Formal
   groupElements.append("polygon")
       .attr("points", shapeFormal)
-      .attr("stroke", "lightgrey")
-      .attr("stroke-width", 2)
-
+      .attr("stroke", "black")
+      .attr("stroke-width", 2.5)
+      .attr("fill", "grey")
   ;
   groupElements.append("polygon")
       .attr("points", shapeFormal2)
-      .attr("stroke", "lightgrey")
-      .attr("stroke-width", 2)
+      .attr("stroke", "black")
+      .attr("stroke-width", 2.5)
+      .attr("fill", "grey")
   ;
-
+  groupElements.append("polygon")
+      .attr("points", shapeFormal3)
+      .attr("stroke", "black")
+      .attr("stroke-width",2.5)
+      .attr("fill", "grey")
+  ;
   // // ingredients triangle
   // let ingredientsGroup = groupElements.append("g");
   // ingredientsGroup.selectAll(".trigroup").data(function(d){return d.ingredients}).enter()
@@ -569,15 +575,19 @@ function chooseMoodaColor(d) {
 
 function shapeFormal(d) {
   if (d.category == "Formal") {
-    return "-5,45 -5,35 -25,30 -30,35 -30,45 -25,50 -5,45 -3,47 3,47 5,45 25,50 30,45 30,35 25,30 5,35 -5,35 -3,33 3,33 5,35 5,45";
+    return "-5,45 -5,35 -25,30 -30,35 -30,45 -25,50";
   }
 }
 function shapeFormal2(d) {
   if (d.category == "Formal") {
-    return "-5,45 -5,35 5,35 5,45";
+    return "-5,35 -5,45 -3,47 3,47 5,45 5,35 3,33 -3,33";
   }
 }
-
+function shapeFormal3(d) {
+  if (d.category == "Formal") {
+    return "5,45 25,50 30,45 30,35 25,30 5,35";
+  }
+}
 
 function durationPoints(d){
   return "-6,-15 2,-14 2,14 -6,15 ";
