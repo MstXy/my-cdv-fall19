@@ -1066,3 +1066,53 @@ viz.append("text")
     .attr("font-size", 30)
     .attr("font-weight", 350)
 ;
+
+// formal
+viz.append("polygon")
+    .attr("points", "-5,45 -5,35 -25,30 -30,35 -30,45 -25,50")
+    .attr("fill", "grey")
+    .attr("stroke", "black")
+    .attr("stroke-width", 1.5)
+    .attr("transform", "translate(1050, 625)")
+;
+viz.append("polygon")
+    .attr("points", "-5,35 -5,45 -3,47 3,47 5,45 5,35 3,33 -3,33")
+    .attr("fill", "grey")
+    .attr("stroke", "black")
+    .attr("stroke-width", 1.5)
+    .attr("transform", "translate(1050, 625)")
+;
+viz.append("polygon")
+    .attr("points", "5,45 25,50 30,45 30,35 25,30 5,35")
+    .attr("fill", "grey")
+    .attr("stroke", "black")
+    .attr("stroke-width", 1.5)
+    .attr("transform", "translate(1050, 625)")
+;
+viz.append("text")
+    .text("That Means A")
+    .attr("fill", "black")
+    .attr("x", 1020)
+    .attr("y", 725)
+    .attr("font-family", "Roboto")
+    .attr("font-size", 25)
+    .attr("font-weight", 400)
+;
+viz.append("text")
+    .text("Formal Dinner!")
+    .attr("fill", "black")
+    .attr("x", 1020)
+    .attr("y", 755)
+    .attr("font-family", "Roboto")
+    .attr("font-size", 25)
+    .attr("font-weight", 400)
+;
+// path
+viz.append("path")
+    .attr("d", "M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z")
+    .attr("stroke", "black")
+    .attr("stroke-width", 2)
+    .attr("fill-rule", "evenodd")
+    .attr("clip-rule", "evenodd")
+    .attr("transform", "translate(1100,700) rotate(-135)")
+;
