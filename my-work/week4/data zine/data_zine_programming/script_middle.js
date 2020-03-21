@@ -287,6 +287,14 @@ function transformData(d) {
     d[i * 3 + 2]["colors"] = colorArray;
   }
 
+  // transform ingredients: add total
+  for (var i = 0; i < d.length; i++) {
+    total = d[i].ingredients.length;
+    for (var n = 0; n < d[i].ingredients.length; n++) {
+      d[i].ingredients[n]["total"] = total;
+    }
+  }
+
   // false data starts here: feelsguiltyman
   // manipulate WHITE color
   for (var i = 0; i < d.length; i++) {
@@ -336,6 +344,21 @@ function gotData(incomingData) {
       .attr("stroke-width", function(d) { return (d.size == "Small") ? 3 : 4})
       .attr("fill", chooseColor)
   ;
+
+  // individual ingredients
+  let ingredientsGroup = groupElements.append("g");
+
+  ingredientsGroup.selectAll(".pointgroup").data(function(d){return d.ingredients}).enter()
+    .append("circle")
+      .attr("class", "pointgroup")
+      .attr("cx", chooseIngX)
+      .attr("cy", chooseIngY)
+      .attr("r", 5)
+      .attr("stroke", "#000")
+      .attr("stroke-width", 2)
+      .attr("fill", function(d) { return d.color })
+  ;
+
 
   // duration
   let polyGroup = viz.selectAll(".polyGroup").data(transformedData).enter()
@@ -903,11 +926,11 @@ function translateColorPosition(d) {
   } else {
     x = 2300;
     if (d.day == 4) {
-      y = y1;
+      y = y3;
     } else if (d.day == 5) {
       y = y2;
     } else if (d.day == 6) {
-      y = y3;
+      y = y1;
     }
   }
   return "translate(" + x + "," + y + ")"
@@ -958,6 +981,38 @@ function transformColorRect(d) {
     offsetX = - d.amount * 0.9 - 10;
   }
   return "translate(" + (x + offsetX) + "," + (y + offsetY) + ")"
+}
+
+
+
+function chooseIngX(d) {
+  // if (d.size == "Small") {
+  //   r = s1;
+  // } else if (d.size == "Medium") {
+  //   r = s2;
+  // } else if (d.size == "Big") {
+  //   r = s3;
+  // }
+  if (d.total % 2 == 0) {
+    //even偶
+    i = d.no;
+    x = Math.pow(-1,i + 1) * (Math.floor((i+1)/2) * 2 - 1) * 8;
+  } else if (d.total % 2 == 1) {
+    //odd奇
+    i = d.no;
+    x = Math.pow(-1,i + 1) * (Math.floor((i)/2) * 2) * 8;
+  }
+  return x;
+}
+function chooseIngY(d) {
+  if (d.size == "Small") {
+    r = s1;
+  } else if (d.size == "Medium") {
+    r = s2;
+  } else if (d.size == "Big") {
+    r = s3;
+  }
+  return r * 1.2 + 10;
 }
 //
 // function chooseTriPoint(d) {
