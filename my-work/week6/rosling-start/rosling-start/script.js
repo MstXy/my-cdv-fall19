@@ -143,10 +143,10 @@ function gotData(incomingData){
     function getGroupLocation(d, i){
       return "translate("+ xScale(d.fert) + ", " + yScale(d.life) + ")"
     }
-    enteringElements.attr("opacity", 0).attr("transform", getGroupLocation).transition().duration(150).attr("opacity", 0.5);
+    enteringElements.attr("opacity", 0).attr("transform", getGroupLocation).transition().duration(400).attr("opacity", 0.5);
 
     // take care of updating elements
-    datagroups.transition().duration(150).attr("transform", getGroupLocation).attr("opacity", function (d) {
+    datagroups.transition().duration(400).ease(d3.easeLinear).attr("transform", getGroupLocation).attr("opacity", function (d) {
       return opacityScale(d.year);
     });
 
@@ -185,7 +185,7 @@ function gotData(incomingData){
     currentYear = dates[currentYearIndex];
     year.text(currentYear)
     drawViz();
-  }, 150);
+  }, 400);
 
 
 
