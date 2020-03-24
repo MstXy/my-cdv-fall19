@@ -5,3 +5,7 @@ Added one feature: the opacity will change from 0.5 to 1 as the year goes up.
 
 One Issue is the smoothness of the transition, right now the movement seems a little stiff.
 I have tried with the d3.ease functions, but it is not working properly, probably due to the version of the d3js library.
+
+[Updated Solution: add .ease(d3.easeLinear) in the transition() chain and it will work.
+more possible ease functions: https://github.com/d3/d3-ease
+]
