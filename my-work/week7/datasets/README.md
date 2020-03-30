@@ -8,7 +8,7 @@ What is unique for this dataset is that the data is all seperated for each movie
 #### 2 Twitter Emoji
 ##### **link**: EmojifyData-EN: English tweets, with emojis: https://www.kaggle.com/rexhaif/emojifydata-en
 ##### Twitter Emoji Scraper: https://github.com/miikargh/twitter-emoji-scraper
-##### One great example and it has a context with helps with the analysis: https://christinequan.github.io/airtweets/ & https://towardsdatascience.com/the-data-files-twitter-emoji-analysis-987093f9c1ee (for the detailed process)
+##### One great example and it has a context which helps with the analysis: https://christinequan.github.io/airtweets/ & https://towardsdatascience.com/the-data-files-twitter-emoji-analysis-987093f9c1ee (for the detailed process)
 It is a raw dataset of 18 millions english tweets, all with emoticons included. I could process the dataset with regard to each emoji's appearance frequency, its word context, how it is used for combination, and create links between them, and could see how many emoji's are least used, and see what the context are when they are used. Also, the skin color for those emojis of faces and gestures could be analyzed.
 And if these data does not suffice, I found the scraping code on github which should be able to help. And i could probably combine it with the general scraping tool to get more information.
 
