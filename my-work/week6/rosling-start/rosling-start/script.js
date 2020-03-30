@@ -140,6 +140,13 @@ function gotData(incomingData){
         .attr("fill", chooseFillColor)
     ;
 
+
+
+    enteringElements.append("text")
+        .text(function(d){return d.Country})
+
+    ;
+
     function getGroupLocation(d, i){
       return "translate("+ xScale(d.fert) + ", " + yScale(d.life) + ")"
     }
