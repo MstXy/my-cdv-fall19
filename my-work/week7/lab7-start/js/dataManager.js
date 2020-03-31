@@ -186,3 +186,7 @@ function shuffleDatapoints(){
 shuffleDatapoints();
 
 //now bind this function to a button in script.js
+
+function reverseData(){
+  data.sort(function(a,b){return b.value-a.value});
+}
