@@ -1,0 +1,33 @@
+body{
+  text-align: center;
+  margin-top:30px;
+}
+
+#changeProjection {
+  z-index: 1;
+  position: absolute;
+  left: 30%;
+  top: 90%;
+  transform: translate(-50%, -50%);
+  font-size: 35px;
+  font-family: Futura;
+}
+
+#zoom {
+  z-index: 1;
+  position: absolute;
+  right: 10%;
+  top: 90%;
+  transform: translate(-50%, -50%);
+  font-size: 35px;
+  font-family: Futura;
+}
+/* #projectionText {
+  z-index: 1;
+  width: auto;
+  position: absolute;
+  left: 100px;
+  top: 50px;
+  font-size: 30px;
+  font-family: Futura;
+} */
