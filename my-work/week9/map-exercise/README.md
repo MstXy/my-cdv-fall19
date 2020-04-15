@@ -12,10 +12,14 @@ The upperleft displays the current projection method.
 
 The right button would "zoom in" the map and focus on mainland China.
 
-Note: as discovered in previous lab exercises, the font doesn't load on other computers, (which is obvious...), I used \@font-face {font-family: "Futura";src: url("Futura/Futura-Book-2.ttf");}, no sure if it works.
+Note: as discovered in previous lab exercises, the font doesn't load on other computers, (which is obvious...), I used
+  **\@font-face {font-family: "Futura";src: url("Futura/Futura-Book-2.ttf");},**
+
+no sure if it works.
 
 Note2: the code for updating the data, i.e switching between data form different files:
-    *function updateMap(newData){
+
+    **function updateMap(newData){
        let paths = mapPathGroup.selectAll(".country").data(newData.features);
        let enteringPaths = paths.enter():
        let exitingPaths = paths.exit();
@@ -34,5 +38,5 @@ Note2: the code for updating the data, i.e switching between data form different
       ;
       //exiting
       exitingPaths.remove()
-    }*
+    }**
 which is quite useful! (Thanks, Leon!)
