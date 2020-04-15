@@ -1,7 +1,19 @@
+@font-face {
+  font-family: "Futura";
+  src: url("Futura/Futura-Book-2.ttf");
+}
+@font-face {
+  font-family: "Netron";
+  src: url("Netron/Netron-2.otf");
+}
+
+
 body{
   text-align: center;
   margin-top:30px;
 }
+
+
 
 #changeProjection {
   z-index: 1;
@@ -16,12 +28,14 @@ body{
 #zoom {
   z-index: 1;
   position: absolute;
-  right: 10%;
+  right: 5%;
   top: 90%;
   transform: translate(-50%, -50%);
   font-size: 35px;
   font-family: Futura;
 }
+
+
 /* #projectionText {
   z-index: 1;
   width: auto;

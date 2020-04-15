@@ -26,29 +26,9 @@ d3.json("countries.geojson").then(function(geoData){
 
         incomingData = processRoutes(incomingData);
 
-        // incomingData.map(function (d, i) {
-        //   d.population = Number(d.population);
-        //   return d
-        // })
-        //
-        // let minPop = d3.min(incomingData, function(d, i) {
-        //   return d.population;
-        // })
-        // let maxPop = d3.max(incomingData, function(d, i) {
-        //   return d.population;
-        // })
-        // console.log(minPop, maxPop);
-        //
-        // let colorScale = d3.scaleLinear().domain([minPop, maxPop]).range(["white", "blue"])
-        // // PRINT DATA
-        // console.log(geoData);
+        shAirportArray = incomingData.filter(getShAp);
 
-        // SCALES (to translate data values to pixel values)
-        // let xDomain = d3.extent(incomingData, function(d){ return Number(d.year); })
-        // let xScale = d3.scaleLinear().domain(xDomain).range([padding,w-padding]);
-        // let yDomain = d3.extent(incomingData, function(d){ return Number(d.birthsPerThousand); })
-        // let yScale = d3.scaleLinear().domain(yDomain).range([h-padding,padding]);
-
+        projectionIndex = 0;
 
         let projection = d3.geoEqualEarth()
             .translate([w/2, h/2])
@@ -56,47 +36,50 @@ d3.json("countries.geojson").then(function(geoData){
             .fitExtent([[padding,padding], [w-padding, h-padding]], geoData)
         ;
 
-        // PATH (line) MAKER - gets points, returns one of those complicated looking path strings
-        // let lineMaker = d3.line()
-        //     .x(function(d){
-        //       return xScale(Number(d.year));
-        //     })
-        //     .y(function(d){
-        //       return yScale(Number(d.birthsPerThousand));
-        //     })
-        // ;
 
+        function updateMap(newData){
+          if (newData == landData) {
+            projection.fitExtent([[padding,padding], [w-padding, h-padding]], newData);
+          }
+          pathMaker = d3.geoPath(projection);
+
+
+
+          let mapPath = mapPathGroup.selectAll(".country").data(newData.features);
+          let enteringPaths = mapPath.enter();
+          let exitingPaths = mapPath.exit();
+          // entering
+          enteringPaths.append("path")
+              .attr("class", "country")
+              .attr("d", pathMaker)
+              .attr("fill", "black")
+              .attr("stroke", "grey")
+              .attr("stroke-width", 1)
+          ;
+          // updating
+          mapPath
+            .attr("d", pathMaker)
+            .attr("fill", function(d) { return (newData == geoData) ? "black" : "red"})
+          ;
+          //exiting
+          exitingPaths.remove();
+        }
 
         let pathMaker = d3.geoPath(projection);
 
         // CREATE SHAPES ON THE PAGE!
         let mapPathGroup = viz.append("g").attr("class", "mapPathGroup");
 
-        let mapPath = mapPathGroup.selectAll(".country").data(geoData.features).enter()
-          .append("path")
-            .attr("class", "country")
-            .attr("d", pathMaker)
-            // .attr("fill", function(d, i) {
-            //   console.log(d.properties.name);
-            //   let correspondingDatapoint = incomingData.find(function(datapoint) {
-            //     if (datapoint.province == d.properties.name){
-            //       return true
-            //     } else {
-            //       return false
-            //     }
-            //   })
-            //   console.log(correspondingDatapoint);
-            //   if (correspondingDatapoint != undefined) {
-            //     console.log(correspondingDatapoint.population);
-            //     return colorScale(correspondingDatapoint.population)
-            //   } else {
-            //     return "black"
-            //   }
-            // })
-            .attr("fill", "black")
-            .attr("stroke", "grey")
-            .attr("stroke-width", 1)
-        ;
+        // let mapPath = mapPathGroup.selectAll(".country").data(geoData.features).enter()
+        //   .append("path")
+        //     .attr("class", "country")
+        //     .attr("d", pathMaker)
+        //     .attr("fill", "black")
+        //     .attr("stroke", "grey")
+        //     .attr("stroke-width", 1)
+        // ;
+        updateMap(geoData);
+
         function getLatOrLon(d,sod,lol) {
           let correspondingDatapoint = locationData.find(function(datapoint) {
             if (sod == "source") {
@@ -151,23 +134,37 @@ d3.json("countries.geojson").then(function(geoData){
 
         }
 
+        function updateCurrentRoute() {
+
+          console.log("update");
+
+          let route = routeGroup.selectAll(".route").data(incomingData);
+          let enteringRoutes = route.enter();
+          let exitingRoutes = route.exit();
+
+          enteringRoutes
+            .append("path")
+              .attr("class", "route")
+              // .datum(getRoute)
+              // .attr("d", d3.geoPath(projection))
+              .attr("d", getRoute)
+              .attr("stroke", "#95ff00")
+              .attr("stroke-width", 1)
+              .attr("opacity", 0.1)
+              // .attr("stroke-width", 1)
+              // .attr("opacity", 1)
+              .attr("fill", "transparent")
+          ;
+
+          // update
+          route.attr("d", getRoute);
+
+          // exit
+          exitingRoutes.remove();
+        }
 
         let routeGroup = viz.append("g").attr("class", "routeGroup");
-        let route = routeGroup.selectAll(".route").data(incomingData).enter()
-          .append("path")
-            .attr("class", "route")
-            // .datum(getRoute)
-            // .attr("d", d3.geoPath(projection))
-            .attr("d", getRoute)
-            .attr("stroke", "#95ff00")
-            .attr("stroke-width", 1)
-            .attr("opacity", 0.1)
-            // .attr("stroke-width", 1)
-            // .attr("opacity", 1)
-            .attr("fill", "transparent")
-        ;
-
-
+        updateCurrentRoute();
 
         let nyulat = 31.22773;
         let nyulon = 121.52946;
@@ -181,6 +178,7 @@ d3.json("countries.geojson").then(function(geoData){
             .attr("stroke", "white")
             .attr("stroke-width", 1)
         ;
+
 
         let title = viz.append("text")
             .text("World Flight Route")
@@ -211,8 +209,10 @@ d3.json("countries.geojson").then(function(geoData){
             .attr("y", 50)
         ;
 
-        projectionIndex = 0
+
         function changeProjection() {
+          viz.selectAll(".errorReport").remove();
+
           if (projectionIndex == newProjectionFunctionArray.length) {
             projectionIndex = 0;
           }
@@ -223,11 +223,10 @@ d3.json("countries.geojson").then(function(geoData){
               // .center([103.8, 34.1])
           ;
           if (n_pName != "geoConicConformal") {
-            projection.fitExtent([[padding,padding], [w-padding, h-padding]], geoData)
+            projection.fitExtent([[padding,padding], [w-padding, h-padding]], geoData);
           }
-          ;
-          let newPathMaker = d3.geoPath(projection);
-          mapPath.attr("d", newPathMaker);
+
+          updateMap(geoData);
 
           // nyu
           let newPixelvalue = projection([nyulon, nyulat]);
@@ -236,7 +235,7 @@ d3.json("countries.geojson").then(function(geoData){
 
           // route
           // route.datum(getRoute)
-          route.attr("d",getRoute);
+          updateCurrentRoute();
 
           // displayer
 
@@ -247,27 +246,26 @@ d3.json("countries.geojson").then(function(geoData){
           projectionIndex += 1;
 
         }
+
         document.getElementById("changeProjection").addEventListener("click", changeProjection);
+
         function zoomInOut() {
           console.log("btnpressed");
-          // d3.json("mainland.geojson").then(function(land1Data) {
-          // let mapPath = mapPathGroup.selectAll(".country").data(land1Data.features).enter()
-          //   .append("path")
-          //     .attr("class", "country")
-          //     .attr("d", pathMaker)
-          //     .attr("fill", "black")
-          //     .attr("stroke", "grey")
-          //     .attr("stroke-width", 1)
-          // ;
-          // // let newPixelvalue = projection([nyulon, nyulat]);
-          // // nyush.attr("cx", newPixelvalue[0]).attr("cy", newPixelvalue[1]);
-          // // console.log("newPath");
-          // //
-          // // // route
-          // // // route.datum(getRoute)
-          // // route.attr("d",getRoute);
-          //
-          // })
+          if (projectionIndex == 3) {
+            viz.append("text")
+                .text("There is no China on this projection...")
+                .attr("x", w/2 - 200)
+                .attr("y", h/2)
+                .attr("font-size", 30)
+                .attr("font-family", "Futura")
+                .attr("class", "errorReport")
+            ;
+
+          }
+          updateMap(landData);
+          updateCurrentRoute();
+          let newPixelvalue = projection([nyulon, nyulat]);
+          nyush.attr("cx", newPixelvalue[0]).attr("cy", newPixelvalue[1]);
         };
 
         document.getElementById("zoom").addEventListener("click", zoomInOut);
@@ -281,9 +279,9 @@ d3.json("countries.geojson").then(function(geoData){
             return false;
           }
         }
-        shAirportArray = incomingData.filter(getShAp);
+
         function updateRoute() {
-          var g = routeGroup.append("g").attr("class", "active")
+          var g = viz.append("g").attr("class", "active")
           for (var n = 0; n < shAirportArray.length; n++) {
             g.append("path")
                 .attr("stroke", "#00ff15")
@@ -297,7 +295,17 @@ d3.json("countries.geojson").then(function(geoData){
                 .attr("d", getRoute(shAirportArray[n]))
                 .style("stroke-dasharray", "1000,1000")
           }
-          routeGroup.transition().delay(1500).selectAll(".active").remove();
+
+          pixelvalue = projection([nyulon, nyulat]);
+          g.append("circle")
+              .attr("cx", pixelvalue[0])
+              .attr("cy", pixelvalue[1])
+              .attr("r", 5)
+              .attr("fill", "#57068C")
+              .attr("stroke", "white")
+              .attr("stroke-width", 1)
+          ;
+          viz.transition().delay(1500).selectAll(".active").remove();
         }
         setInterval(function(){
           updateRoute();
