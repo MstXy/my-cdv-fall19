@@ -1,0 +1,6 @@
+intro
+scatter plot
+frequency
+position
+combination
+sentiment variance
