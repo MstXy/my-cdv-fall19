@@ -1,3 +1,125 @@
+@font-face {
+  font-family: "Futura";
+  src: url("Futura/Futura-Book-2.ttf");
+}
+@font-face {
+  font-family: "ArgonPERSONAL";
+  src: url("Argon/ArgonPERSONAL-Regular-1.otf");
+}
+@font-face {
+  font-family: "Inconsolata";
+  src: url("Inconsolata/Inconsolata.ttf");
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.title {
+  width: auto;
+  font-family: Futura;
+  font-size: 120px;
+  font-weight: bold;
+  position: absolute;
+  margin: 0;
+}
+#title1 {
+  left: 650px;
+  top: 65px;
+}
+#title2 {
+  left: 800px;
+  top: 100px;
+  font-size: 80px;
+}
+#title3 {
+  left: 900px;
+  top: 65px;
+}
+#title4 {
+  left: 650px;
+  top: 250px;
+}
+#title5 {
+  font-size: 80px;
+  left: 710px;
+  top: 285px;
+}
+#title6 {
+  left: 820px;
+  top: 250px;
+  width: 800px;
+}
+#credit {
+  font-size: 30px;
+  font-weight: normal;
+  left: 1075px;
+  top: 450px;
+}
+
+.mainContent {
+  position: absolute;
+  font-family: Inconsolata;
+}
+#intro {
+  left: 650px;
+  top: 550px;
+  width: 800px;
+  font-size: 25px;
+}
+#intro2 {
+  left: 650px;
+  top: 800px;
+  width: 800px;
+  font-size: 25px;
+}
+#intro3 {
+  left: 650px;
+  top: 925px;
+  width: 800px;
+  font-size: 75px;
+  text-align: center;
+}
+#intro4 {
+  left: 650px;
+  top: 1100px;
+  width: 800px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+#intro5 {
+  left: 650px;
+  top: 1225px;
+  width: 800px;
+  font-size: 25px;
+}
+#intro6 {
+  left: 650px;
+  top: 1475px;
+  width: 800px;
+  font-size: 25px;
+}
+#intro7 {
+  left: 650px;
+  top: 1700px;
+  width: 800px;
+  font-size: 25px;
+}
+
+#graph11 {
+  left: 1000px;
+  top: 1900px;
+  width: 800px;
+  font-size: 30px;
+}
+#graph12 {
+  left: 1000px;
+  top: 1950px;
+  width: 800px;
+  font-size: 30px;
+}
+
 .selected {
   opacity: 0.1;
 }
@@ -18,4 +140,8 @@ svg text {
 
 .grid path {
   stroke-width: 0;
+}
+
+#container1 {
+  position: absolute;
 }

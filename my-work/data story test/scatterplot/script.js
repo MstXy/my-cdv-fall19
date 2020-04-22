@@ -1,18 +1,28 @@
+// title, front page
 
 
-let w1 = 1100;
+
+
+
+let w1 = 1000;
 let h1 = 750;
+let h11 = 864 * 3;
+let h1Offset = h11-h1;
 let xPadding1 = 75;
 let yPadding1 = 75;
 let mouseXOffset = 5;
 let mouseYOffset = 5;
 
-let viz = d3.select("#container1")
+var top  = window.pageYOffset;
+
+let viz0 = d3.select("#container1")
   .append("svg")
-    .style("width", w1)
-    .style("height", h1)
-    .style("outline", "solid black")
+      .style("width", w1)
+      .style("height", h11)
+    // .style("outline", "solid black")
 ;
+let viz = viz0.append("g").attr("transform", "translate(0," + 0 + ")");
+      // .attr("transform", "translate(0," + h1Offset + ")");
 
 function calculateSentiment(incomingData1) {
   for (var i = 0; i < incomingData1.length; i++) {
@@ -22,10 +32,6 @@ function calculateSentiment(incomingData1) {
     incomingData1[i].neutrality = (parseFloat(incomingData1[i].Neutral) / parseFloat(incomingData1[i].Occurrences));
   }
 }
-
-
-
-
 
 d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
   d3.csv("emoji_df.csv").then(function(descriptionData) {
@@ -60,7 +66,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
     let xAxis1 = d3.axisBottom(xScale1);
     let xAxisGroup1 = viz.append("g")
         .attr("class", "xaxisgroup1")
-        .attr("transform", "translate(0,"+(h1-yPadding1)+")")
+        .attr("transform", "translate(0,"+(h1+h1Offset-yPadding1)+")")
     ;
     xAxisGroup1.call(xAxis1);
 
@@ -68,7 +74,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
     let xgrid = viz.append("g")
         .attr("id", "xgrid")
         .attr("class", "grid")
-        .attr("transform", "translate(0," + (h1-yPadding1) + ")")
+        .attr("transform", "translate(0," + (h1+h1Offset-yPadding1) + ")")
     ;
     xgrid
         .call(d3.axisBottom(xScale1)
@@ -85,10 +91,12 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
         .text("Sentiment Score")
         .attr("fill", "black")
         .attr("font-size", 25)
+        .attr("font-family", "Futura")
+        .attr("font-weight", "bold")
     ;
 
     let yDomain1 = d3.extent(incomingData1, function(d) { return d.neutrality});
-    let yScale1 = d3.scaleLinear().domain(yDomain1).range([h1-yPadding1, yPadding1]);
+    let yScale1 = d3.scaleLinear().domain(yDomain1).range([h1+h1Offset-yPadding1, +h1Offset+yPadding1]);
     let yAxis1 = d3.axisLeft(yScale1);
     let yAxisGroup1 = viz.append("g")
         .attr("class", "yaxisgroup1")
@@ -98,13 +106,15 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
 
     yAxisGroup1.append("text")
         .attr("y", 0 - xPadding1)
-        .attr("x",0 - (h1 / 2))
+        .attr("x",0 - (h1 / 2) -h1Offset)
         .attr("transform", "rotate(-90)")
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .text("Neutrality")
         .attr("fill", "black")
         .attr("font-size", 25)
+        .attr("font-family", "Futura")
+        .attr("font-weight", "bold")
     ;
 
 
@@ -140,6 +150,14 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
       return yScale1(d.neutrality)+getEmojiFontSize(d)/2;
     }
 
+    function getScatterPlotEmojiX0(d, i) {
+      remain = i % 10;
+      return 55 + remain * 50;
+    }
+    function getScatterPlotEmojiY0(d, i) {
+      remain = Math.floor(i/10)
+      return 55 + remain * 50;
+    }
 
     function giveScatterPlotEmojiID(d, i) {
       return d.Emoji;
@@ -162,13 +180,13 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
         .attr("id", "clip")
         .append("svg:rect")
         .attr("width", w1 )
-        .attr("height", h1 )
+        .attr("height", h1+h1Offset)
         .attr("x", 0)
         .attr("y", 0)
     ;
 
     var brush = d3.brush()
-      .extent([[xPadding1, yPadding1], [w1-xPadding1, h1-yPadding1]])
+      .extent([[xPadding1, yPadding1+h1Offset], [w1-xPadding1, h1+h1Offset-yPadding1]])
       .on("end", updateChart);
 
     var scatter = viz.append('g')
@@ -181,7 +199,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
           .call(brush)
     ;
 
-    scatter
+    let scatterEmoji = scatter
       .selectAll(".datagroup1")
       .data(incomingData1)
       .enter()
@@ -189,16 +207,46 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
         .text(function(d) { return d.Emoji})
         .attr("id", giveScatterPlotEmojiID)
         .attr("class", "datagroup1")
-        .attr("x", getScatterPlotEmojiX)
-        .attr("y", getScatterPlotEmojiY)
-        .attr("font-size", getEmojiFontSize)
+        .attr("x", getScatterPlotEmojiX0)
+        .attr("y", getScatterPlotEmojiY0)
+        .attr("font-size", 18)
+        // .attr("x", getScatterPlotEmojiX)
+        // .attr("y", getScatterPlotEmojiY)
+        // .attr("font-size", getEmojiFontSize)
         .attr("fill", "black")
         .attr("opacity", 1)
         .style("text-anchor", "middle")
-        .on("mouseover", showDetail)
-        .on("mouseout", hideDetail)
+        // .on("mouseover", showDetail)
+        // .on("mouseout", hideDetail)
     ;
 
+    window.onscroll = pageScrolled;
+    scrollToFirst = false;
+    function pageScrolled() {
+        var scrollTop = window.pageYOffset;
+        // console.log(scrollTop);
+        if (scrollTop >= 1400 && scrollToFirst == false) {
+          window.scrollTo(0, 1900);
+          scrollToFirst = true;
+          scatterEmoji.transition().duration(2000)
+              .attr("x", getScatterPlotEmojiX)
+              .attr("y", getScatterPlotEmojiY)
+          ;
+          scatterEmoji.transition().delay(2000).duration(1000)
+              .attr("font-size", getEmojiFontSize)
+          ;
+          scatterEmoji
+              .on("mouseover", showDetail)
+              .on("mouseout", hideDetail)
+          ;
+        } else if (scrollTop <= 1400 && scrollToFirst == true) {
+          scrollToFirst = false;
+          scatterEmoji.transition().duration(2000)
+              .attr("x", getScatterPlotEmojiX0)
+              .attr("y", getScatterPlotEmojiY0)
+              .attr("font-size", 18)
+        }
+    }
 
 
     var idleTimeout;
@@ -277,10 +325,12 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
       } else {
         pos = 1
       }
-      if (y >= h1/2) {
-        y = 0.8 * y;
+      if (y >= h1/2 + h1Offset) {
+        // console.log("down");
+        y = h1Offset + 0.8 * (y-+h1Offset);
       } else {
-        y = 1.3 * y;
+        // console.log("up");
+        y = h1Offset + (y-+h1Offset);
       }
       informationGroup = scatter.append("g");
       informationGroup.append("rect")
