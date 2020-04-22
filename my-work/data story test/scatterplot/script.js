@@ -4,7 +4,7 @@
 
 
 
-let w1 = 1000;
+let w1 = 950;
 let h1 = 750;
 let h11 = 864 * 3;
 let h1Offset = h11-h1;
@@ -131,7 +131,23 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
             .tickFormat("")
         )
     ;
-
+    // scatterPlot text support: Positive, Negative
+    viz.append("text")
+        .text("Negative")
+        .attr("x", 100)
+        .attr("y", h1Offset+100)
+        .attr("font-size", 25)
+        .attr("fill", "grey")
+        .attr("font-family", "Futura")
+    ;
+    viz.append("text")
+        .text("Positive")
+        .attr("x", w1-175)
+        .attr("y", h1Offset+100)
+        .attr("font-size", 25)
+        .attr("fill", "grey")
+        .attr("font-family", "Futura")
+    ;
 
     // let graphGroup1 = viz.append("g").attr("class", "graphGroup1")
     //
@@ -226,7 +242,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
         var scrollTop = window.pageYOffset;
         // console.log(scrollTop);
         if (scrollTop >= 1400 && scrollToFirst == false) {
-          window.scrollTo(0, 1900);
+          window.scrollTo(0, 1870);
           scrollToFirst = true;
           scatterEmoji.transition().duration(2000)
               .attr("x", getScatterPlotEmojiX)
@@ -263,6 +279,8 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
         if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
         xScale1.domain(xDomain1);
         yScale1.domain(yDomain1);
+        inWholeSize = true;
+
       }else{
         // yScale1.domain([ yScale1.invert(extent[1]), yScale1.invert(extent[0]) ])
         xScale1.domain([ xScale1.invert(extent[0][0]), xScale1.invert(extent[1][0]) ])
@@ -439,11 +457,25 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
       d3.selectAll(".tempInfo").remove();
     }
 
-    document.getElementById("testButton").addEventListener("click", zoomInSpecific)
+    // button for Zoomming In.
 
-    function zoomInSpecific() {
-      selection = [[w1/2,h1/2], [w1,h1]]
-      updateChart(selection);
+    document.getElementById("clickToZoomIn1").addEventListener("click", zoomInSpecific1);
+    document.getElementById("clickToZoomIn2").addEventListener("click", zoomInSpecific2);
+    //
+    inWholeSize = true;
+    function zoomInSpecific1() {
+      if (inWholeSize == true) {
+        selection = [[w1/2,h1Offset+h1/2+50], [w1-50,h1Offset+h1-175]]
+        updateChart(selection);
+        inWholeSize = false;
+      }
+    }
+    function zoomInSpecific2() {
+      if (inWholeSize == true) {
+        selection = [[200,h1Offset+h1/2+100], [w1-50,h1Offset+h1-175]]
+        updateChart(selection);
+        inWholeSize = false;
+      }
     }
 
 
