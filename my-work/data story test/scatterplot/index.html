@@ -2,8 +2,9 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Scatter Plot for Sentiment</title>
+    <title>Emojified Social Media</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -34,13 +35,56 @@
       <p class="mainContent" id="graph13">• The higher the emoji, the more neutral.</p>
       <p class="mainContent" id="graph14">• Emojis on the right are more positive.</p>
       <p class="mainContent" id="graph15">• The size shows the relative occurrences.</p>
-      <p class="mainContent" id="graph16">More emojis are clustering on <span id="clickToZoomIn1">the right hand side</span>, which shows there are more positive emojis (of course!), or to say, there are more positive tweets sent out each day.</p>
+      <p class="mainContent" id="graph16">More emojis are clustering on <span class="interactiveBtn" id="clickToZoomIn1">the right hand side</span>, which shows there are more positive emojis (of course!), or to say, there are more positive tweets sent out each day.</p>
       <p class="mainContent" id="graph1instruction1">[Please Double-click on the graph to zoom out.]</p>
-      <p class="mainContent" id="graph17">The emojis with more occurrences are all gathering in <span id="clickToZoomIn2">the lower middle part</span>, it seems the most popular emojis are all used for expressing emotions.</p>
+      <p class="mainContent" id="graph17">The emojis with more occurrences are all gathering in <span class="interactiveBtn" id="clickToZoomIn2">the lower middle part</span>, it seems the most popular emojis are all used for expressing emotions.</p>
       <p class="mainContent" id="graph1instruction2">[Explore yourself by selecting an area on the graph.<br>Hover on the emojis to show detailed data.]</p>
     </div>
     <div>
-      <p class="mainContent" id="transition1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p class="mainContent" id="transition1">Most likely, you have encountered some emojis beyond your expectation - <b>some seemingly neutral emojis are used mostly in negative tweets??</b></p>
+      <p class="mainContent" id="transition2">The above are general cases, what about emojis in <b>individual</b> texts?</p>
+    </div>
+    <div class="spamming">
+      <p class="mainContent" id="spam1">Spamming</p>
+      <p class="mainContent" id="spam2">How many times do you spam emojis in text every day?  Surely a lot.</p>
+      <p class="mainContent" id="spam3">Among the <span class="highlightedNumber">6,000,000</span> texts processed, <span class="interactiveBtn" id="spamPercentage">UNKNOWN</span> texts contains several spamming of one emoji.</p>
+      <p class="mainContent" id="spam4">And how many times is one emoji spammed in one text?</p>
+      <p class="mainContent" id="spam5">Let's <span class="interactiveBtn" id="changeToForce">see</span> ——</p>
+    </div>
+    <div id="container2">
+
+    </div>
+    <div>
+      <p class="mainContent" id="spam01">Here are some randomly chosen emojis. The dots' radius represents the number of times the emoji is spammed in one text.</p>
+      <p class="mainContent" id="spam02"><span class="interactiveBtn" id="changeRandomForce">Show</span> some other commonly spammed emojis.</p>
+      <p class="mainContent" id="spam03"><span class="interactiveBtn" id="changeTopForce">List</span> the <b>top most spammed</b> emojis.</p>
+      <p class="mainContent" id="spam04"><span class="interactiveBtn" id="changeTopMostForce">The Best Spammer</span> in my dataset spams am astounding <span class="highlightedNumber">UNKNOWN</span> number of <span>EMOJIS</span> in one text. </p>
+      <p class="mainContent" id="spam05">With words, it is hard to directly express certain emotions, but with the strong visual cue of emojis, we could make sure our strong emotions be delivered 😜😜😜😜😜😜😜.</p>
+    </div>
+    <div class="position">
+      <p class="mainContent" id="position1">Position</p>
+      <p class="mainContent" id="position2">Where in your text do you often place your emojis? Probably in most of the times, it is more subconscious than intentional. <br><br>Could there be some pattern to find?</p>
+      <p class="mainContent" id="position3">[Left: the beginning of tweets, <br>Right: the end of tweets.]</p>
+      <p class="mainContent" id="position4">On average, an emoji is placed at <span class="highlightedNumber">2/3</span> of the length of a tweet.</p>
+    </div>
+    <div id="container3">
+
+    </div>
+
+    <div>
+      <p class="mainContent" id="transition3">Emoticons such as :-) are used sparsely and typically at the very end of a sentence. <br><br><b>Emojis</b>, on the other hand, appear in <b>groups</b> and not only at the end of the tweets.</p>
+    </div>
+
+    <div class="combination">
+        <p class="mainContent" id="combination1">Combination</p>
+        <p class="mainContent" id="combination2">In one text, what do you expect to combine the usage of different emojis? I randomly selected <span class="highlightedNumber">2000</span> tweets out of the 6,000,000 and filtered the dataset with unique combinations with at least 3 different emojis. <br><br>Hover to figure out! </p>
+        <p class="mainContent" id="combination3">Surely, some stories could be found beneath the emojis —— </p>
+        <p class="mainContent" id="combination4">• Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="mainContent" id="combination5">• Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="mainContent" id="combination6">• Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div id="container">
+
     </div>
 
     <!-- <button type="button" name="testButton" id="testButton">!!TEST!!</button> -->

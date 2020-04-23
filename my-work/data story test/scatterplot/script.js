@@ -2,7 +2,7 @@
 
 
 
-
+scrollToSecond = false;
 
 let w1 = 950;
 let h1 = 750;
@@ -241,7 +241,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
     function pageScrolled() {
         var scrollTop = window.pageYOffset;
         // console.log(scrollTop);
-        if (scrollTop >= 1400 && scrollToFirst == false) {
+        if (scrollTop >= 1400 && scrollTop <= 1800 && scrollToFirst == false) {
           window.scrollTo(0, 1870);
           scrollToFirst = true;
           scatterEmoji.transition().duration(2000)
@@ -261,7 +261,16 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
               .attr("x", getScatterPlotEmojiX0)
               .attr("y", getScatterPlotEmojiY0)
               .attr("font-size", 18)
+        } else if (scrollTop >= 2900 && scrollTop <= 3500 && scrollToSecond == false) {
+          document.getElementById("container2").style.position = "fixed";
+          document.getElementById("container2").style.top = "100px";
+          scrollToSecond = true;
+        } else if ((scrollTop <= 2900 || scrollTop >= 3950) && scrollToSecond == true) {
+          document.getElementById("container2").style.position = "absolute";
+          document.getElementById("container2").style.top = scrollTop + "px";
+          scrollToSecond = false;
         }
+
     }
 
 
@@ -327,6 +336,9 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
 
 
     function showDetail(d) {
+      d3.selectAll(".datagroup1").attr("opacity", 0.2);
+      d3.select(this).attr("opacity", 1);
+
       let correspondingDatapoint = descriptionData.find(function(datapoint) {
         if (datapoint.emoji == d.Emoji) {
           return true;
@@ -455,6 +467,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
     }
     function hideDetail(d) {
       d3.selectAll(".tempInfo").remove();
+      d3.selectAll(".datagroup1").attr("opacity", 1);
     }
 
     // button for Zoomming In.
@@ -558,3 +571,321 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
     // viz.on("mouseout", recoverEmojiScatterState)
   })
 });
+
+// viz 2
+
+// Spamming
+
+let w2 = 800;
+let h2 = 550;
+let h22 = 3500;
+let h2Offset = h22-h2;
+let xPadding2 = 75;
+let yPadding2 = 75;
+
+let viz2 = d3.select("#container2")
+  .append("svg")
+      .style("width", w2)
+      .style("height", h2)
+      .style("outline", "solid black")
+;
+
+document.getElementById("spamPercentage").addEventListener("click", showPercentage);
+
+function showPercentage() {
+  document.getElementById("container2").style.position = "fixed";
+  document.getElementById("container2").style.top = "100px";
+}
+
+
+// viz 3
+
+// position
+let w3 = 800;
+let h3 = 450;
+let h33 = 5500;
+let h3Offset = h33-h3;
+let xPadding3 = 75;
+let yPadding3 = 75;
+
+let viz3 = d3.select("#container3")
+  .append("svg")
+      .style("width", w3)
+      .style("height", h3)
+      .style("outline", "solid black")
+;
+
+
+
+// viz 4
+
+// combination
+d3.json("comb0.json").then(gotData);
+
+
+let w = 850;
+let h = 800;
+let viz4 = d3.select("#container")
+  .append("svg")
+    .style("width", w)
+    .style("height", h)
+    // .style("outline", "solid black")
+;
+
+circleRadius1 = 360;
+circleRadius2 = 380;
+lineRadius1 = 360;
+lineRadius2 = 380;
+emojiPosList = [];
+
+//create random seed
+var myrng = new Math.seedrandom('hello.');
+// function unique (arr) {
+//   return Array.from(new Set(arr))
+// }
+
+function filterFunction(datapoint) {
+  uniqueEmoji = unique(datapoint.emoji)
+
+  if (uniqueEmoji.length > 2) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function createDict(d) {
+  for (var i = 0; i < d.length; i++) {
+    emojiPosList.push(d[i]['emoji'])
+  }
+}
+
+//
+function shuffle(array, i0 = 0, i1 = array.length) {
+  console.log("shuffle");
+  var m = i1 - (i0 = +i0),
+      t,
+      i;
+
+  while (m) {
+    i = myrng() * m-- | 0;
+    t = array[m + i0];
+    array[m + i0] = array[i + i0];
+    array[i + i0] = t;
+  }
+
+  return array;
+}
+
+function processData(d) {
+  for (var i = 0; i < d.length; i++) {
+    for (var n = 0; n < d[i]["comb"].length; n++) {
+      d[i]["comb"][n] = [d[i]['emoji'], d[i]["comb"][n]]
+    }
+  }
+}
+
+function gotData(incomingData){
+  // incomingData = incomingData.slice(0,200);
+  // let filteredData = incomingData.filter(filterFunction)
+  // console.log(filteredData);
+  arrayLength = incomingData.length;
+  // console.log(arrayLength);
+  processData(incomingData);
+  shuffle(incomingData);
+  createDict(incomingData);
+  console.log(emojiPosList);
+  console.log(incomingData);
+
+  d3.selection.prototype.moveToFront = function() {
+      return this.each(function(){
+        this.parentNode.appendChild(this);
+    });
+  };
+
+
+  let graphGroup = viz4.append("g").attr("class", "graphGroup");
+
+  let pathGroup = graphGroup.append("g").attr("class", "pathGroup");
+  let emojiGroup = graphGroup.append("g").attr("class", "emojiGroup");
+
+  // let datagroups = graphGroup.selectAll(".emoji").data(incomingData, function(d,i) { return d.emoji });
+
+
+  console.log("creating lines");
+
+  // let linegroups = emoji.append("g");
+  let linegroups = pathGroup.selectAll(".linegroup").data(incomingData, function(d,i) { return d.emoji }).enter()
+    .append("g")
+      .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")")
+      .attr("class", "linegroup")
+  ;
+  let lineSelection = linegroups.selectAll(".emojiLine").data(function(d){return d.comb}).enter();
+
+  let emojiLine = lineSelection
+    .append("path")
+      .attr("class", "emojiLine")
+      // .attr("id", giveLineID)
+      .attr("d", getPath)
+      // .attr("x1", getStartX)
+      // .attr("y1", getStartY)
+      // .attr("x2", getDesX)
+      // .attr("y2", getDesY)
+      // .attr("stroke", function(d) { return (d[0] == "🎈") ? "red" : "lightgrey"})
+      .attr("stroke", "lightgrey")
+      .attr("stroke-width", 1)
+      .attr("opacity", 0.1)
+      .attr("fill", "transparent")
+  ;
+
+  console.log("creating emojis");
+  // make it on the top layer
+  let emojigroups = emojiGroup.selectAll(".emoji").data(incomingData, function(d,i) { return d.emoji }).enter()
+    .append("g")
+      .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")")
+  ;
+
+
+  let emojiDot = emojigroups.append("text")
+      .text(function(d, i) { return d.emoji })
+      .attr("transform", "translate(" + -4 + "," + 2 + ")")
+      // .attr("class", "emojiDotClass")
+      .attr("id", giveEmojiID)
+      .on("mouseover", showLine)
+      .on("mouseout", hideLine)
+      .attr("class", "emoji")
+  ;
+  emojiDot
+      .attr("x", getCircleX)
+      .attr("y", getCircleY)
+      .attr("font-size", 10)
+  ;
+  // console.log(d3.selectAll(".emojiDot"));
+  // d3.selectAll(".emojiDot").moveToFront();
+
+  function showLine(d) {
+    showList = [];
+    targetList = [];
+    startPoint = d.emoji;
+    // do things with emoji dots
+    showList.push(startPoint);
+    for (var n = 0; n < d.comb.length; n++) {
+      showList.push(d.comb[n][1])
+      targetList.push([startPoint, d.comb[n][1]]);
+    }
+    console.log(showList);
+    console.log(targetList);
+    d3.selectAll(".emoji").attr("opacity", 0.2);
+    for (var n = 0; n < showList.length; n++) {
+      id = "#c" + showList[n];
+      d3.select(id).attr("font-size", 50).attr("transform", "translate(-20, 10)").attr("opacity", 1);
+    }
+
+    // do things with emoji lines
+    var g = pathGroup.append("g")
+      .attr("class", "active")
+      .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")")
+    ;
+    for (var n = 0; n < targetList.length; n++) {
+      g.append("path")
+          .attr("d", getPathOri(targetList[n]))
+          .attr("stroke", "darkblue")
+          .attr("stroke-width", 3)
+          .attr("opacity", 1)
+          .attr("fill", "transparent")
+          .style("stroke-dasharray", "0,1000")
+          .transition()
+            .duration(1000)
+            .ease(d3.easeCubicIn)
+          .attr("d", getPath(targetList[n]))
+          .style("stroke-dasharray", "1000,1000")
+    }
+
+
+  }
+  function hideLine(d, i) {
+    d3.selectAll(".emoji").attr("font-size", 10).attr("transform", "translate(-4, 2)").attr("opacity", 1);
+    pathGroup.selectAll(".active").remove();
+  }
+}
+
+
+
+function getStartX(d, i) {
+  if (i % 2 == 0) {
+    return Math.cos( emojiPosList.indexOf(d[0]) * (Math.PI * 2) / arrayLength) * lineRadius1;
+  } else {
+    return Math.cos( emojiPosList.indexOf(d[0]) * (Math.PI * 2) / arrayLength) * lineRadius2;
+  }
+}
+function getStartY(d, i) {
+  if (i % 2 == 0) {
+    return Math.sin( emojiPosList.indexOf(d[0]) * (Math.PI * 2) / arrayLength) * lineRadius1;
+  } else {
+    return Math.sin( emojiPosList.indexOf(d[0]) * (Math.PI * 2) / arrayLength) * lineRadius2;
+  }
+}
+
+
+function getDesX(d, i) {
+  if (i % 2 == 0) {
+    return Math.cos( emojiPosList.indexOf(d[1]) * (Math.PI * 2) / arrayLength) * lineRadius1;
+  } else {
+    return Math.cos( emojiPosList.indexOf(d[1]) * (Math.PI * 2) / arrayLength) * lineRadius2;
+  }
+}
+function getDesY(d, i) {
+  if (i % 2 == 0) {
+    return Math.sin( emojiPosList.indexOf(d[1]) * (Math.PI * 2) / arrayLength) * lineRadius1;
+  } else {
+    return Math.sin( emojiPosList.indexOf(d[1]) * (Math.PI * 2) / arrayLength) * lineRadius2;
+  }
+}
+
+function getPath(d) {
+  i1 = emojiPosList.indexOf(d[0]);
+  i2 = emojiPosList.indexOf(d[1]);
+  startX = getStartX(d, i1);
+  startY = getStartY(d, i1);
+  desX = getDesX(d, i2);
+  desY = getDesY(d, i2);
+
+  return "M" + startX + " " + startY + " " + "Q 0 0" + " " + desX + " " + desY;
+}
+
+function getCircleX(d, i) {
+  if (i % 2 == 0) {
+    return Math.cos( i * (Math.PI * 2) / arrayLength) * circleRadius1;
+  } else {
+    return Math.cos( i * (Math.PI * 2) / arrayLength) * circleRadius2;
+  }
+}
+
+function getCircleY(d, i) {
+  if (i % 2 == 0) {
+    return Math.sin( i * (Math.PI * 2) / arrayLength) * circleRadius1;
+  } else {
+    return Math.sin( i * (Math.PI * 2) / arrayLength) * circleRadius2;
+  }
+}
+
+function giveEmojiID(d, i) {
+  return "c" + d.emoji;
+}
+// function giveLineID(d, i) {
+//   return d[0] + d[1];
+// }
+
+
+
+// function getRandom() {
+//   return - w/ 2 + Math.random() * w;
+// }
+
+function getPathOri(d) {
+  i1 = emojiPosList.indexOf(d[0]);
+  i2 = emojiPosList.indexOf(d[1]);
+  startX = getStartX(d, i1);
+  startY = getStartY(d, i1);
+  return "M" + startX + " " + startY;
+}

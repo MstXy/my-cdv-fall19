@@ -48,7 +48,7 @@ html {
 #title6 {
   left: 820px;
   top: 250px;
-  width: 800px;
+  width: 690px;
 }
 #credit {
   font-size: 30px;
@@ -149,7 +149,7 @@ html {
   width: 500px;
   font-size: 23px;
 }
-#clickToZoomIn1 {
+/* #clickToZoomIn1 {
   color: darkblue;
   text-decoration-line: underline;
   text-decoration-style: dashed;
@@ -164,6 +164,15 @@ html {
   cursor: pointer;
 }
 #clickToZoomIn2:hover {
+  color: darkgreen;
+  cursor: pointer;
+} */
+.interactiveBtn {
+  color: darkblue;
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+}
+.interactiveBtn:hover {
   color: darkgreen;
   cursor: pointer;
 }
@@ -181,13 +190,7 @@ html {
   font-size: 20px;
   font-weight: 800;
 }
-#transition1 {
-  top: 2650px;
-  left: 100px;
-  width: 1200px;
-  font-size: 30px;
 
-}
 
 /* .selected {
   opacity: 0.1;
@@ -213,4 +216,182 @@ svg text {
 
 #container1 {
   position: absolute;
+}
+
+
+#transition1 {
+  top: 2650px;
+  left: 150px;
+  width: 1200px;
+  font-size: 30px;
+  text-align: center;
+}
+#transition2 {
+  top: 2775px;
+  left: 150px;
+  width: 1200px;
+  font-size: 30px;
+  text-align: center;
+}
+#spam1 {
+  top: 2900px;
+  left: 100px;
+  width: 500px;
+  font-size: 40px;
+  font-weight: bold;
+}
+#spam2 {
+  top: 3000px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#spam3 {
+  top: 3100px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#spam4 {
+  top: 3230px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#spam5 {
+  top: 3330px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+.highlightedNumber {
+  color:darkred;
+}
+/* #spamPercentage {
+  color: darkblue;
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+}
+#spamPercentage:hover {
+  color: darkgreen;
+  cursor: pointer;
+} */
+
+#spam01{
+  top: 3530px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#spam02 {
+  top: 3800px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#spam03 {
+  top: 3980px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#spam04 {
+  top: 4120px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#spam05 {
+  top: 4350px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#container2 {
+  position: absolute;
+  left: 650px;
+  top: 2950px;
+}
+#position1 {
+  top: 4750px;
+  left: 100px;
+  width: 500px;
+  font-size: 40px;
+  font-weight: bold;
+}
+#position2 {
+  top: 4850px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#position3 {
+  top: 5115px;
+  left: 100px;
+  width: 500px;
+  font-size: 25px;
+  font-weight: bold;
+}
+#position4 {
+  top: 5225px;
+  left: 100px;
+  width: 500px;
+  font-size: 30px;
+}
+#container3 {
+  position: absolute;
+  left: 650px;
+  top: 4850px;
+}
+
+#transition3 {
+  top: 5450px;
+  left: 250px;
+  width: 1000px;
+  font-size: 30px;
+  text-align: center;
+}
+
+#combination1 {
+  top: 5700px;
+  left: 900px;
+  width: 500px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+#combination2 {
+  top: 5800px;
+  left: 900px;
+  width: 500px;
+  font-size: 30px;
+}
+#combination3 {
+  top: 6115px;
+  left: 900px;
+  width: 500px;
+  font-size: 30px;
+}
+#combination4 {
+  top: 6215px;
+  left: 900px;
+  width: 500px;
+  font-size: 30px;
+}
+#combination5 {
+  top: 6315px;
+  left: 900px;
+  width: 500px;
+  font-size: 30px;
+}
+#combination6 {
+  top: 6415px;
+  left: 900px;
+  width: 500px;
+  font-size: 30px;
+}
+#container {
+  position: absolute;
+  left: 25px;
+  top: 5750px;
 }
