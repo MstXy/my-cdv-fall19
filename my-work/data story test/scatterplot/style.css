@@ -355,7 +355,7 @@ svg text {
 #combination1 {
   top: 5700px;
   left: 900px;
-  width: 500px;
+  width: 600px;
   font-size: 40px;
   font-weight: bold;
 }
@@ -363,35 +363,67 @@ svg text {
 #combination2 {
   top: 5800px;
   left: 900px;
-  width: 500px;
+  width: 600px;
   font-size: 30px;
 }
 #combination3 {
   top: 6115px;
   left: 900px;
-  width: 500px;
+  width: 600px;
   font-size: 30px;
 }
 #combination4 {
   top: 6215px;
   left: 900px;
-  width: 500px;
-  font-size: 30px;
+  width: 600px;
+  font-size: 25px;
 }
 #combination5 {
   top: 6315px;
   left: 900px;
-  width: 500px;
+  width: 600px;
   font-size: 30px;
 }
 #combination6 {
   top: 6415px;
   left: 900px;
-  width: 500px;
+  width: 600px;
   font-size: 30px;
 }
 #container {
   position: absolute;
   left: 25px;
   top: 5750px;
+}
+
+
+#textSenti1 {
+  top: 6650px;
+  left: 100px;
+  width: 1000px;
+  font-size: 40px;
+  font-weight: bold;
+}
+#textSenti2 {
+  top: 6750px;
+  left: 100px;
+  width: 600px;
+  font-size: 30px;
+}
+#textSenti3 {
+  top: 6975px;
+  left: 100px;
+  width: 600px;
+  font-size: 30px;
+}
+#textSenti4 {
+  top: 6825px;
+  left: 850px;
+  width: 600px;
+  font-size: 35px;
+}
+#container5 {
+  position: absolute;
+  left: 100px;
+  top: 7200px;
 }

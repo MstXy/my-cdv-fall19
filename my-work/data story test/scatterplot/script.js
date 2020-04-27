@@ -263,7 +263,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
               .attr("font-size", 18)
         } else if (scrollTop >= 2900 && scrollTop <= 3500 && scrollToSecond == false) {
           document.getElementById("container2").style.position = "fixed";
-          document.getElementById("container2").style.top = "100px";
+          document.getElementById("container2").style.top = "110px";
           scrollToSecond = true;
         } else if ((scrollTop <= 2900 || scrollTop >= 3950) && scrollToSecond == true) {
           document.getElementById("container2").style.position = "absolute";
@@ -593,8 +593,8 @@ let viz2 = d3.select("#container2")
 document.getElementById("spamPercentage").addEventListener("click", showPercentage);
 
 function showPercentage() {
-  document.getElementById("container2").style.position = "fixed";
-  document.getElementById("container2").style.top = "100px";
+  // document.getElementById("container2").style.position = "fixed";
+  // document.getElementById("container2").style.top = "110px";
 }
 
 
@@ -889,3 +889,22 @@ function getPathOri(d) {
   startY = getStartY(d, i1);
   return "M" + startX + " " + startY;
 }
+
+
+// viz 5
+
+// text Sentiment vs.emoji sentiment
+
+let w5 = 1300;
+let h5 = 600;
+let h55 = 7000;
+let h5Offset = h55-h5;
+let xPadding5 = 75;
+let yPadding5 = 75;
+
+let viz5 = d3.select("#container5")
+  .append("svg")
+      .style("width", w5)
+      .style("height", h5)
+      .style("outline", "solid black")
+;
