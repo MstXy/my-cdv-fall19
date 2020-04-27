@@ -261,15 +261,16 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
               .attr("x", getScatterPlotEmojiX0)
               .attr("y", getScatterPlotEmojiY0)
               .attr("font-size", 18)
-        } else if (scrollTop >= 2900 && scrollTop <= 3500 && scrollToSecond == false) {
-          document.getElementById("container2").style.position = "fixed";
-          document.getElementById("container2").style.top = "110px";
-          scrollToSecond = true;
-        } else if ((scrollTop <= 2900 || scrollTop >= 3950) && scrollToSecond == true) {
-          document.getElementById("container2").style.position = "absolute";
-          document.getElementById("container2").style.top = scrollTop + "px";
-          scrollToSecond = false;
         }
+        // else if (scrollTop >= 2900 && scrollTop <= 3500 && scrollToSecond == false) {
+        //   document.getElementById("container2").style.position = "fixed";
+        //   document.getElementById("container2").style.top = "110px";
+        //   scrollToSecond = true;
+        // } else if ((scrollTop <= 2900 || scrollTop >= 3950) && scrollToSecond == true) {
+        //   document.getElementById("container2").style.position = "absolute";
+        //   document.getElementById("container2").style.top = scrollTop + "px";
+        //   scrollToSecond = false;
+        // }
 
     }
 

@@ -307,10 +307,15 @@ svg text {
   width: 500px;
   font-size: 30px;
 }
-#container2 {
+#containerfor2 {
   position: absolute;
   left: 650px;
   top: 2950px;
+  height: 1650px;
+}
+#container2 {
+  position: sticky;
+  top: 50px;
 }
 #position1 {
   top: 4750px;
