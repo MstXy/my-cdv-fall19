@@ -908,3 +908,16 @@ let viz5 = d3.select("#container5")
       .style("height", h5)
       .style("outline", "solid black")
 ;
+
+
+// Ending
+
+document.getElementById("Ending0").addEventListener("click", clickEnd)
+
+function clickEnd() {
+  document.getElementById("Ending0").style.opacity = 0;
+  document.getElementById("Ending1").style.opacity = 1;
+  document.getElementById("Ending1").style.zIndex = 1;
+  document.getElementById("Ending2").style.opacity = 1;
+  window.scrollTo(0, 10000);
+}

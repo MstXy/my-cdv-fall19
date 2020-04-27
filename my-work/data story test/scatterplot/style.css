@@ -427,3 +427,74 @@ svg text {
   left: 100px;
   top: 7200px;
 }
+#textSenti5 {
+  top: 7850px;
+  left: 100px;
+  width: 600px;
+  font-size: 30px;
+}
+
+#generalConclusion0 {
+  top: 8300px;
+  left: 150px;
+  width: 1200px;
+  font-size: 35px;
+  text-align: center;
+}
+#generalConclusion1 {
+  top: 8600px;
+  left: 150px;
+  width: 1200px;
+  font-size: 35px;
+  text-align: center;
+}
+#generalConclusion2 {
+  top: 8850px;
+  left: 150px;
+  width: 1200px;
+  font-size: 35px;
+  text-align: center;
+}
+
+#Ending0 {
+  position: absolute;
+  top: 9500px;
+  left: 700px;
+  width: 100px;
+  font-size: 80px;
+  transition: 2s;
+  text-align: center;
+}
+#Ending1 {
+  position: absolute;
+  top: 9500px;
+  left: 700px;
+  width: 100px;
+  font-size: 80px;
+  opacity: 0;
+  z-index: -1;
+  transition: 2s;
+  text-align: center;
+}
+#Ending0:hover {
+  cursor:pointer;
+}
+#Ending2 {
+  position: absolute;
+  font-family: Futura;
+  top: 9800px;
+  left: 500px;
+  width: 500px;
+  font-size: 100px;
+  opacity: 0;
+  transition: 5s;
+  text-align: center;
+  font-weight: bold;
+}
+
+#forHeight {
+  position: absolute;
+  width: 1200px;
+  top: 9800px;
+  height: 500px;
+}
