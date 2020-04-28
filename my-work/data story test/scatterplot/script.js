@@ -602,22 +602,132 @@ function showPercentage() {
 // viz 3
 
 // position
-let w3 = 800;
+let w3 = 850;
 let h3 = 450;
 let h33 = 5500;
 let h3Offset = h33-h3;
-let xPadding3 = 75;
-let yPadding3 = 75;
+let xPadding3 = 10;
+let xPadding30 = 30;
+let yPadding3 = 40;
 
 let viz3 = d3.select("#container3")
   .append("svg")
       .style("width", w3)
       .style("height", h3)
-      .style("outline", "solid black")
+      // .style("outline", "solid black")
 ;
 
+// legend
+viz3.append("circle")
+  .attr("fill", "#81d8d0")
+  .attr("stroke-width", 0)
+  .attr("cx", 40)
+  .attr("cy", 25)
+  .attr("r", 5)
+;
+viz3.append("text")
+  .text(": Positive")
+  .attr("font-family", "Futura")
+  .attr("font-size", 25)
+  .attr("x", 50)
+  .attr("y", 30)
+;
+viz3.append("circle")
+  .attr("fill", "#ff4242")
+  .attr("stroke-width", 0)
+  .attr("cx", 40)
+  .attr("cy", 50)
+  .attr("r", 5)
+;
+viz3.append("text")
+  .text(": Negative")
+  .attr("font-family", "Futura")
+  .attr("font-size", 25)
+  .attr("x", 50)
+  .attr("y", 55)
+;
+
+d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData3) {
+  d3.csv("emoji_df.csv").then(function(descriptionData) {
+
+    function filterFunction3(d) {
+      let correspondingDatapoint = descriptionData.find(function(datapoint) {
+        if (datapoint.emoji == d.Emoji) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      if (correspondingDatapoint != undefined) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    let xAxisGroup3 = viz3.append("g").attr("class", "xaxisgroup3").attr("transform", "translate(0,"+ (h3 - yPadding3) +")");
+    let xScale3 = d3.scaleLinear().domain([0,1]).range([xPadding3, w3-xPadding3*3]);
+    let xScale30 = d3.scaleLinear().domain([0,1]).range([xPadding30, w3-xPadding30*3]);
+    let xAxis3 = d3.axisBottom(xScale3);
+    xAxisGroup3.call(xAxis3);
+
+    let textElement = viz3.append("text")
+        // .text("hi")
+        .attr("x", w3/2)
+        .attr("y", yPadding3-10)
+        .style("text-anchor", "middle")
+        .attr("class", "description")
+        .attr("font-family", "Futura")
+        .attr("font-size", 30)
+    ;
+
+    let simulation = d3.forceSimulation(incomingData3)
+          .force('x', d3.forceX().x(d => xScale30(d.Position)).strength(1))
+          .force('y', d3.forceY().y(d => h3/2).strength(1))
+          .force('collision', d3.forceCollide(6))//.radius(d => d.radius + 1))
+    ;
+    simulation.stop();
+
+    for (let i = 0; i < incomingData3.length; ++i){
+        simulation.tick();
+    }
+
+    let u = viz3.selectAll('.positionSwarm').data(incomingData3);
+    u.enter()
+      .append('circle')
+        .attr("class", "positionSwarm")
+        // .attr('r', d => d.radius + 1))
+        .attr('r', 5)
+        .style('fill', function(d) {
+          if (parseFloat(d.Positive) > parseFloat(d.Negative)) {
+            return "#81d8d0";
+          } else {
+            return "#ff4242";
+          }
+        })
+        .merge(u)
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
+        .on("mouseover", function(d) {
+          // console.log(d3.mouse(viz3.node()));
+          textElement.text(d.Emoji + ": " + parseFloat(d.Position).toFixed(2));
+          // d3.selectAll(".positionSwarm").attr("opacity", 0.2);
+          d3.select(this)
+              .attr("opacity", 0.1)
+          ;
+        })
+        .on("mouseout", function(d) {
+          // textElement.text("");
+          // d3.selectAll(".positionSwarm").attr("opacity", 1);
+          d3.select(this)
+            .attr("opacity", 1)
+          ;
+        })
+        ;
 
 
+  })
+});
 // viz 4
 
 // combination

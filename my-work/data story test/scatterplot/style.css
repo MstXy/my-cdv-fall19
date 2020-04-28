@@ -15,6 +15,11 @@ html {
   scroll-behavior: smooth;
 }
 
+.tick text {
+  font-family: Futura;
+  font-size: 15px;
+}
+
 .title {
   width: auto;
   font-family: Futura;
@@ -345,8 +350,8 @@ svg text {
 }
 #container3 {
   position: absolute;
-  left: 650px;
-  top: 4850px;
+  left: 620px;
+  top: 4875px;
 }
 
 #transition3 {
@@ -437,6 +442,20 @@ svg text {
   left: 100px;
   width: 600px;
   font-size: 30px;
+}
+#textSenti6 {
+  top: 7850px;
+  left: 800px;
+  width: 600px;
+  font-size: 30px;
+}
+
+#endSep {
+  position: absolute;
+  top: 8220px;
+  width: 1300px;
+  left: 100px;
+  border-style: inset;
 }
 
 #generalConclusion0 {
