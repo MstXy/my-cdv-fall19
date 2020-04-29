@@ -54,7 +54,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
     // console.log(incomingData1);
     calculateSentiment(incomingData1);
     incomingData1 = incomingData1.filter(filterFunction1)
-    console.log(incomingData1);
+    // console.log(incomingData1);
 
 
 
@@ -578,7 +578,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
 // Spamming
 
 let w2 = 800;
-let h2 = 550;
+let h2 = 650;
 let h22 = 3500;
 let h2Offset = h22-h2;
 let xPadding2 = 75;
@@ -594,9 +594,128 @@ let viz2 = d3.select("#container2")
 document.getElementById("spamPercentage").addEventListener("click", showPercentage);
 
 function showPercentage() {
-  // document.getElementById("container2").style.position = "fixed";
-  // document.getElementById("container2").style.top = "110px";
+  percentage = 100*(1011166/6000000);
+  document.getElementById("spamPercentage").innerHTML = "% " + percentage.toFixed(2);
+
+  var sampleSize = (percentage/100) * 5516;
+  var tfArray = [];
+  for (var i = 0; i < sampleSize; i++) {
+    tfArray.push(true);
+  }
+  for (var i = 0; i < (5516-sampleSize); i++) {
+    tfArray.push(false);
+  }
+  oriArray = JSON.parse(JSON.stringify(tfArray));
+  randomArray = d3.shuffle(tfArray);
+  console.log(oriArray);
+  spamFillIndex = 0;
+  d3.selectAll(".spamEmoji").transition().delay(function(d, i) {
+    if (randomArray[i] == true) {
+      spamFillIndex += 1;
+      return spamFillIndex*10;
+    } else {
+      return 0;
+    }
+  }).attr("fill", function(d, i) {
+    if (randomArray[i] == true) {
+      return "green";
+    } else {
+      return "grey";
+    }
+  })
+
+  spamFillIndex1 = 0;
+  d3.selectAll(".spamEmoji").transition().delay(function(d, i) {
+    if (oriArray[i] == true) {
+      spamFillIndex1 += 1;
+      return 15000 + spamFillIndex1*10;
+    } else {
+      return 15000;
+    }
+  }).attr("fill", function(d, i) {
+    if (oriArray[i] == true) {
+      return "green";
+    } else {
+      return "grey";
+    }
+  })
 }
+
+function filterFunction2(d) {
+  if (d.frequency.length > 5) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+let spamXIndex = 0;
+let spamYIndex = 0;
+function chooseSpamX(d) {
+  numX = (w2 - 8) / 9.6;
+  remain = spamXIndex % numX;
+  spamXIndex += 1;
+  return 5 + remain*9.6;
+}
+
+function chooseSpamY(d) {
+  numY = (w2 - 8) / 9.6;
+  remain = Math.floor(spamYIndex / numY);
+  spamYIndex += 1;
+  // console.log(spamIndex);
+  return 5 + remain*9.6;
+}
+
+function updateSpam(newData, perc=false) {
+  let spamEmojiGroup = viz2.selectAll(".spamEmojiGroup").data(newData);
+
+  let enteringSpamGroups = spamEmojiGroup.enter();
+  let exitingSpamGroups = spamEmojiGroup.exit();
+
+  let spamDotGroup = enteringSpamGroups.append("g").attr("class", "spamEmojiGroup");
+
+  let spamEmoji = spamDotGroup.selectAll(".spamEmoji").data(d => d.frequency);
+
+  let enteringSpamEmoji = spamEmoji.enter();
+  let exitingSpamEmoji = spamEmoji.exit();
+
+  let spamDot = enteringSpamEmoji
+    .append("circle")
+      .attr("class", "spamEmoji")
+      .attr("cx", chooseSpamX)
+      .attr("cy", chooseSpamY)
+      .attr("r", 4)
+      .attr("fill", "grey")
+      .attr("stroke-width", 0)
+  ;
+
+
+  // some animation for removing
+
+  exitingSpamEmoji.remove();
+  exitingSpamGroups.remove();
+
+
+
+}
+
+
+d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
+
+  for (var i = 0; i < incomingData2.length; i++) {
+    incomingData2[i]
+  }
+  incomingData2 = incomingData2.filter(filterFunction2);
+  console.log(incomingData2);
+
+  initialData = incomingData2.slice(25,29);
+  console.log(initialData);
+
+
+  updateSpam(initialData);
+
+
+});
 
 
 // viz 3
@@ -773,7 +892,7 @@ function createDict(d) {
 
 //
 function shuffle(array, i0 = 0, i1 = array.length) {
-  console.log("shuffle");
+  // console.log("shuffle");
   var m = i1 - (i0 = +i0),
       t,
       i;
@@ -805,8 +924,8 @@ function gotData(incomingData){
   processData(incomingData);
   shuffle(incomingData);
   createDict(incomingData);
-  console.log(emojiPosList);
-  console.log(incomingData);
+  // console.log(emojiPosList);
+  // console.log(incomingData);
 
   d3.selection.prototype.moveToFront = function() {
       return this.each(function(){
@@ -823,7 +942,7 @@ function gotData(incomingData){
   // let datagroups = graphGroup.selectAll(".emoji").data(incomingData, function(d,i) { return d.emoji });
 
 
-  console.log("creating lines");
+  // console.log("creating lines");
 
   // let linegroups = emoji.append("g");
   let linegroups = pathGroup.selectAll(".linegroup").data(incomingData, function(d,i) { return d.emoji }).enter()
@@ -849,7 +968,7 @@ function gotData(incomingData){
       .attr("fill", "transparent")
   ;
 
-  console.log("creating emojis");
+  // console.log("creating emojis");
   // make it on the top layer
   let emojigroups = emojiGroup.selectAll(".emoji").data(incomingData, function(d,i) { return d.emoji }).enter()
     .append("g")
@@ -884,8 +1003,8 @@ function gotData(incomingData){
       showList.push(d.comb[n][1])
       targetList.push([startPoint, d.comb[n][1]]);
     }
-    console.log(showList);
-    console.log(targetList);
+    // console.log(showList);
+    // console.log(targetList);
     d3.selectAll(".emoji").attr("opacity", 0.2);
     for (var n = 0; n < showList.length; n++) {
       id = "#c" + showList[n];
