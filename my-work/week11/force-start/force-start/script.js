@@ -79,7 +79,7 @@ d3.json("data.json").then(function(incomingData){
       .on("tick", simulationRan)
   ;
   function simulationRan() {
-    console.log(incomingData[0].x);
+    console.log(incomingData[0]);
     viz.selectAll(".datapoint")
         .attr("cx", function(d){
           return d.x;
