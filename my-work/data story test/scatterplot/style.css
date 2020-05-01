@@ -283,19 +283,19 @@ svg text {
 } */
 
 #spam01{
-  top: 3530px;
+  top: 3430px;
   left: 100px;
   width: 500px;
   font-size: 30px;
 }
 #spam02 {
-  top: 3800px;
+  top: 3650px;
   left: 100px;
   width: 500px;
   font-size: 30px;
 }
 #spam03 {
-  top: 3980px;
+  top: 3770px;
   left: 100px;
   width: 500px;
   font-size: 30px;
@@ -311,6 +311,13 @@ svg text {
   left: 100px;
   width: 500px;
   font-size: 30px;
+}
+#spam06{
+  top: 3820px;
+  left: 100px;
+  width: 520px;
+  font-size: 30px;
+  opacity: 0;
 }
 #containerfor2 {
   position: absolute;
@@ -377,7 +384,7 @@ svg text {
   font-size: 30px;
 }
 #combination3 {
-  top: 6115px;
+  top: 6100px;
   left: 900px;
   width: 600px;
   font-size: 30px;
@@ -392,20 +399,31 @@ svg text {
   top: 6315px;
   left: 900px;
   width: 600px;
-  font-size: 30px;
+  font-size: 25px;
 }
 #combination6 {
   top: 6415px;
   left: 900px;
   width: 600px;
-  font-size: 30px;
+  font-size: 25px;
 }
 #container {
   position: absolute;
   left: 25px;
   top: 5750px;
 }
-
+.combSt {
+  padding: 2px;
+  border-radius: 10px;
+  border: solid;
+}
+.combSt:hover {
+  cursor: pointer;
+  filter: opacity(60%);
+}
+#st1{
+  opacity: 0;
+}
 
 #textSenti1 {
   top: 6650px;

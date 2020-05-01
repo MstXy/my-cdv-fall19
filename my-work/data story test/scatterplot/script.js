@@ -584,8 +584,8 @@ let w2 = 800;
 let h2 = 650;
 let h22 = 3500;
 let h2Offset = h22-h2;
-let xPadding2 = 75;
-let yPadding2 = 75;
+let xPadding2 = 50;
+let yPadding2 = 42;
 
 let viz2 = d3.select("#container2")
   .append("svg")
@@ -593,9 +593,24 @@ let viz2 = d3.select("#container2")
       .style("height", h2)
       // .style("outline", "solid black")
 ;
+viz2.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", (w2))
+    .attr("height", (h2))
+    .attr("fill", "lightgrey")
+    // .attr("stroke-width", 2)
+    // .attr("stroke", "black")
+;
 
-
-
+viz2.append("rect")
+    .attr("x", xPadding2)
+    .attr("y", yPadding2)
+    .attr("width", (w2-2*xPadding2))
+    .attr("height", (h2-2*yPadding2))
+    .attr("fill", "#3d3d3d")
+    .attr("stroke-width", 0)
+;
 
 
 
@@ -656,9 +671,9 @@ function chooseSpamForceY(d, i) {
 
 d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
 
-  for (var i = 0; i < incomingData2.length; i++) {
-    incomingData2[i]
-  }
+  // for (var i = 0; i < incomingData2.length; i++) {
+  //   incomingData2[i]
+  // }
   incomingData2 = incomingData2.filter(filterFunction2);
   // console.log(incomingData2);
 
@@ -683,12 +698,12 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
     percentage = 100*(1011166/6000000);
     document.getElementById("spamPercentage").innerHTML = "% " + percentage.toFixed(2);
 
-    var sampleSize = (percentage/100) * 5516;
+    var sampleSize = (percentage/100) * 2184;
     var tfArray = [];
     for (var i = 0; i < sampleSize; i++) {
       tfArray.push(true);
     }
-    for (var i = 0; i < (5516-sampleSize); i++) {
+    for (var i = 0; i < (2184-sampleSize); i++) {
       tfArray.push(false);
     }
     oriArray = JSON.parse(JSON.stringify(tfArray));
@@ -705,7 +720,7 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
       }
     }).attr("fill", function(d, i) {
       if (randomArray[i] == true) {
-        return "green";
+        return "#61ffed";
       } else {
         return "grey";
       }
@@ -715,13 +730,13 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
     d3.selectAll(".spamEmoji").transition().delay(function(d, i) {
       if (oriArray[i] == true) {
         spamFillIndex1 += 1;
-        return 12000 + spamFillIndex1*10;
+        return 8000 + spamFillIndex1*10;
       } else {
-        return 12000;
+        return 8000;
       }
     }).attr("fill", function(d, i) {
       if (oriArray[i] == true) {
-        return "green";
+        return "#61ffed";
       } else {
         return "grey";
       }
@@ -730,7 +745,7 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
 
   console.log(maxFreq);
   // let spamRadiusScale = d3.scaleLinear().domain([3, maxFreq]).range([5, 50]);
-  let spamRadiusScale = d3.scaleLinear().domain([3, maxFreq]).range([16, 50]);
+  let spamRadiusScale = d3.scaleLinear().domain([3, maxFreq]).range([16, 100]);
 
 
 
@@ -740,10 +755,10 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
     let spamYIndex = 0;
     function chooseSpamX(d) {
       if (state == 0) {
-        numX = (w2 - 10) / 15;
+        numX = (w2 - 2*xPadding2 - 10) / 15 + 6 ;
         remain = spamXIndex % numX;
         spamXIndex += 1;
-        return 10 + remain*15;
+        return xPadding2 + 10 + remain*13.3;
       }
       // else {
       //   return d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x));
@@ -751,11 +766,11 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
     }
     function chooseSpamY(d) {
       if (state == 0) {
-        numY = (w2 - 10) / 15;
+        numY = (w2 - 2*xPadding2 - 10) / 15 + 6;
         remain = Math.floor(spamYIndex / numY);
         spamYIndex += 1;
         // console.log(spamIndex);
-        return 10 + remain*15;
+        return yPadding2 + 10 + remain*13.3;
       }
       //  else {
       //   return d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y));
@@ -783,7 +798,7 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
         })
         .attr("cx", chooseSpamX)
         .attr("cy", chooseSpamY)
-        .attr("r", 5)
+        .attr("r", 4)
         .attr("fill", "grey")
         .attr("stroke-width", 0)
     ;
@@ -816,12 +831,11 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
           .attr("fill", randomFill(1))
           .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
           // .attr("r", d => spamRadiusScale(d.frequency))
-          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
 
         let last = viz2.selectAll(tempClass).last();
-        console.log(last);
-        last.attr("r", 25);
+        last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
         if (label1 == false) {
           viz2.append("text").attr("class", "spamEmoji").attr("id", "label1").text(newData[0].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
@@ -859,12 +873,12 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
           .attr("fill", randomFill(2))
           .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
           // .attr("r", d => spamRadiusScale(d.frequency))
-          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
 
         let last = viz2.selectAll(tempClass).last();
 
-        last.attr("r", 25);
+        last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
         if (label2 == false) {
           viz2.append("text").attr("class", "spamEmoji").attr("id", "label2").text(newData[1].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
@@ -901,11 +915,11 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
           .attr("fill", randomFill(3))
           .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
           // .attr("r", d => spamRadiusScale(d.frequency))
-          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
 
         let last = viz2.selectAll(tempClass).last();
-        last.attr("r", 25);
+        last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
         if (label3 == false) {
           viz2.append("text").attr("class", "spamEmoji").attr("id", "label3").text(newData[2].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
@@ -942,11 +956,11 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
           .attr("fill", randomFill(4))
           .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
           // .attr("r", d => spamRadiusScale(d.frequency))
-          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
 
         let last = viz2.selectAll(tempClass).last();
-        last.attr("r", 25);
+        last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
         if (label4 == false) {
           viz2.append("text").attr("class", "spamEmoji").attr("id", "label4").text(newData[3].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
@@ -1018,11 +1032,11 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
             .attr("fill", randomFill(1))
             .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
             // .attr("r", d => spamRadiusScale(d.frequency))
-            .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-            .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+            .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+            .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
 
           let last = viz2.selectAll(tempClass).last();
-          last.attr("r", 25);
+          last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
           if (label1 == false) {
             viz2.append("text").attr("class", "spamEmoji").attr("id", "label1").text(newData[0].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
@@ -1062,11 +1076,11 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
             .attr("fill", randomFill(2))
             .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
             // .attr("r", d => spamRadiusScale(d.frequency))
-            .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-            .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+            .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+            .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
 
           let last = viz2.selectAll(tempClass).last();
-          last.attr("r", 25);
+          last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
           if (label2 == false) {
             viz2.append("text").attr("class", "spamEmoji").attr("id", "label2").text(newData[1].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
@@ -1105,11 +1119,11 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
             .attr("fill", randomFill(3))
             .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
             // .attr("r", d => spamRadiusScale(d.frequency))
-            .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-            .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+            .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+            .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
 
           let last = viz2.selectAll(tempClass).last();
-          last.attr("r", 25);
+          last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
           if (label3 == false) {
             viz2.append("text").attr("class", "spamEmoji").attr("id", "label3").text(newData[2].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
@@ -1147,11 +1161,11 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
             .attr("fill", randomFill(4))
             .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
             // .attr("r", d => spamRadiusScale(d.frequency))
-            .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-            .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+            .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+            .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
 
           let last = viz2.selectAll(tempClass).last();
-          last.attr("r", 25);
+          last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
           if (label4 == false) {
             viz2.append("text").attr("class", "spamEmoji").attr("id", "label4").text(newData[3].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
@@ -1162,12 +1176,65 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
           viz2.selectAll("#label4").attr("x", posX).attr("y", parseFloat(posY) + 10);
 
         }
+      } else if (state == 3) {
+
+          simulation1.stop();
+          simulation2.stop();
+          simulation3.stop();
+          simulation4.stop();
+          viz2.selectAll(".spamEmoji").remove();
+          spamEmoji = spamDotGroup.selectAll(".spamEmoji").data(d => d.frequency).enter();
 
 
+          spamEmoji
+            .append("circle")
+              .attr("class", "spamEmoji")
+              .attr("id", function (d) {
+                return "node" + d3.select(this.parentNode).datum().emoji;
+              })
+              .attr("cx", w2/2)
+              .attr("cy", h2/2)
+              .attr("r", 5)
+              .attr("fill", "grey")
+              .attr("stroke-width", 0)
+          ;
 
+          label1 = false;
 
+          node1 = newData[0].frequency;
+          node1.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
+          simulation1.nodes(node1)
+              .force("forceX", d3.forceX(w2/2))
+              .force("forceY", d3.forceY(h2/2))
+              .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
+              // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
+              .alphaDecay(0.1)
+              .on("tick", simulation1Ran)
+          ;
+          simulation1.restart();
 
-    }
+          function simulation1Ran() {
+            tempClass = "#node" + newData[0].emoji;
+            viz2.selectAll(tempClass)
+              .attr("fill", randomFill(1))
+              .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
+              // .attr("r", d => spamRadiusScale(d.frequency))
+              .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+              .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+
+            let last = viz2.selectAll(tempClass).last();
+            last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
+
+            if (label1 == false) {
+              viz2.append("text").attr("class", "spamEmoji").attr("id", "label1").text(newData[0].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
+              label1 = true;
+            }
+            posX = last.attr("cx");
+            posY = last.attr("cy");
+            viz2.selectAll("#label1").attr("x", posX).attr("y", parseFloat(posY) + 10);
+
+          }
+      }
     // if (state == 1) {
     //   d3.selectAll(".spamEmoji").transition()
     //     .attr("cx", chooseSpamX)
@@ -1200,10 +1267,25 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
   function randomForce() {
     ranDataIndex = Math.floor(Math.random()*212);
     randata = incomingData2.slice(ranDataIndex,ranDataIndex+4);
-    updateSpam(randata);
+    updateSpam(randata, 2);
+  }
+
+  document.getElementById("changeTopForce").addEventListener("click", topForce);
+
+  function topForce() {
+    topdata = [incomingData2[1]];
+    updateSpam(topdata, 3);
+    document.getElementById("spam06").style.transition = "2s";
+    document.getElementById("spam06").style.opacity = "1";
   }
 
 });
+
+// document.getElementById("changeTopMostForce").addEventListener("click", topMost);
+//
+// function topMost() {
+//
+// }
 
 
 // viz 3
@@ -1608,6 +1690,11 @@ function getPathOri(d) {
   return "M" + startX + " " + startY;
 }
 
+document.getElementById("combSt1").addEventListener("click", showCombSt1)
+function showCombSt1() {
+  document.getElementById("st1").style.transition = "1s";
+  document.getElementById("st1").style.opacity = 1;
+}
 
 // viz 5
 
