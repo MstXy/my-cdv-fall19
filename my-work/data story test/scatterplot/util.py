@@ -25,11 +25,27 @@
 #             largest = i
 # print(largest)
 
-import json
+# import json
+#
+# jsonFile = open("frequencyDictFile.json", encoding="utf-8")
+# freqDict = json.load(jsonFile)
+# jsonFile.close()
+# print("json loaded")
+#
+# print(len(freqDict["✅"]))
 
-jsonFile = open("frequencyDictFile.json", encoding="utf-8")
-freqDict = json.load(jsonFile)
-jsonFile.close()
-print("json loaded")
+import random,json
+random.seed(0)
 
-print(len(freqDict["✅"]))
+file = open("emoji_df.csv", encoding='utf-8')
+linelst = file.readlines()
+emojiLst = []
+
+for line in linelst:
+    emojiLst.append(line.split(',')[0])
+
+random.shuffle(emojiLst)
+data = json.dumps(emojiLst)
+nf = open("randEmojiList.json", "w", encoding="utf-8")
+nf.write(data)
+nf.close()

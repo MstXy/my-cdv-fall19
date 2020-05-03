@@ -390,19 +390,19 @@ svg text {
   font-size: 30px;
 }
 #combination4 {
-  top: 6215px;
+  top: 6220px;
   left: 900px;
   width: 600px;
   font-size: 25px;
 }
 #combination5 {
-  top: 6315px;
+  top: 6335px;
   left: 900px;
   width: 600px;
   font-size: 25px;
 }
 #combination6 {
-  top: 6415px;
+  top: 6425px;
   left: 900px;
   width: 600px;
   font-size: 25px;
@@ -422,6 +422,12 @@ svg text {
   filter: opacity(60%);
 }
 #st1{
+  opacity: 0;
+}
+#st2{
+  opacity: 0;
+}
+#st3{
   opacity: 0;
 }
 
@@ -480,24 +486,28 @@ svg text {
   top: 8300px;
   left: 150px;
   width: 1200px;
-  font-size: 35px;
+  font-size: 30px;
   text-align: center;
 }
 #generalConclusion1 {
   top: 8600px;
-  left: 150px;
-  width: 1200px;
-  font-size: 35px;
-  text-align: center;
+  left: 100px;
+  width: 1000px;
+  font-size: 30px;
+  /* text-align: center; */
 }
 #generalConclusion2 {
   top: 8850px;
-  left: 150px;
-  width: 1200px;
-  font-size: 35px;
-  text-align: center;
+  left: 100px;
+  width: 1000px;
+  font-size: 30px;
+  /* text-align: center; */
 }
-
+#container6 {
+  position: absolute;
+  left: 1100px;
+  top: 8250px;
+}
 #Ending0 {
   position: absolute;
   top: 9500px;

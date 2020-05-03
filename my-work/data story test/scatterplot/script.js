@@ -1204,11 +1204,12 @@ d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
           node1 = newData[0].frequency;
           node1.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
           simulation1.nodes(node1)
-              .force("forceX", d3.forceX(w2/2))
-              .force("forceY", d3.forceY(h2/2))
+              .velocityDecay(0.2)
+              .force("forceX", d3.forceX(w/2).strength(0.002))
+              .force("forceY", d3.forceY(h/2).strength(0.002))
               .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
               // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
-              .alphaDecay(0.1)
+              .alphaDecay(0.125)
               .on("tick", simulation1Ran)
           ;
           simulation1.restart();
@@ -1695,6 +1696,16 @@ function showCombSt1() {
   document.getElementById("st1").style.transition = "1s";
   document.getElementById("st1").style.opacity = 1;
 }
+document.getElementById("combSt2").addEventListener("click", showCombSt2)
+function showCombSt2() {
+  document.getElementById("st2").style.transition = "1s";
+  document.getElementById("st2").style.opacity = 1;
+}
+document.getElementById("combSt3").addEventListener("click", showCombSt3)
+function showCombSt3() {
+  document.getElementById("st3").style.transition = "1s";
+  document.getElementById("st3").style.opacity = 1;
+}
 
 // viz 5
 
@@ -1716,6 +1727,35 @@ let viz5 = d3.select("#container5")
 
 
 // Ending
+
+let w6 = 400;
+let h6 = 1200;
+let xPadding6 = 25;
+let yPadding6 = 25;
+
+
+let viz6 = d3.select("#container6")
+  .append("svg")
+      .style("width", w6)
+      .style("height", h6)
+      // .style("outline", "solid black")
+;
+
+d3.json("randEmojiList.json").then(function(incomingData6) {
+
+  viz6.selectAll("finalEmoji").data(incomingData6).enter()
+    .append("text")
+      .text(d => d)
+      .attr("font-size", 20)
+      .attr("x", function () {
+        return xPadding6 + Math.random()*(w6-xPadding6*2);
+      })
+      .attr("y", function() {
+        return yPadding6 + Math.random()*(h6-yPadding6*2);
+      })
+      .attr("text-anchor", "middle")
+
+})
 
 document.getElementById("Ending0").addEventListener("click", clickEnd)
 
