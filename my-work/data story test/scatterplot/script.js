@@ -36,8 +36,8 @@ function calculateSentiment(incomingData1) {
   }
 }
 
-d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
-  d3.csv("emoji_df.csv").then(function(descriptionData) {
+d3.csv("data/Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
+  d3.csv("data/emoji_df.csv").then(function(descriptionData) {
 
     function filterFunction1(d) {
       let correspondingDatapoint = descriptionData.find(function(datapoint) {
@@ -669,7 +669,7 @@ function chooseSpamForceY(d, i) {
 }
 
 
-d3.json("NEATfrequencyListFile.json").then(function(incomingData2) {
+d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
 
   // for (var i = 0; i < incomingData2.length; i++) {
   //   incomingData2[i]
@@ -1337,8 +1337,8 @@ viz3.append("text")
   .attr("y", 55)
 ;
 
-d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData3) {
-  d3.csv("emoji_df.csv").then(function(descriptionData) {
+d3.csv("data/Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData3) {
+  d3.csv("data/emoji_df.csv").then(function(descriptionData) {
 
     function filterFunction3(d) {
       let correspondingDatapoint = descriptionData.find(function(datapoint) {
@@ -1421,7 +1421,7 @@ d3.csv("Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData3) {
 // viz 4
 
 // combination
-d3.json("comb0.json").then(gotData);
+d3.json("data/comb0.json").then(gotData);
 
 
 let w = 850;
@@ -1725,6 +1725,9 @@ let viz5 = d3.select("#container5")
       .style("outline", "solid black")
 ;
 
+d3.json("data/new_data.json").then(function (incomingData5) {
+  console.log();
+})
 
 // Ending
 
@@ -1741,7 +1744,7 @@ let viz6 = d3.select("#container6")
       // .style("outline", "solid black")
 ;
 
-d3.json("randEmojiList.json").then(function(incomingData6) {
+d3.json("data/randEmojiList.json").then(function(incomingData6) {
 
   viz6.selectAll("finalEmoji").data(incomingData6).enter()
     .append("text")
