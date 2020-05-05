@@ -173,14 +173,24 @@ html {
   cursor: pointer;
 } */
 .interactiveBtn {
-  color: darkblue;
-  text-decoration-line: underline;
-  text-decoration-style: dashed;
+  color: #00c780;
+  /* text-decoration-line: underline;
+  text-decoration-style: dashed; */
+  /* padding: 1px; */
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 10px;
+  border: dashed;
+  border-width: 1.5px;
 }
 .interactiveBtn:hover {
-  color: darkgreen;
+  background-color: #8f8f8f;
+  color: #42ffc3;
   cursor: pointer;
+  filter: opacity(60%);
 }
+
+
 #graph1instruction1 {
   left: 975px;
   top: 2265px;
@@ -329,6 +339,9 @@ svg text {
   position: sticky;
   top: 50px;
 }
+#changeToForce {
+  border: none;
+}
 #position1 {
   top: 4750px;
   left: 100px;
@@ -459,8 +472,22 @@ svg text {
 #container5 {
   position: absolute;
   left: 100px;
-  top: 7200px;
+  top: 7100px;
+
 }
+#btnSentiText {
+  position: absolute;
+  left: 500px;
+  top: 7700px;
+  font-size: 28px;
+}
+#btnwSentiEmo {
+  position: absolute;
+  left: 800px;
+  top: 7700px;
+  font-size: 28px;
+}
+
 #textSenti5 {
   top: 7850px;
   left: 100px;

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Emojified Social Media</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://unpkg.com/enter-view"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
@@ -49,7 +50,7 @@
       <p class="mainContent" id="spam2">How many times do you spam emojis in text every day?  Surely a lot.</p>
       <p class="mainContent" id="spam3">Among the <span class="highlightedNumber">6,000,000</span> texts processed, <span class="interactiveBtn" id="spamPercentage">1,011,166</span> texts contains several spamming of one emoji!</p>
       <p class="mainContent" id="spam4">And how many times is one emoji spammed in one text?</p>
-      <p class="mainContent" id="spam5">Let's <span class="interactiveBtn" id="changeToForce">see</span> ——</p>
+      <p class="mainContent" id="spam5">Let's <span class="interactiveBtn" id="changeToForce">See</span> ——</p>
     </div>
     <div id="containerfor2">
       <div id="container2">
@@ -99,10 +100,14 @@
       <p class="mainContent" id="textSenti3">So, Are we <b>feeling less of the feels</b>, while <b>becoming more emotional on the social media?</b></p>
       <p class="mainContent" id="textSenti4"><i>"In fact, we don’t even <b>have</b> emotions—we have feels. But maybe not all the feels."</i></p>
       <p class="mainContent" id="textSenti5">I used the Natural Language Token and VADER (Valence Aware Dictionary and sEntiment Reasoner) library of Python to give the text sentiment scores separately from emojis and see how emoji is contributing to the emotion of the tweets.</p>
-      <p class="mainContent" id="textSenti6">From the graph, we can see that Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="mainContent" id="textSenti6">I bet the graph is a bit <i>unexpected</i>? From the <b>positive</b> graph, it seems in most times, our emotion in our text conform with the emojis' emotion. <br>However, from the <b>negative</b> graph, most emojis' sentiment score are positive? <br>That opens a new topic beyond my reach, but we may guess that when we are expressing negative emotions, we tend to use positive emojis to cover it up? </p>
     </div>
     <div id="container5">
 
+    </div>
+    <div class="buttonForSentiPlot">
+      <p class="interactiveBtn" id="btnSentiText">Text Sentiment</p>
+      <p class="interactiveBtn" id="btnwSentiEmo">Emoji Sentiment</p>
     </div>
     <hr id="endSep">
     <div class="generalConclusion">

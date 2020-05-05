@@ -1258,10 +1258,26 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
   var initState = 0;
   updateSpam(initialData, 0);
 
-  document.getElementById("changeToForce").addEventListener("click", toForce);
-  function toForce() {
-    updateSpam(initialData, 1);
-  }
+  // document.getElementById("changeToForce").addEventListener("click", toForce);
+  // function toForce() {
+  //   updateSpam(initialData, 1);
+  // }
+
+  enterView({
+  	selector: '#changeToForce',
+  	enter: function(el) {
+  		// el.classList.add('entered');
+      updateSpam(initialData, 1);
+  	},
+  	// exit: function(el) {
+  	// 	el.classList.remove('entered');
+  	// },
+  	// progress: function(el, progress) {
+  	// 	el.style.opacity = progress;
+  	// },
+  	offset: 0.5, // enter at middle of viewport
+  	once: true, // trigger just once
+  });
 
   document.getElementById("changeRandomForce").addEventListener("click", randomForce);
 
@@ -1714,6 +1730,7 @@ function showCombSt3() {
 let w5 = 1300;
 let h5 = 600;
 let h55 = 7000;
+let mid = w5/2;
 let h5Offset = h55-h5;
 let xPadding5 = 75;
 let yPadding5 = 75;
@@ -1722,11 +1739,232 @@ let viz5 = d3.select("#container5")
   .append("svg")
       .style("width", w5)
       .style("height", h5)
-      .style("outline", "solid black")
+      // .style("outline", "solid black")
 ;
 
+function filterPos(d) {
+  if (d.sentiment.compound > 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function filterNeg(d) {
+  if (d.sentiment.compound < 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function filterNeu(d) {
+  if (d.sentiment.compound == 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 d3.json("data/new_data.json").then(function (incomingData5) {
-  console.log();
+  console.log(incomingData5);
+
+  let posData = incomingData5.filter(filterPos);
+  let negData = incomingData5.filter(filterNeg);
+  incomingData5 = incomingData5.filter(filterNeu);
+
+  console.log(posData,negData);
+
+  // let posExtent = d3.extent(posData, function(d) {
+  //   return d.emoji_total;
+  // })
+  // let negExtent = d3.extent(negData, function(d) {
+  //   return d.emoji_total;
+  // })
+  // let extent = d3.extent(incomingData5, function(d) {
+  //   return d.emoji_total;
+  // });
+  let min = d3.min(incomingData5, function(d) {
+    return d.emoji_total;
+  });
+  let max = d3.max(incomingData5, function(d) {
+    return d.emoji_total;
+  });
+
+
+  let xScalePos = d3.scaleLinear().domain([min, -1, 1, max]).range([xPadding5,(w5-xPadding5-mid)/2 - 150,(w5-xPadding5-mid)/2 + 150, mid-xPadding5]);
+  let xScaleNeg = d3.scaleLinear().domain([min, -1, 1, max]).range([mid+xPadding5, (mid+w5-xPadding5)/2 - 150,(mid+w5-xPadding5)/2 + 150, w5-xPadding5]);
+
+  let posYExt = d3.extent(posData, function(d) {
+    // return d.sentiment.compound;
+    return d.sentiment.neu;
+  })
+  let negYExt = d3.extent(posData, function(d) {
+    // return d.sentiment.compound;
+    return d.sentiment.neu;
+  })
+  let yScalePos = d3.scaleLinear().domain(posYExt).range([h5-yPadding5, yPadding5]);
+  let yScaleNeg = d3.scaleLinear().domain(negYExt).range([h5-yPadding5, yPadding5]);
+
+  let posGroup = viz5.append("g").attr("class", "pos");
+  let negGroup = viz5.append("g").attr("class", "neg");
+
+  let posXAxisGroup6 = posGroup.append("g").attr("class", "posXAxisGroup");
+  let posYAxisGroup6 = posGroup.append("g").attr("class", "posYAxisGroup");
+  let negXAxisGroup6 = negGroup.append("g").attr("class", "negXAxisGroup");
+  let negYAxisGroup6 = negGroup.append("g").attr("class", "negYAxisGroup");
+
+  let pX = d3.axisBottom(xScalePos);
+  posXAxisGroup6.call(pX);
+  posXAxisGroup6.attr("transform", "translate(0," + (h5-yPadding5) + ")");
+
+  let pY = d3.axisLeft(yScalePos);
+  posYAxisGroup6.call(pY);
+  posYAxisGroup6.attr("transform", "translate(" + xPadding5 + ",0)");
+
+
+  posXAxisGroup6.append("text")
+      .attr("transform",
+          "translate(" + (mid/2) + " ," + yPadding5 / 1.5 + " )")
+      .style("text-anchor", "middle")
+      .text("Sentiment Score")
+      .attr("fill", "black")
+      .attr("font-size", 25)
+      .attr("font-family", "Futura")
+      .attr("font-weight", "bold")
+  ;
+  posYAxisGroup6.append("text")
+      .attr("y", 0 - xPadding5)
+      .attr("x",0 - (h5 / 2))
+      .attr("transform", "rotate(-90)")
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Neutrality")
+      .attr("fill", "black")
+      .attr("font-size", 25)
+      .attr("font-family", "Futura")
+      .attr("font-weight", "bold")
+  ;
+
+  let nX = d3.axisBottom(xScaleNeg);
+  negXAxisGroup6.call(nX);
+  negXAxisGroup6.attr("transform", "translate(0," + (h5-yPadding5) + ")");
+
+  let nY = d3.axisLeft(yScaleNeg);
+  negYAxisGroup6.call(nY);
+  negYAxisGroup6.attr("transform", "translate(" + (mid+xPadding5) + ",0)");
+
+
+
+  negXAxisGroup6.append("text")
+      .attr("transform",
+          "translate(" + (mid + mid/2) + " ," + yPadding5 / 1.5 + " )")
+      .style("text-anchor", "middle")
+      .text("Sentiment Score")
+      .attr("fill", "black")
+      .attr("font-size", 25)
+      .attr("font-family", "Futura")
+      .attr("font-weight", "bold")
+  ;
+  negYAxisGroup6.append("text")
+      .attr("y", 0 - xPadding5)
+      .attr("x",0 - (h5 / 2))
+      .attr("transform", "rotate(-90)")
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Neutrality")
+      .attr("fill", "black")
+      .attr("font-size", 25)
+      .attr("font-family", "Futura")
+      .attr("font-weight", "bold")
+  ;
+
+
+  let posGraphGroup = viz5.append("g").attr("class", "posGraphGroup");
+  let negGraphGroup = viz5.append("g").attr("class", "negGraphGroup");
+
+  // legend
+  // scatterPlot text support: Positive, Negative
+  posGraphGroup.append("text")
+      .text("Positive")
+      .attr("x", 100)
+      .attr("y", 100)
+      .attr("font-size", 25)
+      .attr("fill", "grey")
+      .attr("font-family", "Futura")
+  ;
+  negGraphGroup.append("text")
+      .text("Negative")
+      .attr("x", mid+100)
+      .attr("y", 100)
+      .attr("font-size", 25)
+      .attr("fill", "grey")
+      .attr("font-family", "Futura")
+  ;
+
+
+  let ps = posGraphGroup.selectAll(".posGraph").data(posData).enter();
+  let ng = negGraphGroup.selectAll(".negGraph").data(negData).enter();
+
+  let psT = ps.append("circle")
+    .attr("class", "posGraph")
+    .attr("cx", d => xScalePos(d.sentiment.compound))
+    .attr("cy", d => yScalePos(d.sentiment.neu))
+    .attr("r", 5)
+    .attr("fill", "grey")
+    .attr("opacity", 0)
+  ;
+  let ngT = ng.append("circle")
+    .attr("class", "negGraph")
+    .attr("cx", d => xScaleNeg(d.sentiment.compound))
+    .attr("cy", d => yScaleNeg(d.sentiment.neu))
+    .attr("r", 5)
+    .attr("fill", "grey")
+    .attr("opacity", 0)
+  ;
+  let psE = ps.append("circle")
+    .attr("class", "posGraph")
+    .attr("cx", d => xScalePos(d.emoji_total))
+    .attr("cy", d => yScalePos(d.sentiment.neu))
+    .attr("r", 5)
+    .attr("fill", "green")
+    .attr("opacity", 0)
+  ;
+  let ngE = ng.append("circle")
+    .attr("class", "negGraph")
+    .attr("cx", d => xScaleNeg(d.emoji_total))
+    .attr("cy", d => yScaleNeg(d.sentiment.neu))
+    .attr("r", 5)
+    .attr("fill", "red")
+    .attr("opacity", 0)
+  ;
+  document.getElementById("btnSentiText").addEventListener("click", showSentiText);
+  document.getElementById("btnwSentiEmo").addEventListener("click", showSentiEmo);
+
+  btnSentiTextClicked = false;
+
+  function showSentiText() {
+    if (btnSentiTextClicked == false) {
+      psT.transition().delay(function (d,i) {
+        return i*4;
+      }).attr("opacity", 0.5);
+      ngT.transition().delay(function (d,i) {
+        return i*4;
+      }).attr("opacity", 0.5);
+      btnSentiTextClicked = true;
+    }
+  }
+  function showSentiEmo() {
+    if (btnSentiTextClicked == true) {
+      psE.transition().delay(function (d,i) {
+        return i*10;
+      }).attr("opacity", 0.5);
+      ngE.transition().delay(function (d,i) {
+        return i*10;
+      }).attr("opacity", 0.5);
+    }
+  }
+
+
 })
 
 // Ending
