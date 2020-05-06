@@ -140,7 +140,7 @@ d3.csv("data/Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
         .attr("x", 100)
         .attr("y", h1Offset+100)
         .attr("font-size", 25)
-        .attr("fill", "grey")
+        .attr("fill", "#ff4242")
         .attr("font-family", "Futura")
     ;
     viz.append("text")
@@ -148,7 +148,7 @@ d3.csv("data/Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData1) {
         .attr("x", w1-175)
         .attr("y", h1Offset+100)
         .attr("font-size", 25)
-        .attr("fill", "grey")
+        .attr("fill", "#81d8d0")
         .attr("font-family", "Futura")
     ;
 
@@ -1431,6 +1431,14 @@ d3.csv("data/Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData3) {
         })
         ;
 
+    viz3.append("text")
+        .text("👈The beginning of a tweet, emoji goes anywhere in the text, this marks the end.👉")
+        .attr("font-family", "Futura")
+        .attr("font-size", 22.5)
+        .attr("text-anchor", "middle")
+        .attr("x", (w3+xPadding3-xPadding30)/2)
+        .attr("y", h3 - yPadding3*1.2)
+    ;
 
   })
 });
@@ -1889,7 +1897,7 @@ d3.json("data/new_data.json").then(function (incomingData5) {
       .attr("x", 100)
       .attr("y", 100)
       .attr("font-size", 25)
-      .attr("fill", "grey")
+      .attr("fill", "#81d8d0")
       .attr("font-family", "Futura")
   ;
   negGraphGroup.append("text")
@@ -1897,7 +1905,7 @@ d3.json("data/new_data.json").then(function (incomingData5) {
       .attr("x", mid+100)
       .attr("y", 100)
       .attr("font-size", 25)
-      .attr("fill", "grey")
+      .attr("fill", "#ff4242")
       .attr("font-family", "Futura")
   ;
 
@@ -1926,7 +1934,7 @@ d3.json("data/new_data.json").then(function (incomingData5) {
     .attr("cx", d => xScalePos(d.emoji_total))
     .attr("cy", d => yScalePos(d.sentiment.neu))
     .attr("r", 5)
-    .attr("fill", "green")
+    .attr("fill", "#81d8d0")
     .attr("opacity", 0)
   ;
   let ngE = ng.append("circle")
@@ -1934,7 +1942,7 @@ d3.json("data/new_data.json").then(function (incomingData5) {
     .attr("cx", d => xScaleNeg(d.emoji_total))
     .attr("cy", d => yScaleNeg(d.sentiment.neu))
     .attr("r", 5)
-    .attr("fill", "red")
+    .attr("fill", "#ff4242")
     .attr("opacity", 0)
   ;
   document.getElementById("btnSentiText").addEventListener("click", showSentiText);
@@ -1957,10 +1965,10 @@ d3.json("data/new_data.json").then(function (incomingData5) {
     if (btnSentiTextClicked == true) {
       psE.transition().delay(function (d,i) {
         return i*10;
-      }).attr("opacity", 0.5);
+      }).attr("opacity", 0.8);
       ngE.transition().delay(function (d,i) {
         return i*10;
-      }).attr("opacity", 0.5);
+      }).attr("opacity", 0.6);
     }
   }
 

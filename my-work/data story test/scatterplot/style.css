@@ -177,8 +177,8 @@ html {
   /* text-decoration-line: underline;
   text-decoration-style: dashed; */
   /* padding: 1px; */
-  padding-left: 2px;
-  padding-right: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-radius: 10px;
   border: dashed;
   border-width: 1.5px;
@@ -280,7 +280,7 @@ svg text {
   font-size: 30px;
 }
 .highlightedNumber {
-  color:darkred;
+  color:#ba0000;
 }
 /* #spamPercentage {
   color: darkblue;
@@ -299,13 +299,13 @@ svg text {
   font-size: 30px;
 }
 #spam02 {
-  top: 3650px;
+  top: 3630px;
   left: 100px;
   width: 500px;
   font-size: 30px;
 }
 #spam03 {
-  top: 3770px;
+  top: 3750px;
   left: 100px;
   width: 500px;
   font-size: 30px;
@@ -317,7 +317,7 @@ svg text {
   font-size: 30px;
 }
 #spam05 {
-  top: 4350px;
+  top: 4380px;
   left: 100px;
   width: 500px;
   font-size: 30px;
@@ -340,7 +340,7 @@ svg text {
   top: 50px;
 }
 #changeToForce {
-  border: none;
+  color: #00c780;
 }
 #position1 {
   top: 4750px;
@@ -480,12 +480,15 @@ svg text {
   left: 500px;
   top: 7700px;
   font-size: 28px;
+  font-family: Futura;
 }
 #btnwSentiEmo {
   position: absolute;
   left: 800px;
   top: 7700px;
   font-size: 28px;
+  font-family: Futura;
+
 }
 
 #textSenti5 {
