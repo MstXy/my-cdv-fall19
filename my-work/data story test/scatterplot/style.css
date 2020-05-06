@@ -329,6 +329,14 @@ svg text {
   font-size: 30px;
   opacity: 0;
 }
+#spam07 {
+  top: 3600px;
+  left: 100px;
+  width: 520px;
+  font-size: 20px;
+  opacity: 1;
+  font-weight: bold;
+}
 #containerfor2 {
   position: absolute;
   left: 650px;

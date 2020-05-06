@@ -694,7 +694,10 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
 
   document.getElementById("spamPercentage").addEventListener("click", showPercentage);
 
+  // let spamPercentageClicked = false;
   function showPercentage() {
+    // spamPercentageClicked = true;
+
     percentage = 100*(1011166/6000000);
     document.getElementById("spamPercentage").innerHTML = "% " + percentage.toFixed(2);
 
@@ -730,9 +733,9 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
     d3.selectAll(".spamEmoji").transition().delay(function(d, i) {
       if (oriArray[i] == true) {
         spamFillIndex1 += 1;
-        return 8000 + spamFillIndex1*10;
+        return 6000 + spamFillIndex1*10;
       } else {
-        return 8000;
+        return 6000;
       }
     }).attr("fill", function(d, i) {
       if (oriArray[i] == true) {
@@ -741,6 +744,7 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
         return "grey";
       }
     })
+
   }
 
   console.log(maxFreq);
@@ -818,8 +822,8 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
       node1 = newData[0].frequency;
       node1.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
       simulation1.nodes(node1)
-          .force("forceX", d3.forceX(w2/4))
-          .force("forceY", d3.forceY(h2/4))
+          .force("forceX", d3.forceX(w2/4).strength(0.05))
+          .force("forceY", d3.forceY(h2/4).strength(0.05))
           .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
           // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
           // .alphaDecay(0.1)
@@ -860,8 +864,8 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
       node2 = newData[1].frequency;
       node2.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
       simulation2.nodes(node2)
-          .force("forceX", d3.forceX(3 *w2/4))
-          .force("forceY", d3.forceY(h2/4))
+          .force("forceX", d3.forceX(3 *w2/4).strength(0.05))
+          .force("forceY", d3.forceY(h2/4).strength(0.05))
           .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
           // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
           // .alphaDecay(0.1)
@@ -902,8 +906,8 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
       node3 = newData[2].frequency;
       node3.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
       simulation3.nodes(node3)
-          .force("forceX", d3.forceX(w2/4))
-          .force("forceY", d3.forceY(3 *h2/4))
+          .force("forceX", d3.forceX(w2/4).strength(0.05))
+          .force("forceY", d3.forceY(3 *h2/4).strength(0.05))
           .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
           // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
           // .alphaDecay(0.1)
@@ -943,8 +947,8 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
       node4 = newData[3].frequency;
       node4.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
       simulation4.nodes(node4)
-          .force("forceX", d3.forceX(3 *w2/4))
-          .force("forceY", d3.forceY(3 *h2/4))
+          .force("forceX", d3.forceX(3 *w2/4).strength(0.05))
+          .force("forceY", d3.forceY(3 *h2/4).strength(0.05))
           .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
           // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
           // .alphaDecay(0.1)
@@ -1017,8 +1021,8 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
         node1 = newData[0].frequency;
         node1.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
         simulation1.nodes(node1)
-            .force("forceX", d3.forceX(w2/4))
-            .force("forceY", d3.forceY(h2/4))
+            .force("forceX", d3.forceX(w2/4).strength(0.05))
+            .force("forceY", d3.forceY(h2/4).strength(0.05))
             .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
             // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
             // .alphaDecay(0.1)
@@ -1061,8 +1065,8 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
         node2 = newData[1].frequency;
         node2.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
         simulation2.nodes(node2)
-            .force("forceX", d3.forceX(3 *w2/4))
-            .force("forceY", d3.forceY(h2/4))
+            .force("forceX", d3.forceX(3 *w2/4).strength(0.05))
+            .force("forceY", d3.forceY(h2/4).strength(0.05))
             .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
             // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
             // .alphaDecay(0.1)
@@ -1104,8 +1108,8 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
         node3 = newData[2].frequency;
         node3.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
         simulation3.nodes(node3)
-            .force("forceX", d3.forceX(w2/4))
-            .force("forceY", d3.forceY(3 *h2/4))
+            .force("forceX", d3.forceX(w2/4).strength(0.05))
+            .force("forceY", d3.forceY(3 *h2/4).strength(0.05))
             .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
             // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
             // .alphaDecay(0.1)
@@ -1147,8 +1151,8 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
         node4 = newData[3].frequency;
         node4.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
         simulation4.nodes(node4)
-            .force("forceX", d3.forceX(3 *w2/4))
-            .force("forceY", d3.forceY(3 *h2/4))
+            .force("forceX", d3.forceX(3 *w2/4).strength(0.05))
+            .force("forceY", d3.forceY(3 *h2/4).strength(0.05))
             .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
             // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
             // .alphaDecay(0.1)
@@ -1267,7 +1271,13 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
   	selector: '#changeToForce',
   	enter: function(el) {
   		// el.classList.add('entered');
+      // console.log(spamPercentageClicked);
+      // if (spamPercentageClicked == true) {
+      //   console.log("why");
+      //   updateSpam(initialData, 1);
+      // }
       updateSpam(initialData, 1);
+
   	},
   	// exit: function(el) {
   	// 	el.classList.remove('entered');
@@ -1275,7 +1285,7 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
   	// progress: function(el, progress) {
   	// 	el.style.opacity = progress;
   	// },
-  	offset: 0.5, // enter at middle of viewport
+  	offset: 0.65, // enter at 0.7middle of viewport
   	once: true, // trigger just once
   });
 
