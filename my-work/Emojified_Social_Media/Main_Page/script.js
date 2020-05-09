@@ -1716,7 +1716,7 @@ d3.json("data/comb0.json").then(gotData);
 
 
 let w = 850;
-let h = 800;
+let h = 835;
 let viz4 = d3.select("#container")
   .append("svg")
     .style("width", w)
