@@ -670,354 +670,161 @@ function chooseSpamForceY(d, i) {
 
 
 d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
+  d3.json("data/frequencyListFile.json").then(function(totalFreqData) {
+    // for (var i = 0; i < incomingData2.length; i++) {
+    //   incomingData2[i]
+    // }
+    incomingData2 = incomingData2.filter(filterFunction2);
+    // console.log(incomingData2);
 
-  // for (var i = 0; i < incomingData2.length; i++) {
-  //   incomingData2[i]
-  // }
-  incomingData2 = incomingData2.filter(filterFunction2);
-  // console.log(incomingData2);
-
-  let maxFreq = 0;
-  for (var i = 0; i < incomingData2.length; i++) {
-    for (var n = 0; n < incomingData2[i].frequency.length; n++) {
-      num = incomingData2[i].frequency[n];
-      if (num > maxFreq) {
-        maxFreq = num;
-      }
-      incomingData2[i].frequency[n] = {"frequency": num};
-    }
-  }
-  console.log(incomingData2);
-  initialData = incomingData2.slice(12,16);
-  console.log(initialData);
-
-
-  document.getElementById("spamPercentage").addEventListener("click", showPercentage);
-
-  // let spamPercentageClicked = false;
-  function showPercentage() {
-    // spamPercentageClicked = true;
-
-    percentage = 100*(1011166/6000000);
-    document.getElementById("spamPercentage").innerHTML = "% " + percentage.toFixed(2);
-
-    var sampleSize = (percentage/100) * 2184;
-    var tfArray = [];
-    for (var i = 0; i < sampleSize; i++) {
-      tfArray.push(true);
-    }
-    for (var i = 0; i < (2184-sampleSize); i++) {
-      tfArray.push(false);
-    }
-    oriArray = JSON.parse(JSON.stringify(tfArray));
-    randomArray = d3.shuffle(tfArray);
-    console.log(oriArray);
-    console.log(randomArray);
-    spamFillIndex = 0;
-    d3.selectAll(".spamEmoji").transition().delay(function(d, i) {
-      if (randomArray[i] == true) {
-        spamFillIndex += 1;
-        return spamFillIndex*10;
-      } else {
-        return 0;
-      }
-    }).attr("fill", function(d, i) {
-      if (randomArray[i] == true) {
-        return "#61ffed";
-      } else {
-        return "grey";
-      }
-    })
-
-    spamFillIndex1 = 0;
-    d3.selectAll(".spamEmoji").transition().delay(function(d, i) {
-      if (oriArray[i] == true) {
-        spamFillIndex1 += 1;
-        return 6000 + spamFillIndex1*10;
-      } else {
-        return 6000;
-      }
-    }).attr("fill", function(d, i) {
-      if (oriArray[i] == true) {
-        return "#61ffed";
-      } else {
-        return "grey";
-      }
-    })
-
-  }
-
-  console.log(maxFreq);
-  // let spamRadiusScale = d3.scaleLinear().domain([3, maxFreq]).range([5, 50]);
-  let spamRadiusScale = d3.scaleLinear().domain([3, maxFreq]).range([16, 100]);
-
-
-
-  function updateSpam(newData, state=2) {
-
-    let spamXIndex = 0;
-    let spamYIndex = 0;
-    function chooseSpamX(d) {
-      if (state == 0) {
-        numX = (w2 - 2*xPadding2 - 10) / 15 + 6 ;
-        remain = spamXIndex % numX;
-        spamXIndex += 1;
-        return xPadding2 + 10 + remain*13.3;
-      }
-      // else {
-      //   return d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x));
-      // }
-    }
-    function chooseSpamY(d) {
-      if (state == 0) {
-        numY = (w2 - 2*xPadding2 - 10) / 15 + 6;
-        remain = Math.floor(spamYIndex / numY);
-        spamYIndex += 1;
-        // console.log(spamIndex);
-        return yPadding2 + 10 + remain*13.3;
-      }
-      //  else {
-      //   return d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y));
-      // }
-
-    }
-
-    let spamEmojiGroup = viz2.selectAll(".spamEmojiGroup").data(newData, d => d.emoji);
-    let enteringSpamGroups = spamEmojiGroup.enter();
-    let exitingSpamGroups = spamEmojiGroup.exit();
-    let spamDotGroup = enteringSpamGroups
-      .append("g")
-        .attr("class", "spamEmojiGroup")
-        .attr("id", d => d.emoji)
-        // .attr("transform", transformSpamGroup)
-    ;
-
-    let spamEmoji = spamDotGroup.selectAll(".spamEmoji").data(d => d.frequency).enter();
-
-    spamEmoji
-      .append("circle")
-        .attr("class", "spamEmoji")
-        .attr("id", function (d) {
-          return "node" + d3.select(this.parentNode).datum().emoji;
-        })
-        .attr("cx", chooseSpamX)
-        .attr("cy", chooseSpamY)
-        .attr("r", 4)
-        .attr("fill", "grey")
-        .attr("stroke-width", 0)
-    ;
-
-    //force
-    let simulation1 = d3.forceSimulation();
-    let simulation2 = d3.forceSimulation();
-    let simulation3 = d3.forceSimulation();
-    let simulation4 = d3.forceSimulation();
-    let label1 = false;
-    let label2 = false;
-    let label3 = false;
-    let label4 = false;
-
-    if (state == 1) {
-
-      node1 = newData[0].frequency;
-      node1.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
-      simulation1.nodes(node1)
-          .force("forceX", d3.forceX(w2/4).strength(0.05))
-          .force("forceY", d3.forceY(h2/4).strength(0.05))
-          .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
-          // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
-          // .alphaDecay(0.1)
-          .on("tick", simulation1Ran)
-      ;
-      function simulation1Ran() {
-        tempClass = "#node" + newData[0].emoji;
-        viz2.selectAll(tempClass)
-          .attr("fill", randomFill(1))
-          .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
-          // .attr("r", d => spamRadiusScale(d.frequency))
-          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
-
-        let last = viz2.selectAll(tempClass).last();
-        last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
-
-        if (label1 == false) {
-          viz2.append("text").attr("class", "spamEmoji").attr("id", "label1").text(newData[0].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
-          label1 = true;
+    let maxFreq = 0;
+    for (var i = 0; i < incomingData2.length; i++) {
+      for (var n = 0; n < incomingData2[i].frequency.length; n++) {
+        num = incomingData2[i].frequency[n];
+        if (num > maxFreq) {
+          maxFreq = num;
         }
-        posX = last.attr("cx");
-        posY = last.attr("cy");
-        viz2.selectAll("#label1").attr("x", posX).attr("y", parseFloat(posY) + 10);
-
+        incomingData2[i].frequency[n] = {"frequency": num};
       }
-      // simulation1.stop();
-      // for (let i = 0; i < node1.length; ++i){
-      //     simulation1.tick();
-      // }
-      // tempClass1 = "." + newData[0].emoji;
-      // viz2.selectAll(tempClass1).transition()
-      //   .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
-      //   .attr("cx", d => d.x)
-      //   .attr("cy", d => d.y);
+    }
+    console.log(incomingData2);
+    initialData = incomingData2.slice(12,16);
+    console.log(initialData);
+
+    for (var i = 0; i < totalFreqData.length; i++) {
+      totalFreqData[i].frequency = totalFreqData[i].frequency.length;
+    }
 
 
-      node2 = newData[1].frequency;
-      node2.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
-      simulation2.nodes(node2)
-          .force("forceX", d3.forceX(3 *w2/4).strength(0.05))
-          .force("forceY", d3.forceY(h2/4).strength(0.05))
-          .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
-          // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
-          // .alphaDecay(0.1)
-          .on("tick", simulation2Ran)
-      ;
-      function simulation2Ran() {
-        tempClass = "#node" + newData[1].emoji;
-        viz2.selectAll(tempClass)
-          .attr("fill", randomFill(2))
-          .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
-          // .attr("r", d => spamRadiusScale(d.frequency))
-          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+    document.getElementById("spamPercentage").addEventListener("click", showPercentage);
 
-        let last = viz2.selectAll(tempClass).last();
+    // let spamPercentageClicked = false;
+    function showPercentage() {
+      // spamPercentageClicked = true;
 
-        last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
+      percentage = 100*(1011166/6000000);
+      document.getElementById("spamPercentage").innerHTML = "% " + percentage.toFixed(2);
 
-        if (label2 == false) {
-          viz2.append("text").attr("class", "spamEmoji").attr("id", "label2").text(newData[1].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
-          label2 = true;
+      var sampleSize = (percentage/100) * 2184;
+      var tfArray = [];
+      for (var i = 0; i < sampleSize; i++) {
+        tfArray.push(true);
+      }
+      for (var i = 0; i < (2184-sampleSize); i++) {
+        tfArray.push(false);
+      }
+      oriArray = JSON.parse(JSON.stringify(tfArray));
+      randomArray = d3.shuffle(tfArray);
+      console.log(oriArray);
+      console.log(randomArray);
+      spamFillIndex = 0;
+      d3.selectAll(".spamEmoji").transition().delay(function(d, i) {
+        if (randomArray[i] == true) {
+          spamFillIndex += 1;
+          return spamFillIndex*10;
+        } else {
+          return 0;
         }
-        posX = last.attr("cx");
-        posY = last.attr("cy");
-        viz2.selectAll("#label2").attr("x", posX).attr("y", parseFloat(posY) + 10);
-
-      }
-      // simulation2.stop();
-      // for (let i = 0; i < node2.length; ++i){
-      //     simulation2.tick();
-      // }
-      // tempClass2 = "." + newData[1].emoji;
-      // viz2.selectAll(tempClass2).transition()
-      //   .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
-      //   .attr("cx", d => d.x)
-      //   .attr("cy", d => d.y);
-
-      node3 = newData[2].frequency;
-      node3.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
-      simulation3.nodes(node3)
-          .force("forceX", d3.forceX(w2/4).strength(0.05))
-          .force("forceY", d3.forceY(3 *h2/4).strength(0.05))
-          .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
-          // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
-          // .alphaDecay(0.1)
-          .on("tick", simulation3Ran)
-      ;
-      function simulation3Ran() {
-        tempClass = "#node" + newData[2].emoji;
-        viz2.selectAll(tempClass)
-          .attr("fill", randomFill(3))
-          .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
-          // .attr("r", d => spamRadiusScale(d.frequency))
-          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
-
-        let last = viz2.selectAll(tempClass).last();
-        last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
-
-        if (label3 == false) {
-          viz2.append("text").attr("class", "spamEmoji").attr("id", "label3").text(newData[2].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
-          label3 = true;
+      }).attr("fill", function(d, i) {
+        if (randomArray[i] == true) {
+          return "#61ffed";
+        } else {
+          return "grey";
         }
-        posX = last.attr("cx");
-        posY = last.attr("cy");
-        viz2.selectAll("#label3").attr("x", posX).attr("y", parseFloat(posY) + 10);
+      })
 
-      }
-      // simulation3.stop();
-      // for (let i = 0; i < node3.length; ++i){
-      //     simulation3.tick();
-      // }
-      // tempClass3 = "." + newData[2].emoji;
-      // viz2.selectAll(tempClass3).transition()
-      //   .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
-      //   .attr("cx", d => d.x)
-      //   .attr("cy", d => d.y);
-
-      node4 = newData[3].frequency;
-      node4.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
-      simulation4.nodes(node4)
-          .force("forceX", d3.forceX(3 *w2/4).strength(0.05))
-          .force("forceY", d3.forceY(3 *h2/4).strength(0.05))
-          .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
-          // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
-          // .alphaDecay(0.1)
-          .on("tick", simulation4Ran)
-      ;
-      function simulation4Ran() {
-        tempClass = "#node" + newData[3].emoji;
-        viz2.selectAll(tempClass)
-          .attr("fill", randomFill(4))
-          .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
-          // .attr("r", d => spamRadiusScale(d.frequency))
-          .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
-          .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
-
-        let last = viz2.selectAll(tempClass).last();
-        last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
-
-        if (label4 == false) {
-          viz2.append("text").attr("class", "spamEmoji").attr("id", "label4").text(newData[3].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
-          label4 = true;
+      spamFillIndex1 = 0;
+      d3.selectAll(".spamEmoji").transition().delay(function(d, i) {
+        if (oriArray[i] == true) {
+          spamFillIndex1 += 1;
+          return 6000 + spamFillIndex1*10;
+        } else {
+          return 6000;
         }
-        posX = last.attr("cx");
-        posY = last.attr("cy");
-        viz2.selectAll("#label4").attr("x", posX).attr("y", parseFloat(posY) + 10);
+      }).attr("fill", function(d, i) {
+        if (oriArray[i] == true) {
+          return "#61ffed";
+        } else {
+          return "grey";
+        }
+      })
+
+    }
+
+    console.log(maxFreq);
+    // let spamRadiusScale = d3.scaleLinear().domain([3, maxFreq]).range([5, 50]);
+    let spamRadiusScale = d3.scaleLinear().domain([3, maxFreq]).range([16, 100]);
+
+
+
+    function updateSpam(newData, state=2) {
+
+      let spamXIndex = 0;
+      let spamYIndex = 0;
+      function chooseSpamX(d) {
+        if (state == 0) {
+          numX = (w2 - 2*xPadding2 - 10) / 15 + 6 ;
+          remain = spamXIndex % numX;
+          spamXIndex += 1;
+          return xPadding2 + 10 + remain*13.3;
+        }
+        // else {
+        //   return d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(w2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x));
+        // }
+      }
+      function chooseSpamY(d) {
+        if (state == 0) {
+          numY = (w2 - 2*xPadding2 - 10) / 15 + 6;
+          remain = Math.floor(spamYIndex / numY);
+          spamYIndex += 1;
+          // console.log(spamIndex);
+          return yPadding2 + 10 + remain*13.3;
+        }
+        //  else {
+        //   return d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)), Math.min(h2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y));
+        // }
 
       }
-      // simulation4.stop();
-      // for (let i = 0; i < node4.length; ++i){
-      //     simulation4.tick();
-      // }
-      // tempClass4 = "." + newData[3].emoji;
-      // viz2.selectAll(tempClass4).transition()
-      //   .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
-      //   .attr("cx", d => d.x)
-      //   .attr("cy", d => d.y);
-    } else if (state == 2) {
-        // simulation1.force("forceX", w2/2).force("forceY", h2/2).force("collide", d3.forceCollide(0.5));
-        // simulation2.force("forceX", w2/2).force("forceY", h2/2).force("collide", d3.forceCollide(0.5));
-        // simulation3.force("forceX", w2/2).force("forceY", h2/2).force("collide", d3.forceCollide(0.5));
-        // simulation4.force("forceX", w2/2).force("forceY", h2/2).force("collide", d3.forceCollide(0.5));
 
+      let spamEmojiGroup = viz2.selectAll(".spamEmojiGroup").data(newData, d => d.emoji);
+      let enteringSpamGroups = spamEmojiGroup.enter();
+      let exitingSpamGroups = spamEmojiGroup.exit();
+      let spamDotGroup = enteringSpamGroups
+        .append("g")
+          .attr("class", "spamEmojiGroup")
+          .attr("id", d => d.emoji)
+          // .attr("transform", transformSpamGroup)
+      ;
 
-        simulation1.stop();
-        simulation2.stop();
-        simulation3.stop();
-        simulation4.stop();
-        viz2.selectAll(".spamEmoji").remove();
-        spamEmoji = spamDotGroup.selectAll(".spamEmoji").data(d => d.frequency).enter();
+      let spamEmoji = spamDotGroup.selectAll(".spamEmoji").data(d => d.frequency).enter();
 
+      spamEmoji
+        .append("circle")
+          .attr("class", "spamEmoji")
+          .attr("id", function (d) {
+            return "node" + d3.select(this.parentNode).datum().emoji;
+          })
+          .attr("cx", chooseSpamX)
+          .attr("cy", chooseSpamY)
+          .attr("r", 4)
+          .attr("fill", "grey")
+          .attr("stroke-width", 0)
+      ;
 
-        spamEmoji
-          .append("circle")
-            .attr("class", "spamEmoji")
-            .attr("id", function (d) {
-              return "node" + d3.select(this.parentNode).datum().emoji;
-            })
-            .attr("cx", w2/2)
-            .attr("cy", h2/2)
-            .attr("r", 5)
-            .attr("fill", "grey")
-            .attr("stroke-width", 0)
-        ;
+      //force
+      let simulation1 = d3.forceSimulation();
+      let simulation2 = d3.forceSimulation();
+      let simulation3 = d3.forceSimulation();
+      let simulation4 = d3.forceSimulation();
+      let label1 = false;
+      let label2 = false;
+      let label3 = false;
+      let label4 = false;
 
-        label1 = false;
-        label2 = false;
-        label3 = false;
-        label4 = false;
+      let bboxPadding = 5;
 
-        console.log(newData);
+      if (state == 1) {
+
         node1 = newData[0].frequency;
         node1.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
         simulation1.nodes(node1)
@@ -1028,8 +835,6 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
             // .alphaDecay(0.1)
             .on("tick", simulation1Ran)
         ;
-        simulation1.restart();
-
         function simulation1Ran() {
           tempClass = "#node" + newData[0].emoji;
           viz2.selectAll(tempClass)
@@ -1043,8 +848,34 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
           last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
           if (label1 == false) {
-            viz2.append("text").attr("class", "spamEmoji").attr("id", "label1").text(newData[0].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
             label1 = true;
+            //emoji
+            viz2.append("text").attr("class", "spamEmoji").attr("id", "label1").text(newData[0].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
+            //data text
+            let textDown = viz2.append("g").attr("class", "spamEmoji");
+            let textTop = viz2.append("g").attr("class", "spamEmoji");
+            let textt = textTop.append("text").text(function() {
+              let correspondingDatapoint = totalFreqData.find(function(datapoint) {
+                if (datapoint.emoji == newData[0].emoji) {
+                  return true;
+                } else {
+                  return false;
+                }
+              })
+              return newData[0].emoji + ": " + correspondingDatapoint.frequency;
+            })
+            .attr("x", w2/2 - 10).attr("y", h2/2 - 25)
+            .attr("font-family", "Futura").attr("font-size", 20).attr("text-anchor", "end")
+            .attr("stroke-width", 0).attr("fill","white");
+            let bbox = textt.node().getBBox();
+            textDown.append("rect")
+              // .attr("x", w2/2).attr("y", h2/2)
+              // .transition().duration(1000)
+              .attr("width", bbox.width+2*bboxPadding).attr("height", bbox.height+2*bboxPadding)
+              .attr("fill", randomFill(1)).attr("stroke-width", 2).attr("stroke", "black")
+              .attr("rx", 5).attr("ry", 5).attr("opacity", 0.8)
+              .attr("x", bbox.x-bboxPadding).attr("y", bbox.y-bboxPadding)
+            ;
           }
           posX = last.attr("cx");
           posY = last.attr("cy");
@@ -1072,8 +903,6 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
             // .alphaDecay(0.1)
             .on("tick", simulation2Ran)
         ;
-        simulation2.restart();
-
         function simulation2Ran() {
           tempClass = "#node" + newData[1].emoji;
           viz2.selectAll(tempClass)
@@ -1084,11 +913,37 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
             .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
 
           let last = viz2.selectAll(tempClass).last();
+
           last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
 
           if (label2 == false) {
             viz2.append("text").attr("class", "spamEmoji").attr("id", "label2").text(newData[1].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
             label2 = true;
+
+            //data text
+            let textDown = viz2.append("g").attr("class", "spamEmoji");
+            let textTop = viz2.append("g").attr("class", "spamEmoji");
+            let textt = textTop.append("text").text(function() {
+              let correspondingDatapoint = totalFreqData.find(function(datapoint) {
+                if (datapoint.emoji == newData[1].emoji) {
+                  return true;
+                } else {
+                  return false;
+                }
+              })
+              return newData[1].emoji + ": " + correspondingDatapoint.frequency;
+            })
+
+            .attr("x", w2/2 + 10).attr("y", h2/2 - 25)
+            .attr("font-family", "Futura").attr("font-size", 20).attr("text-anchor", "start")
+            .attr("stroke-width", 0).attr("fill","white");
+            let bbox = textt.node().getBBox();
+            textDown.append("rect")
+              .attr("x", bbox.x-bboxPadding).attr("y", bbox.y-bboxPadding)
+              .attr("width", bbox.width+2*bboxPadding).attr("height", bbox.height+2*bboxPadding)
+              .attr("fill", randomFill(2)).attr("stroke-width", 2).attr("stroke", "black")
+              .attr("rx", 5).attr("ry", 5).attr("opacity", 0.8)
+              ;
           }
           posX = last.attr("cx");
           posY = last.attr("cy");
@@ -1115,8 +970,6 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
             // .alphaDecay(0.1)
             .on("tick", simulation3Ran)
         ;
-        simulation3.restart();
-
         function simulation3Ran() {
           tempClass = "#node" + newData[2].emoji;
           viz2.selectAll(tempClass)
@@ -1132,6 +985,30 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
           if (label3 == false) {
             viz2.append("text").attr("class", "spamEmoji").attr("id", "label3").text(newData[2].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
             label3 = true;
+            //data text
+            let textDown = viz2.append("g").attr("class", "spamEmoji");
+            let textTop = viz2.append("g").attr("class", "spamEmoji");
+            let textt = textTop.append("text").text(function() {
+              let correspondingDatapoint = totalFreqData.find(function(datapoint) {
+                if (datapoint.emoji == newData[2].emoji) {
+                  return true;
+                } else {
+                  return false;
+                }
+              })
+              return newData[2].emoji + ": " + correspondingDatapoint.frequency;
+            })
+
+            .attr("x", w2/2 - 10).attr("y", h2/2 + 25)
+            .attr("font-family", "Futura").attr("font-size", 20).attr("text-anchor", "end")
+            .attr("stroke-width", 0).attr("fill","white");
+            let bbox = textt.node().getBBox();
+            textDown.append("rect")
+              .attr("x", bbox.x-bboxPadding).attr("y", bbox.y-bboxPadding)
+              .attr("width", bbox.width+2*bboxPadding).attr("height", bbox.height+2*bboxPadding)
+              .attr("fill", randomFill(3)).attr("stroke-width", 2).attr("stroke", "black")
+              .attr("rx", 5).attr("ry", 5).attr("opacity", 0.8)
+            ;
           }
           posX = last.attr("cx");
           posY = last.attr("cy");
@@ -1158,7 +1035,6 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
             // .alphaDecay(0.1)
             .on("tick", simulation4Ran)
         ;
-        simulation4.restart();
         function simulation4Ran() {
           tempClass = "#node" + newData[3].emoji;
           viz2.selectAll(tempClass)
@@ -1174,13 +1050,51 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
           if (label4 == false) {
             viz2.append("text").attr("class", "spamEmoji").attr("id", "label4").text(newData[3].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
             label4 = true;
+            //data text
+            let textDown = viz2.append("g").attr("class", "spamEmoji");
+            let textTop = viz2.append("g").attr("class", "spamEmoji");
+            let textt = textTop.append("text").text(function() {
+              let correspondingDatapoint = totalFreqData.find(function(datapoint) {
+                if (datapoint.emoji == newData[3].emoji) {
+                  return true;
+                } else {
+                  return false;
+                }
+              })
+              return newData[3].emoji + ": " + correspondingDatapoint.frequency;
+            })
+
+            .attr("x", w2/2 + 10).attr("y", h2/2 + 25)
+            .attr("font-family", "Futura").attr("font-size", 20).attr("text-anchor", "start")
+            .attr("stroke-width", 0).attr("fill","white");
+            let bbox = textt.node().getBBox();
+            textDown.append("rect")
+              .attr("x", bbox.x-bboxPadding).attr("y", bbox.y-bboxPadding)
+              .attr("width", bbox.width+2*bboxPadding).attr("height", bbox.height+2*bboxPadding)
+              .attr("fill", randomFill(4)).attr("stroke-width", 2).attr("stroke", "black")
+              .attr("rx", 5).attr("ry", 5).attr("opacity", 0.8)
+              ;
           }
           posX = last.attr("cx");
           posY = last.attr("cy");
           viz2.selectAll("#label4").attr("x", posX).attr("y", parseFloat(posY) + 10);
 
         }
-      } else if (state == 3) {
+        // simulation4.stop();
+        // for (let i = 0; i < node4.length; ++i){
+        //     simulation4.tick();
+        // }
+        // tempClass4 = "." + newData[3].emoji;
+        // viz2.selectAll(tempClass4).transition()
+        //   .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
+        //   .attr("cx", d => d.x)
+        //   .attr("cy", d => d.y);
+      } else if (state == 2) {
+          // simulation1.force("forceX", w2/2).force("forceY", h2/2).force("collide", d3.forceCollide(0.5));
+          // simulation2.force("forceX", w2/2).force("forceY", h2/2).force("collide", d3.forceCollide(0.5));
+          // simulation3.force("forceX", w2/2).force("forceY", h2/2).force("collide", d3.forceCollide(0.5));
+          // simulation4.force("forceX", w2/2).force("forceY", h2/2).force("collide", d3.forceCollide(0.5));
+
 
           simulation1.stop();
           simulation2.stop();
@@ -1204,16 +1118,19 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
           ;
 
           label1 = false;
+          label2 = false;
+          label3 = false;
+          label4 = false;
 
+          console.log(newData);
           node1 = newData[0].frequency;
           node1.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
           simulation1.nodes(node1)
-              .velocityDecay(0.2)
-              .force("forceX", d3.forceX(w/2).strength(0.002))
-              .force("forceY", d3.forceY(h/2).strength(0.002))
+              .force("forceX", d3.forceX(w2/4).strength(0.05))
+              .force("forceY", d3.forceY(h2/4).strength(0.05))
               .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
               // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
-              .alphaDecay(0.125)
+              // .alphaDecay(0.1)
               .on("tick", simulation1Ran)
           ;
           simulation1.restart();
@@ -1233,78 +1150,389 @@ d3.json("data/NEATfrequencyListFile.json").then(function(incomingData2) {
             if (label1 == false) {
               viz2.append("text").attr("class", "spamEmoji").attr("id", "label1").text(newData[0].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
               label1 = true;
+
+              //data text
+              let textDown = viz2.append("g").attr("class", "spamEmoji");
+              let textTop = viz2.append("g").attr("class", "spamEmoji");
+              let textt = textTop.append("text").text(function() {
+                let correspondingDatapoint = totalFreqData.find(function(datapoint) {
+                  if (datapoint.emoji == newData[0].emoji) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                })
+                return newData[0].emoji + ": " + correspondingDatapoint.frequency;
+              })
+
+              .attr("x", w2/2 - 10).attr("y", h2/2 - 25)
+              .attr("font-family", "Futura").attr("font-size", 20).attr("text-anchor", "end")
+              .attr("stroke-width", 0).attr("fill","white");
+              let bbox = textt.node().getBBox();
+              textDown.append("rect")
+                .attr("x", bbox.x-bboxPadding).attr("y", bbox.y-bboxPadding)
+                .attr("width", bbox.width+2*bboxPadding).attr("height", bbox.height+2*bboxPadding)
+                .attr("fill", randomFill(1)).attr("stroke-width", 2).attr("stroke", "black")
+                .attr("rx", 5).attr("ry", 5).attr("opacity", 0.8)
+                ;
             }
             posX = last.attr("cx");
             posY = last.attr("cy");
             viz2.selectAll("#label1").attr("x", posX).attr("y", parseFloat(posY) + 10);
 
           }
-      }
-    // if (state == 1) {
-    //   d3.selectAll(".spamEmoji").transition()
-    //     .attr("cx", chooseSpamX)
-    //     .attr("cy", chooseSpamY);
-    // }
-    // update
-    // enteringSpamGroups.attr("transform", transformSpamGroup);
-    // spamEmoji;
+          // simulation1.stop();
+          // for (let i = 0; i < node1.length; ++i){
+          //     simulation1.tick();
+          // }
+          // tempClass1 = "." + newData[0].emoji;
+          // viz2.selectAll(tempClass1).transition()
+          //   .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
+          //   .attr("cx", d => d.x)
+          //   .attr("cy", d => d.y);
 
 
-    // some animation for removing
+          node2 = newData[1].frequency;
+          node2.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
+          simulation2.nodes(node2)
+              .force("forceX", d3.forceX(3 *w2/4).strength(0.05))
+              .force("forceY", d3.forceY(h2/4).strength(0.05))
+              .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
+              // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
+              // .alphaDecay(0.1)
+              .on("tick", simulation2Ran)
+          ;
+          simulation2.restart();
 
-    setTimeout(function () {
-      exitingSpamGroups.remove();
-    }, 1000);
+          function simulation2Ran() {
+            tempClass = "#node" + newData[1].emoji;
+            viz2.selectAll(tempClass)
+              .attr("fill", randomFill(2))
+              .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
+              // .attr("r", d => spamRadiusScale(d.frequency))
+              .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+              .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+
+            let last = viz2.selectAll(tempClass).last();
+            last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
+
+            if (label2 == false) {
+              viz2.append("text").attr("class", "spamEmoji").attr("id", "label2").text(newData[1].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
+              label2 = true;
+              //data text
+              let textDown = viz2.append("g").attr("class", "spamEmoji");
+              let textTop = viz2.append("g").attr("class", "spamEmoji");
+              let textt = textTop.append("text").text(function() {
+                let correspondingDatapoint = totalFreqData.find(function(datapoint) {
+                  if (datapoint.emoji == newData[1].emoji) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                })
+                return newData[1].emoji + ": " + correspondingDatapoint.frequency;
+              })
+
+              .attr("x", w2/2 + 10).attr("y", h2/2 - 25)
+              .attr("font-family", "Futura").attr("font-size", 20).attr("text-anchor", "start")
+              .attr("stroke-width", 0).attr("fill","white");
+              let bbox = textt.node().getBBox();
+              textDown.append("rect")
+                .attr("x", bbox.x-bboxPadding).attr("y", bbox.y-bboxPadding)
+                .attr("width", bbox.width+2*bboxPadding).attr("height", bbox.height+2*bboxPadding)
+                .attr("fill", randomFill(2)).attr("stroke-width", 2).attr("stroke", "black")
+                .attr("rx", 5).attr("ry", 5).attr("opacity", 0.8)
+                ;
+            }
+            posX = last.attr("cx");
+            posY = last.attr("cy");
+            viz2.selectAll("#label2").attr("x", posX).attr("y", parseFloat(posY) + 10);
+
+          }
+          // simulation2.stop();
+          // for (let i = 0; i < node2.length; ++i){
+          //     simulation2.tick();
+          // }
+          // tempClass2 = "." + newData[1].emoji;
+          // viz2.selectAll(tempClass2).transition()
+          //   .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
+          //   .attr("cx", d => d.x)
+          //   .attr("cy", d => d.y);
+
+          node3 = newData[2].frequency;
+          node3.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
+          simulation3.nodes(node3)
+              .force("forceX", d3.forceX(w2/4).strength(0.05))
+              .force("forceY", d3.forceY(3 *h2/4).strength(0.05))
+              .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
+              // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
+              // .alphaDecay(0.1)
+              .on("tick", simulation3Ran)
+          ;
+          simulation3.restart();
+
+          function simulation3Ran() {
+            tempClass = "#node" + newData[2].emoji;
+            viz2.selectAll(tempClass)
+              .attr("fill", randomFill(3))
+              .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
+              // .attr("r", d => spamRadiusScale(d.frequency))
+              .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+              .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+
+            let last = viz2.selectAll(tempClass).last();
+            last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
+
+            if (label3 == false) {
+              viz2.append("text").attr("class", "spamEmoji").attr("id", "label3").text(newData[2].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
+              label3 = true;
+              //data text
+              let textDown = viz2.append("g").attr("class", "spamEmoji");
+              let textTop = viz2.append("g").attr("class", "spamEmoji");
+              let textt = textTop.append("text").text(function() {
+                let correspondingDatapoint = totalFreqData.find(function(datapoint) {
+                  if (datapoint.emoji == newData[2].emoji) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                })
+                return newData[2].emoji + ": " + correspondingDatapoint.frequency;
+              })
+
+              .attr("x", w2/2 - 10).attr("y", h2/2 + 25)
+              .attr("font-family", "Futura").attr("font-size", 20).attr("text-anchor", "end")
+              .attr("stroke-width", 0).attr("fill","white");
+              let bbox = textt.node().getBBox();
+              textDown.append("rect")
+                .attr("x", bbox.x-bboxPadding).attr("y", bbox.y-bboxPadding)
+                .attr("width", bbox.width+2*bboxPadding).attr("height", bbox.height+2*bboxPadding)
+                .attr("fill", randomFill(3)).attr("stroke-width", 2).attr("stroke", "black")
+                .attr("rx", 5).attr("ry", 5).attr("opacity", 0.8)
+                ;
+            }
+            posX = last.attr("cx");
+            posY = last.attr("cy");
+            viz2.selectAll("#label3").attr("x", posX).attr("y", parseFloat(posY) + 10);
+
+          }
+          // simulation3.stop();
+          // for (let i = 0; i < node3.length; ++i){
+          //     simulation3.tick();
+          // }
+          // tempClass3 = "." + newData[2].emoji;
+          // viz2.selectAll(tempClass3).transition()
+          //   .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
+          //   .attr("cx", d => d.x)
+          //   .attr("cy", d => d.y);
+
+          node4 = newData[3].frequency;
+          node4.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
+          simulation4.nodes(node4)
+              .force("forceX", d3.forceX(3 *w2/4).strength(0.05))
+              .force("forceY", d3.forceY(3 *h2/4).strength(0.05))
+              .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
+              // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
+              // .alphaDecay(0.1)
+              .on("tick", simulation4Ran)
+          ;
+          simulation4.restart();
+          function simulation4Ran() {
+            tempClass = "#node" + newData[3].emoji;
+            viz2.selectAll(tempClass)
+              .attr("fill", randomFill(4))
+              .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
+              // .attr("r", d => spamRadiusScale(d.frequency))
+              .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+              .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+
+            let last = viz2.selectAll(tempClass).last();
+            last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
+
+            if (label4 == false) {
+              viz2.append("text").attr("class", "spamEmoji").attr("id", "label4").text(newData[3].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
+              label4 = true;
+              //data text
+              let textDown = viz2.append("g").attr("class", "spamEmoji");
+              let textTop = viz2.append("g").attr("class", "spamEmoji");
+              let textt = textTop.append("text").text(function() {
+                let correspondingDatapoint = totalFreqData.find(function(datapoint) {
+                  if (datapoint.emoji == newData[3].emoji) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                })
+                return newData[3].emoji + ": " + correspondingDatapoint.frequency;
+              })
+
+              .attr("x", w2/2 + 10).attr("y", h2/2 + 25)
+              .attr("font-family", "Futura").attr("font-size", 20).attr("text-anchor", "start")
+              .attr("stroke-width", 0).attr("fill","white");
+              let bbox = textt.node().getBBox();
+              textDown.append("rect")
+                .attr("x", bbox.x-bboxPadding).attr("y", bbox.y-bboxPadding)
+                .attr("width", bbox.width+2*bboxPadding).attr("height", bbox.height+2*bboxPadding)
+                .attr("fill", randomFill(4)).attr("stroke-width", 2).attr("stroke", "black")
+                .attr("rx", 5).attr("ry", 5).attr("opacity", 0.8)
+                ;
+            }
+            posX = last.attr("cx");
+            posY = last.attr("cy");
+            viz2.selectAll("#label4").attr("x", posX).attr("y", parseFloat(posY) + 10);
+
+          }
+        } else if (state == 3) {
+
+            simulation1.stop();
+            simulation2.stop();
+            simulation3.stop();
+            simulation4.stop();
+            viz2.selectAll(".spamEmoji").remove();
+            spamEmoji = spamDotGroup.selectAll(".spamEmoji").data(d => d.frequency).enter();
 
 
+            spamEmoji
+              .append("circle")
+                .attr("class", "spamEmoji")
+                .attr("id", function (d) {
+                  return "node" + d3.select(this.parentNode).datum().emoji;
+                })
+                .attr("cx", w2/2)
+                .attr("cy", h2/2)
+                .attr("r", 5)
+                .attr("fill", "grey")
+                .attr("stroke-width", 0)
+            ;
 
-  }
-  var initState = 0;
-  updateSpam(initialData, 0);
+            label1 = false;
 
-  // document.getElementById("changeToForce").addEventListener("click", toForce);
-  // function toForce() {
-  //   updateSpam(initialData, 1);
-  // }
+            node1 = newData[0].frequency;
+            node1.forEach(function(d) { d.x = w2/2; d.y = h2/2; })
+            simulation1.nodes(node1)
+                .velocityDecay(0.2)
+                .force("forceX", d3.forceX(w/2).strength(0.002))
+                .force("forceY", d3.forceY(h/2).strength(0.002))
+                .force("collide", d3.forceCollide(d => Math.sqrt(spamRadiusScale(d.frequency)) + 1))
+                // .force("collide", d3.forceCollide(d => spamRadiusScale(d.frequency) + 1))
+                .alphaDecay(0.125)
+                .on("tick", simulation1Ran)
+            ;
+            simulation1.restart();
 
-  enterView({
-  	selector: '#changeToForce',
-  	enter: function(el) {
-  		// el.classList.add('entered');
-      // console.log(spamPercentageClicked);
-      // if (spamPercentageClicked == true) {
-      //   console.log("why");
-      //   updateSpam(initialData, 1);
+            function simulation1Ran() {
+              tempClass = "#node" + newData[0].emoji;
+              viz2.selectAll(tempClass)
+                .attr("fill", randomFill(1))
+                .attr("r", d => Math.sqrt(spamRadiusScale(d.frequency)))
+                // .attr("r", d => spamRadiusScale(d.frequency))
+                .attr("cx", d => d.x = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + xPadding2, Math.min(w2 - xPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.x)))
+                .attr("cy", d => d.y = Math.max(Math.sqrt(spamRadiusScale(d.frequency)) + yPadding2, Math.min(h2 - yPadding2 - Math.sqrt(spamRadiusScale(d.frequency)), d.y)));
+
+              let last = viz2.selectAll(tempClass).last();
+              last.attr("r", 25).attr("stroke-width", 2).attr("stroke", "#3d3d3d");
+
+              if (label1 == false) {
+                viz2.append("text").attr("class", "spamEmoji").attr("id", "label1").text(newData[0].emoji).attr("font-size", 25).attr("x", w2/4).attr("y", h2/4).attr("text-anchor", "middle");
+                label1 = true;
+                //data text
+                let textDown = viz2.append("g").attr("class", "spamEmoji");
+                let textTop = viz2.append("g").attr("class", "spamEmoji");
+                let textt = textTop.append("text").text(function() {
+                  let correspondingDatapoint = totalFreqData.find(function(datapoint) {
+                    if (datapoint.emoji == newData[0].emoji) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  })
+                  return newData[0].emoji + ": " + correspondingDatapoint.frequency;
+                })
+
+                .attr("x", w2/2).attr("y", h2/4*3)
+                .attr("font-family", "Futura").attr("font-size", 20).attr("text-anchor", "middle")
+                .attr("stroke-width", 0).attr("fill","darkred");
+                let bbox = textt.node().getBBox();
+                textDown.append("rect")
+                  .attr("x", bbox.x-bboxPadding).attr("y", bbox.y-bboxPadding)
+                  .attr("width", bbox.width+2*bboxPadding).attr("height", bbox.height+2*bboxPadding)
+                  .attr("fill", "white").attr("stroke-width", 2).attr("stroke", "black")
+                  .attr("rx", 5).attr("ry", 5).attr("opacity", 0.8)
+                  ;
+              }
+              posX = last.attr("cx");
+              posY = last.attr("cy");
+              viz2.selectAll("#label1").attr("x", posX).attr("y", parseFloat(posY) + 10);
+
+            }
+        }
+      // if (state == 1) {
+      //   d3.selectAll(".spamEmoji").transition()
+      //     .attr("cx", chooseSpamX)
+      //     .attr("cy", chooseSpamY);
       // }
-      updateSpam(initialData, 1);
+      // update
+      // enteringSpamGroups.attr("transform", transformSpamGroup);
+      // spamEmoji;
 
-  	},
-  	// exit: function(el) {
-  	// 	el.classList.remove('entered');
-  	// },
-  	// progress: function(el, progress) {
-  	// 	el.style.opacity = progress;
-  	// },
-  	offset: 0.65, // enter at 0.7middle of viewport
-  	once: true, // trigger just once
+
+      // some animation for removing
+
+      setTimeout(function () {
+        exitingSpamGroups.remove();
+      }, 1000);
+
+
+
+    }
+    var initState = 0;
+    updateSpam(initialData, 0);
+
+    // document.getElementById("changeToForce").addEventListener("click", toForce);
+    // function toForce() {
+    //   updateSpam(initialData, 1);
+    // }
+
+    enterView({
+    	selector: '#changeToForce',
+    	enter: function(el) {
+    		// el.classList.add('entered');
+        // console.log(spamPercentageClicked);
+        // if (spamPercentageClicked == true) {
+        //   console.log("why");
+        //   updateSpam(initialData, 1);
+        // }
+        updateSpam(initialData, 1);
+
+    	},
+    	// exit: function(el) {
+    	// 	el.classList.remove('entered');
+    	// },
+    	// progress: function(el, progress) {
+    	// 	el.style.opacity = progress;
+    	// },
+    	offset: 0.65, // enter at 0.7middle of viewport
+    	once: true, // trigger just once
+    });
+
+    document.getElementById("changeRandomForce").addEventListener("click", randomForce);
+
+    function randomForce() {
+      ranDataIndex = Math.floor(Math.random()*212);
+      randata = incomingData2.slice(ranDataIndex,ranDataIndex+4);
+      updateSpam(randata, 2);
+    }
+
+    document.getElementById("changeTopForce").addEventListener("click", topForce);
+
+    function topForce() {
+      topdata = [incomingData2[1]];
+      updateSpam(topdata, 3);
+      document.getElementById("spam06").style.transition = "2s";
+      document.getElementById("spam06").style.opacity = "1";
+    }
+
   });
-
-  document.getElementById("changeRandomForce").addEventListener("click", randomForce);
-
-  function randomForce() {
-    ranDataIndex = Math.floor(Math.random()*212);
-    randata = incomingData2.slice(ranDataIndex,ranDataIndex+4);
-    updateSpam(randata, 2);
-  }
-
-  document.getElementById("changeTopForce").addEventListener("click", topForce);
-
-  function topForce() {
-    topdata = [incomingData2[1]];
-    updateSpam(topdata, 3);
-    document.getElementById("spam06").style.transition = "2s";
-    document.getElementById("spam06").style.opacity = "1";
-  }
 
 });
 
@@ -1409,7 +1637,7 @@ d3.csv("data/Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData3) {
     }
 
     let u = viz3.selectAll('.positionSwarm').data(incomingData3);
-    u.enter()
+    let swarmCircle = u.enter()
       .append('circle')
         .attr("class", "positionSwarm")
         // .attr('r', d => d.radius + 1))
@@ -1422,8 +1650,8 @@ d3.csv("data/Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData3) {
           }
         })
         .merge(u)
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y)
+        .attr("cx", d => d.x)
+        .attr("cy", -25)
         .on("mouseover", function(d) {
           // console.log(d3.mouse(viz3.node()));
           textElement.text(d.Emoji + ": " + parseFloat(d.Position).toFixed(2));
@@ -1439,12 +1667,41 @@ d3.csv("data/Emoji_Sentiment_Data_v1.0.csv").then(function(incomingData3) {
             .attr("opacity", 1)
           ;
         })
-        ;
+    ;
+
+    enterView({
+    	selector: '#position1',
+    	enter: function(el) {
+        console.log("IN");
+        swarmCircle
+          .transition().duration(1000).ease(d3.easeBounce)
+          .delay(function(d,i) {
+            return Math.pow(i, 1/2)*1000;
+          })
+          .attr('cy', d => d.y)
+
+        ;    	},
+    	exit: function(el) {
+    		// el.classList.remove('entered');
+    	},
+    	progress: function(el, progress) {
+    		// el.style.opacity = progress;
+    	},
+    	offset: 0.5, // enter at middle of viewport
+    	once: true, // trigger just once
+    });
+
 
     viz3.append("text")
-        .text("👈The beginning of a tweet, emoji goes anywhere in the text, this marks the end.👉")
+        .text("👈"
+        + "\xa0\xa0E\xa0m\xa0o\xa0j\xa0i\xa0s"
+        + "\xa0\xa0\xa0C\xa0o\xa0u\xa0l\xa0d"
+        + "\xa0\xa0\xa0F\xa0a\xa0l\xa0l"
+        + "\xa0\xa0\xa0A\xa0n\xa0y\xa0w\xa0h\xa0e\xa0r\xa0e\xa0."
+        + "\xa0\xa0👉")
         .attr("font-family", "Futura")
-        .attr("font-size", 22.5)
+        .attr("font-size", 23.5)
+        .attr("font-weight", "bold")
         .attr("text-anchor", "middle")
         .attr("x", (w3+xPadding3-xPadding30)/2)
         .attr("y", h3 - yPadding3*1.2)
@@ -1987,8 +2244,8 @@ d3.json("data/new_data.json").then(function (incomingData5) {
 
 // Ending
 
-let w6 = 400;
-let h6 = 1200;
+let w6 = 500;
+let h6 = 1050;
 let xPadding6 = 25;
 let yPadding6 = 25;
 
