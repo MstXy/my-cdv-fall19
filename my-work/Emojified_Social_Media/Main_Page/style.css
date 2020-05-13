@@ -393,7 +393,7 @@ svg text {
 #combination1 {
   top: 5700px;
   left: 900px;
-  width: 600px;
+  width: 550px;
   font-size: 40px;
   font-weight: bold;
 }
@@ -401,31 +401,31 @@ svg text {
 #combination2 {
   top: 5810px;
   left: 900px;
-  width: 600px;
+  width: 550px;
   font-size: 25px;
 }
 #combination3 {
   top: 6065px;
   left: 900px;
-  width: 600px;
+  width: 550px;
   font-size: 25px;
 }
 #combination4 {
   top: 6160px;
   left: 900px;
-  width: 600px;
+  width: 550px;
   font-size: 25px;
 }
 #combination5 {
   top: 6285px;
   left: 900px;
-  width: 600px;
+  width: 550px;
   font-size: 25px;
 }
 #combination6 {
   top: 6380px;
   left: 900px;
-  width: 600px;
+  width: 550px;
   font-size: 25px;
 }
 #container {
@@ -474,7 +474,7 @@ svg text {
 #textSenti4 {
   top: 6825px;
   left: 850px;
-  width: 600px;
+  width: 550px;
   font-size: 30px;
 }
 #container5 {
@@ -541,6 +541,9 @@ svg text {
   font-size: 25px;
   /* text-align: center; */
 }
+
+
+
 #container6 {
   position: absolute;
   left: 925px;
@@ -548,7 +551,7 @@ svg text {
 }
 #Ending0 {
   position: absolute;
-  top: 9350px;
+  top: 9375px;
   left: 700px;
   width: 100px;
   font-size: 80px;
@@ -581,6 +584,38 @@ svg text {
   text-align: center;
   font-weight: bold;
 }
+
+#creditSep {
+  position: absolute;
+  top: 10100px;
+  width: 1300px;
+  left: 100px;
+  border-style: inset;
+}
+#credit00 {
+  top:10110px;
+  left: 1200px;
+  font-size: 20px;
+}
+#datacredit0 {
+  font-weight: bold;
+  top:10110px;
+  left: 150px;
+  font-size: 20px;
+}
+#datacredit1 {
+  top:10140px;
+  left: 150px;
+  font-size: 20px;
+}
+#datacredit2 {
+  top: 10170px;
+  left: 150px;
+  margin-bottom: 50px;
+  font-size: 20px;
+}
+
+
 
 #forHeight {
   position: absolute;
